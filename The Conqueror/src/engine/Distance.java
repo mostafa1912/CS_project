@@ -7,7 +7,7 @@ public class Distance {
 	private String from;
 	private String to;
 	private int distance;
-	
+	teettoottetetet
 	
 //Constructor 
 	public Distance(String from,String to, int distance) {
