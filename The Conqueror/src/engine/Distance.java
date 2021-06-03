@@ -9,6 +9,10 @@ public class Distance {
 	private int distance;
 	teettoottetetet
 	
+	erer
+	erer
+	
+	
 //Constructor 
 	public Distance(String from,String to, int distance) {
 		this.from = from;
