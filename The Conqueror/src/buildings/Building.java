@@ -30,5 +30,6 @@ public class Building {
 	public int getCost() {
 		return cost;
 	}
-	
+/*teet
+*/
 }
