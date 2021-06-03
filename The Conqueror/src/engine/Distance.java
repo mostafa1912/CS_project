@@ -7,10 +7,7 @@ public class Distance {
 	private String from;
 	private String to;
 	private int distance;
-	teettoottetetet
 	
-	erer
-	erer
 	
 	
 //Constructor 
