@@ -8,8 +8,6 @@ public class Distance {
 	private String to;
 	private int distance;
 	
-	erer
-	erer
 	
 	
 //Constructor 
