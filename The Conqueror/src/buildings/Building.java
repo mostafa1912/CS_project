@@ -25,11 +25,11 @@ public class Building {
 		return coolDown;
 	}
 	public void setCoolDown(boolean coolDown) {
-		this.coolDown = coolDown;
+		this.coolDown = 
 	}
 	public int getCost() {
 		return cost;
 	}
-/*teet
+/*teet --- 7etta zyada 
 */
 }
