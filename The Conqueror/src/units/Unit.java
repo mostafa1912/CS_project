@@ -13,15 +13,56 @@ public class Unit{
     private double siegeUpKeep;
     private Army parentArmy;
     
-    private Unit target;
-   
-    
-    
-    public void attack(Unit target) throws FriendlyFireException
+      
+    public void attack(Unit target) throws FriendlyFireException , IOException
     {	
+    	String type = "";
     	double factor =0.0;
     	if (this instanceof Archers)
-    		factor =Archers.FindFactor()
+    		type = "Archers";
+    	else if (this instanceof Infantry)
+    		type = "Infantry";
+    	else if (this instanceof Cavalry)
+    		type = "Cavalry";
+    	
+    	String path = type + "_factor.csv";    	
+    	String currentLine = "";	
+		FileReader fr = new FileReader(path);
+		BufferedReader br = new BufferedReader(fr);
+    	if (this instanceof Archers) { 
+	
+		
+		while ((currentLine = br.readLine()) != null ) {
+			String[] line = currentLine.split(",");
+			if ( getLevel() == Integer.parseInt(line[0]))
+					factor = Integer.parseInt(line[3]);
+		}
+		}
+    	else if (this instanceof Infantry) { 
+    		for(int i =0; i < 4 ; i++) 
+    			{currentLine = br.readLine();}
+    		while ((currentLine = br.readLine()) != null ) {
+    			String[] line = currentLine.split(",");
+    			if ( getLevel() == Integer.parseInt(line[0]))
+    					factor = Integer.parseInt(line[3]);
+    		}
+    			
+    		
+    		
+        	}
+    	else if (this instanceof Cavalry) { 
+    		for(int i =0; i < 7 ; i++) 
+    			{currentLine = br.readLine();}
+    		while ((currentLine = br.readLine()) != null ) {
+    			String[] line = currentLine.split(",");
+    			if ( getLevel() == Integer.parseInt(line[0]))
+    					factor = Integer.parseInt(line[3]);
+    		}
+    			
+    		
+    		
+        	}
+    	br.close();
     	
     	
     	currentSoldierCount = (int)(currentSoldierCount - (currentSoldierCount*factor));
@@ -79,14 +120,6 @@ public class Unit{
 
 	public void setParentArmy(Army parentArmy) {
 		parentArmy = parentArmy;
-	}
-
-	public static Unit getTarget() {
-		return target;
-	}
-
-	public void setTarget(Unit target) {
-		this.target = target;
 	}
 
 	
