@@ -2,12 +2,12 @@ package exceptions;
 
 public class MaxCapacityException extends ArmyException{
 	
-	MaxCapacityException(){
+	public MaxCapacityException(){
 		super();
 	}
 	
 	
-	MaxCapacityException(String s){ 
+	public MaxCapacityException(String s){ 
 		super(s);
 	}
 

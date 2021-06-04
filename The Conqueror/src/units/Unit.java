@@ -19,7 +19,7 @@ public class Unit{
     {	
     	String type = "";
     	double factor =0.0;
-    	if (this instanceof Archers)
+    	if (this instanceof Archer)
     		type = "Archers";
     	else if (this instanceof Infantry)
     		type = "Infantry";
@@ -30,7 +30,7 @@ public class Unit{
     	String currentLine = "";	
 		FileReader fr = new FileReader(path);
 		BufferedReader br = new BufferedReader(fr);
-    	if (this instanceof Archers) { 
+    	if (this instanceof Archer) { 
 	
 		
 		while ((currentLine = br.readLine()) != null ) {
