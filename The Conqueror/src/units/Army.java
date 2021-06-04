@@ -68,9 +68,39 @@ public class Army{
     	parentArmyOfUnit.getUnits().remove(unit);
     	
     	this.units.add(unit);
+    
+    }
+    
+    
+    // If unit has no soldiers left it is deleted from Units 
+    public void handleAttackedUnit(Unit u) { 
+    	if (u.getCurrentSoldierCount() == 0 )
+    		this.units.remove(u);
+    }
+   
+    
+    // A method that calculates the food needed from each unit inside the army based on the unit's status.
+    public double foodNeeded() { 
+    	double amountOfFoodNeeded = 0 ; 
+    	
+    	if (this.getCurrentStatus() == Status.IDLE) 
+    		for (Unit u : this.units) 
+    			amountOfFoodNeeded = u.getIdleUpKeep() * u.getCurrentSoldierCount();
+        
+    	
+    	
+    	else if (this.getCurrentStatus() == Status.MARCHING) 
+    		for (Unit u : this.units) 
+    			amountOfFoodNeeded = u.getMarchingUpKeep() * u.getCurrentSoldierCount();
+    	
+    	
+    	else if (this.getCurrentStatus() == Status.BESIEGING) 
+    		for (Unit u : this.units) 
+    			amountOfFoodNeeded = u.getSiegeUpKeep() * u.getCurrentSoldierCount();
     	
     	
     	
-    }	
+    	return amountOfFoodNeeded;
+    }
    
 }
