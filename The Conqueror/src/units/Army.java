@@ -67,7 +67,9 @@ public class Army{
     	// Remove unit from the parent army 
     	parentArmyOfUnit.getUnits().remove(unit);
     	
+    	unit.setParentArmy(this);
     	this.units.add(unit);
+    	
     
     }
     
