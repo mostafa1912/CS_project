@@ -120,9 +120,9 @@ public class Unit{
 	}
 
 	public void setParentArmy(Army parentArmy) {
-		parentArmy = parentArmy;
+		this.parentArmy = parentArmy;
 	}
 
 	
-
+ // This is seif's comment 
 }
