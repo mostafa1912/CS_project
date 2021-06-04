@@ -1,8 +1,14 @@
 package buildings;
 
-public class MilitaryBuilding extends Building {
+import java.io.IOException;
+
+import exceptions.BuildingInCoolDownException;
+import exceptions.MaxRecruitedException;
+import units.Unit;
+
+public abstract class  MilitaryBuilding extends Building {
 	private int recruitmentCost,currentRecruit;
-	private int maxRecruit = 3;
+	private final int maxRecruit = 3;
 
 	public int getRecruitmentCost() {
 		return recruitmentCost;
@@ -15,10 +21,12 @@ public class MilitaryBuilding extends Building {
 	public int getCurrentRecruit() {
 		return currentRecruit;
 	}
-
+	
 	public void setCurrentRecruit(int currentRecruit) {
 		this.currentRecruit = currentRecruit;
 	}
+
+	
 
 	public int getMaxRecruit() {
 		return maxRecruit;
@@ -28,5 +36,11 @@ public class MilitaryBuilding extends Building {
 		super(cost, upgradeCost);
 		this.recruitmentCost = recruitmentCost;
 	}
+	
+	
+	
+	/***********************************/
+	// MileStone 2 code 
+	public abstract Unit recruit() throws BuildingInCoolDownException, MaxRecruitedException;
 
 }

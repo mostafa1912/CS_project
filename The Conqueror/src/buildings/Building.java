@@ -1,6 +1,9 @@
 package buildings;
 
-public class Building {
+import exceptions.BuildingInCoolDownException;
+import exceptions.MaxLevelException;
+
+public abstract class Building {
 	private int cost, upgradeCost;
 	private int level = 1;
 	private boolean coolDown = true;
@@ -21,14 +24,27 @@ public class Building {
 	public void setUpgradeCost(int upgradeCost) {
 		this.upgradeCost = upgradeCost;
 	}
-	public boolean isCoolDown() {
-		return coolDown;
-	}
+	
 	public void setCoolDown(boolean coolDown) {
 		this.coolDown = coolDown;
+	}
+	public boolean getCoolDown() {
+		return this.coolDown;
 	}
 	public int getCost() {
 		return cost;
 	}
+	
+	
+	
+	
+	/***************************/ 
+	// Milestone 2 Code : 
+	
+	
+	public abstract void upgrade() throws BuildingInCoolDownException, MaxLevelException ; 
+	
+	
+	
 	
 }
