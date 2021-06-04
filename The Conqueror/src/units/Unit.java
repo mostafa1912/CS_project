@@ -1,5 +1,6 @@
 package units;
-
+import java.io.*;
+import java.util.*;
 
 import exceptions.*;
 
@@ -11,14 +12,16 @@ public class Unit{
     private double marchingUpKeep;
     private double siegeUpKeep;
     private Army parentArmy;
-    private double factor;
+    
     private Unit target;
    
     
     
     public void attack(Unit target) throws FriendlyFireException
-    {
-    	
+    {	
+    	double factor =0.0;
+    	if (this instanceof Archers)
+    		factor =Archers.FindFactor()
     	
     	
     	currentSoldierCount = (int)(currentSoldierCount - (currentSoldierCount*factor));
@@ -78,21 +81,14 @@ public class Unit{
 		parentArmy = parentArmy;
 	}
 
-	public double getFactor() {
-		return factor;
-	}
-
-	public void setFactor(double factor) {
-		this.factor = factor;
-	}
-
-	public Unit getTarget() {
+	public static Unit getTarget() {
 		return target;
 	}
 
 	public void setTarget(Unit target) {
 		this.target = target;
 	}
-    
+
+	
 
 }
