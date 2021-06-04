@@ -1,14 +1,28 @@
 package units;
 
 
+import exceptions.*;
 
 public class Unit{
     private int level ;
     private int maxSoldierCount ;
-    private int currentSoldierCount;
+    private int currentSoldierCount = maxSoldierCount;
     private double idleUpKeep;
     private double marchingUpKeep;
     private double siegeUpKeep;
+    private Army parentArmy;
+    private double factor;
+    private Unit target;
+   
+    
+    
+    public void attack(Unit target) throws FriendlyFireException
+    {
+    	
+    	
+    	
+    	currentSoldierCount = (int)(currentSoldierCount - (currentSoldierCount*factor));
+    }
 
     public int getLevel(){
         return this.level ;
@@ -47,6 +61,7 @@ public class Unit{
                     this.idleUpKeep = idleUpkeep ;
                     this.marchingUpKeep = marchingUpkeep;
                     this.siegeUpKeep = siegeUpkeep;
+                  
                     
 
 
@@ -54,6 +69,30 @@ public class Unit{
                     
 
                 }
+
+	public Army getParentArmy() {
+		return parentArmy;
+	}
+
+	public void setParentArmy(Army parentArmy) {
+		parentArmy = parentArmy;
+	}
+
+	public double getFactor() {
+		return factor;
+	}
+
+	public void setFactor(double factor) {
+		this.factor = factor;
+	}
+
+	public Unit getTarget() {
+		return target;
+	}
+
+	public void setTarget(Unit target) {
+		this.target = target;
+	}
     
 
 }

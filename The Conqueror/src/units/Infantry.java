@@ -6,5 +6,6 @@ public class Infantry extends Unit {
 		super(level, maxSoldierCount, idleUpkeep, marchingUpkeep, siegeUpkeep);
 		
 	}
-
+	
+	
 }
