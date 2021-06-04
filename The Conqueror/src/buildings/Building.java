@@ -4,6 +4,7 @@ import exceptions.BuildingInCoolDownException;
 import exceptions.MaxLevelException;
 
 public abstract class Building {
+	// Updated 
 	private int cost, upgradeCost;
 	private int level = 1;
 	private boolean coolDown = true;
