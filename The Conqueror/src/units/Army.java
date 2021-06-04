@@ -9,6 +9,7 @@ public class Army{
     private String target = "";
     private String currentLocation ;
     private int maxToHold = 10;
+    
 	
 	public Status getCurrentStatus() {
 		return currentStatus;

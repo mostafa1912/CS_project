@@ -20,6 +20,7 @@ public class City {
 // Constructor
 	public City(String name) {
 		this.name = name;
+		this.defendingArmy = new Army(name);
 		
 	}
 	
