@@ -106,12 +106,10 @@ public class Unit{
                     this.idleUpKeep = idleUpkeep ;
                     this.marchingUpKeep = marchingUpkeep;
                     this.siegeUpKeep = siegeUpkeep;
-                  
-                    
-
-
-
-                    
+                   
+                    // Implementing in the constructor for any future update 
+                    this.currentSoldierCount = this.maxSoldierCount;
+                   
 
                 }
 
