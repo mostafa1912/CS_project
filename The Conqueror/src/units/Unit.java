@@ -12,7 +12,7 @@ public class Unit{
     private double marchingUpKeep;
     private double siegeUpKeep;
     private Army parentArmy;
-    //mostafa testing
+    
     
       
     public void attack(Unit target) throws FriendlyFireException , IOException
@@ -124,5 +124,5 @@ public class Unit{
 	}
 
 	
- // This is seif's comment 
+ 
 }

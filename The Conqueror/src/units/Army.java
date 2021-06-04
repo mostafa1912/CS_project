@@ -1,5 +1,7 @@
 package units;
 import java.util.*;
+
+import exceptions.MaxCapacityException;
 public class Army{
     private Status currentStatus = Status.IDLE;
     private ArrayList<Unit> units ;
@@ -56,5 +58,19 @@ public class Army{
     	this.currentLocation = currentLocation;
     }
 
+    
+    public void relocateUnit(Unit unit) throws MaxCapacityException { 
+    	if (this.units.size() == this.maxToHold)
+    		throw new MaxCapacityException();
+    	Army parentArmyOfUnit = unit.getParentArmy();
+    	
+    	// Remove unit from the parent army 
+    	parentArmyOfUnit.getUnits().remove(unit);
+    	
+    	this.units.add(unit);
+    	
+    	
+    	
+    }	
    
 }
