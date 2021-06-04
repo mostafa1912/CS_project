@@ -6,4 +6,5 @@ public class Cavalry extends Unit{
 	
 	}
 
+	
 }

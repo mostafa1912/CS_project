@@ -30,6 +30,5 @@ public class Building {
 	public int getCost() {
 		return cost;
 	}
-/*teet --- 7etta zyada kman
-*/
+	
 }
