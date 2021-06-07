@@ -19,7 +19,7 @@ public class City {
 	
 
 // Constructor
-	public City(String name) {
+public City(String name) {
 		this.name = name;
 		this.defendingArmy = new Army(name);
 		
@@ -130,29 +130,29 @@ public class City {
 		return found;
 	}
 //Getters
-	public String getName() { 
-		return name;
-	}
+		public String getName() { 
+			return name;
+		}
 
-	public  ArrayList<EconomicBuilding> getEconomicalBuildings(){
-		return economicalBuildings;
-	}
-	
-	public ArrayList<MilitaryBuilding> getMilitaryBuildings(){
-		return militaryBuildings;
-	}
-	
-	public Army getDefendingArmy() {
-		return this.defendingArmy;
-	}
-	
-	public int getTurnsUnderSiege() { 
-		return this.turnsUnderSiege;
-	}
-	
-	public boolean isUnderSiege() {
-		return underSiege;
-	}
+		public  ArrayList<EconomicBuilding> getEconomicalBuildings(){
+			return economicalBuildings;
+		}
+		
+		public ArrayList<MilitaryBuilding> getMilitaryBuildings(){
+			return militaryBuildings;
+		}
+		
+		public Army getDefendingArmy() {
+			return this.defendingArmy;
+		}
+		
+		public int getTurnsUnderSiege() { 
+			return this.turnsUnderSiege;
+		}
+		
+		public boolean isUnderSiege() {
+			return underSiege;
+		}
 	
 	
 	
