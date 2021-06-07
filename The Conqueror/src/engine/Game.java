@@ -5,12 +5,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import units.Archer;
+import units.Army;
+import units.Cavalry;
+import units.Infantry;
+import units.Unit;
+
 public class Game {
 	
 //Instance Variables	
 	private Player player;
-	private ArrayList<City> availableCities;
-	private ArrayList<Distance> distances;
+	private ArrayList<City> availableCities = new ArrayList<>();
+	private ArrayList<Distance> distances = new ArrayList<>();
 	private final int maxTurnCount = 30;
 	private int currentTurnCount = 1;
 	
@@ -18,25 +24,49 @@ public class Game {
 	
 // Constructor
 	public Game(String playerName,String playerCity) throws IOException{
-		this.player = new Player(playerName);
+		
+		Player playerTmp = new Player(playerName);
+
 		
 		// Loading all cities and distances
 		loadCitiesAndDistances();
 		
 		
+		
 		// Initializing the armies of the defending cities
 		for (int i = 0 ; i < availableCities.size(); i ++ ) { 
 			//Name and Path of each available city
-			String currCityName  =availableCities.get(i).getName(); 
-			String currCityPath = currCityName;
-			currCityPath = currCityPath.toLowerCase();
-			currCityPath = currCityPath+ "_army.csv";
+			if (!availableCities.get(i).equals(null)) {
 			
-			//Load army if the city is not the player's city
-			if (!currCityName.equals(playerCity)){
-				loadArmy(currCityName,currCityPath);
+				String currCityName  =availableCities.get(i).getName(); 
+				String currCityPath = currCityName;
+				currCityPath = currCityPath.toLowerCase();
+				currCityPath = currCityPath+ "_army.csv";
+				
+				
+				
+				//Load army if the city is not the player's city
+				if (!currCityName.equals(playerCity)){
+					loadArmy(currCityName,currCityPath);
+				}
+				
+				//Army of defending City is Null
+				else { 
+					availableCities.get(i).setDefendingArmy(null);
+					playerTmp.getControlledCities().add(availableCities.get(i));
+					
+				}
+			
 			}
 		}
+		
+		
+		
+		
+		setPlayer(playerTmp);
+		
+		
+		
 	}
 	
 	
@@ -54,7 +84,7 @@ public class Game {
 		this.currentTurnCount = currentTurnCount;
 	}
 	public ArrayList<City> getAvailableCities() {
-		return availableCities;
+		return this.availableCities;
 	}
 	public ArrayList<Distance> getDistances() {
 		return distances;
@@ -69,6 +99,29 @@ public class Game {
 // Methods 
 	
 	public void loadArmy(String cityName,String path) throws IOException{
+		
+		
+		// This method to get the name and to point at the required city in the avaliableCities 
+		City currCity = null; 
+		String currCityName = "";
+		for (int i = 0 ; i < availableCities.size(); i ++ ) {
+			City tmpCity = availableCities.get(i);
+			String tmpCityName = tmpCity.getName();
+			
+			// Once we find it 
+			if (tmpCityName.equals(cityName)) {
+				currCity = tmpCity;
+				currCityName = tmpCityName;
+			}
+		}
+		
+		
+	
+		//Creating the army 
+		Army newArmy = new Army(cityName);
+		
+		//This List holds all units read from the csv file
+		ArrayList<Unit> unitsFromCSVFile = new ArrayList<>() ; 
 		//TYPE,LEVEL
 		
 		// The buffer reader part
@@ -76,15 +129,65 @@ public class Game {
 		FileReader fileReader= new FileReader(path);
 		BufferedReader br = new BufferedReader(fileReader);
 		while ((currentLine = br.readLine()) != null) {
-			System.out.println(currentLine);
+			//System.out.println(currentLine);
 			
 			// Parsing the currentLine String
 			String [] line= currentLine.split(",");
 			String type = line[0];
 			int level = Integer.parseInt(line[1]);
 			
-			//* Left to Moataz ...
+			int maxSoldier = 0;
+			double idleKeep = 0,marchkeep = 0,siegeKeep = 0;
+			
+			if (type.equals("Archer")) {
+				// Set maxSolider 
+				if (level == 1 ) { maxSoldier = 60; idleKeep = 0.4; marchkeep= 0.5;siegeKeep=0.6;}
+				else if (level == 2) { maxSoldier = 60; idleKeep = 0.4; marchkeep= 0.5;siegeKeep=0.6;}
+				else if (level == 3 ) { maxSoldier = 70; idleKeep = 0.5; marchkeep= 0.6;siegeKeep=0.7;}
+	
+				//Create archer unit and add it to the units read from the csv file
+				Unit newArcher = new Archer(level,maxSoldier,idleKeep,marchkeep,siegeKeep);
+				unitsFromCSVFile.add(newArcher);
+			}
+			
+			if (type.equals("Infantry")) {
+				// Set maxSolider 
+				if (level == 1 ) { maxSoldier = 50; idleKeep = 0.5; marchkeep= 0.6;siegeKeep=0.7;}
+				else if (level == 2) { maxSoldier = 50; idleKeep = 0.5; marchkeep= 0.6;siegeKeep=0.7;}
+				else if (level == 3 ) { maxSoldier = 60; idleKeep = 0.6; marchkeep= 0.7;siegeKeep=0.8;}
+	
+				//Create archer unit and add it to the units read from the csv file
+				Unit newInfantry = new Infantry(level,maxSoldier,idleKeep,marchkeep,siegeKeep);
+				unitsFromCSVFile.add(newInfantry);
+			}
+			
+			
+			if (type.equals("Cavalry")) {
+				// Set maxSolider 
+				if (level == 1 ) { maxSoldier = 40; idleKeep = 0.6; marchkeep= 0.7;siegeKeep=0.75;}
+				else if (level == 2)  { maxSoldier = 40; idleKeep = 0.6; marchkeep= 0.7;siegeKeep=0.75;}
+				else if (level == 3 ) { maxSoldier = 60; idleKeep = 0.7; marchkeep= 0.8;siegeKeep=0.9;}
+	
+				//Create archer unit and add it to the units read from the csv file
+				Unit newCavalry = new Cavalry(level,maxSoldier,idleKeep,marchkeep,siegeKeep);
+				unitsFromCSVFile.add(newCavalry);
+			}
+			
+			
+			
+			newArmy.setUnits(unitsFromCSVFile);
+			
+			currCity.setDefendingArmy(newArmy);
+			
+			
+			
+				
+			
 		}
+		
+		
+		
+		
 	}
 	
 	
@@ -112,22 +215,31 @@ public class Game {
 			boolean containsCityName1 = false;
 			boolean containsCityName2 = false;
 			
+	
 
 			// See if input cities are already contained in the game
 			for (int i = 0 ; i < availableCities.size(); i ++ ) { 
-				City curr = availableCities.get(i);
-				
-				if (curr.getName().equals(cityName1))
-					containsCityName1= true;
-				if (curr.getName().equals(cityName2))
-					containsCityName2= true;
+			
+				if (!availableCities.get(i).equals(null)) {
+					City curr = availableCities.get(i);
+					
+					if (curr.getName().equals(cityName1))
+						containsCityName1= true;
+					if (curr.getName().equals(cityName2))
+						containsCityName2= true;
 				}
+				
+				
+			}
 			
 			//Add the cities if they are not already there
 			if (!containsCityName1)
 				availableCities.add(new City(cityName1));
 			if (!containsCityName2)
 				availableCities.add(new City(cityName2));
+			
+		
+			
 			
 
 
@@ -138,7 +250,12 @@ public class Game {
 			
 		
 		}
+		
+		
+		
+		
 	}
+	
 	
 	
 	

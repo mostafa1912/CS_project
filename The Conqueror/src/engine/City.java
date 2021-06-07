@@ -40,6 +40,7 @@ public class City {
 				{
 					found = true;
 				}
+				
 			}
 		}
 		if(type == "Infantry")
@@ -157,19 +158,19 @@ public class City {
 	
 	
 	
-//Setters	
-	// Here I used the currentLocatrion as it is the variable of Army constructor
-	public void setDefendingArmy(String currentLocation) {
-		this.defendingArmy = new Army (currentLocation);	
-	}
+	//Setters	
 	
-	public void setTurnsUnderSiege(int turnsUnderSiege) {
-		this.turnsUnderSiege = turnsUnderSiege;
-	}
-	
-	public void setUnderSiege(boolean underSiege) {
-		this.underSiege = underSiege;
-	}
+		public void setDefendingArmy(Army defendingArmy ) {
+			this.defendingArmy = defendingArmy;
+		}
+		
+		public void setTurnsUnderSiege(int turnsUnderSiege) {
+			this.turnsUnderSiege = turnsUnderSiege;
+		}
+		
+		public void setUnderSiege(boolean underSiege) {
+			this.underSiege = underSiege;
+		}
 	
 	
 	
