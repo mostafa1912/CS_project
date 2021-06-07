@@ -206,7 +206,10 @@ public class Player {
 	
 	
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 	 public void upgradeBuilding(Building b) throws NotEnoughGoldException,
 	 BuildingInCoolDownException, MaxLevelException  
 
