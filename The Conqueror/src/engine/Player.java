@@ -238,46 +238,14 @@ public class Player {
 		 
 		 
 		 // I don't know whether I should start the Siege turns here or wait and they will be started in the game class 
+		 //la keda tmam , mostafa mo3taz
 		 city.setUnderSiege(true);
 		 army.setCurrentStatus(Status.BESIEGING);
 		 
 	 }
 	
 	
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-	 public void upgradeBuilding(Building b) throws NotEnoughGoldException,
-	 BuildingInCoolDownException, MaxLevelException  
 
-	//Setters and Getters
-	public double getTreasury() {
-		return treasury;
-	}
-	public void setTreasury(double treasury) {
-		this.treasury = treasury;
-	}
-	public double getFood() {
-		return food;
-	}
-	public void setFood(double food) {
-		this.food = food;
-	}
-	public String getName() {
-		return name;
-	}
-	public ArrayList<City> getControlledCities() {
-		return controlledCities;
-	}
-	public ArrayList<Army> getControlledArmies() {
-		return controlledArmies;
-	}
-
-	
->>>>>>> Stashed changes
-	
 	
 
 }
