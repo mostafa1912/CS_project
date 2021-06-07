@@ -19,9 +19,43 @@ public class Player {
 	
 // Constructor
 	public Player(String name) {
-		this.name = name;
-	}
+			this.name = name;
+			controlledCities = new ArrayList<>();
+			controlledArmies = new ArrayList<>();
+			
+		}
 	
+	
+
+	
+
+	//Setters and Getters
+	public double getTreasury() {
+		return treasury;
+	}
+	public void setTreasury(double treasury) {
+		this.treasury = treasury;
+	}
+	public double getFood() {
+		return food;
+	}
+	public void setFood(double food) {
+		this.food = food;
+	}
+	public String getName() {
+		return name;
+	}
+	public ArrayList<City> getControlledCities() {
+		return controlledCities;
+	}
+	public ArrayList<Army> getControlledArmies() {
+		return controlledArmies;
+	}
+
+	
+	
+	/*****************************************/
+	/*MileStone 2 Code*/
 	
 
 	public void recruitUnit(String type,String cityName) throws
@@ -41,6 +75,7 @@ public class Player {
 			{	
 				flag = true;
 			}
+			
 		}
 		
 		usedBuilding = currentCity.searchBuilding(type);
@@ -82,8 +117,8 @@ public class Player {
 				neededCost = 700;
 		}
 		if (treasury < neededCost) {
-			System.out.println("Not Enough Gold");
-			throw new NotEnoughGoldException();
+			
+			throw new NotEnoughGoldException("Not Enough Gold");
 			}
 		else {
 			currentCity.getDefendingArmy().getUnits().add(newUnit);
@@ -143,32 +178,6 @@ public class Player {
 		
 	 }
 	
-	
-	
-
-	//Setters and Getters
-	public double getTreasury() {
-		return treasury;
-	}
-	public void setTreasury(double treasury) {
-		this.treasury = treasury;
-	}
-	public double getFood() {
-		return food;
-	}
-	public void setFood(double food) {
-		this.food = food;
-	}
-	public String getName() {
-		return name;
-	}
-	public ArrayList<City> getControlledCities() {
-		return controlledCities;
-	}
-	public ArrayList<Army> getControlledArmies() {
-		return controlledArmies;
-	}
-
 	
 	
 	
