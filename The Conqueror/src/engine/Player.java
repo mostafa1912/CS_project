@@ -3,8 +3,7 @@ import java.util.ArrayList;
 
 import buildings.*;
 import exceptions.*;
-import units.Army;
-import units.Unit;
+
 import units.*;
 
 public class Player {
@@ -49,9 +48,7 @@ public class Player {
 		if (type == "Archer")
 		{
 			ArcheryRange usedBuilding2 = (ArcheryRange) usedBuilding ;
-			newUnit = usedBuilding2.recruit();
-			currentCity.getDefendingArmy().getUnits().add(newUnit);
-			
+			newUnit = usedBuilding2.recruit();			
 			
 			if (usedBuilding2.getLevel() == 1)
 				neededCost = 400;
@@ -65,7 +62,6 @@ public class Player {
 		{
 			Barracks usedBuilding2 = (Barracks) usedBuilding ;
 			newUnit = usedBuilding2.recruit();
-			currentCity.getDefendingArmy().getUnits().add(newUnit);
 			if (usedBuilding2.getLevel() == 1)
 				neededCost = 500;
 			if (usedBuilding2.getLevel() == 2)
@@ -77,8 +73,7 @@ public class Player {
 		if (type == "Cavalry")
 		{
 			Stable usedBuilding2 = (Stable) usedBuilding ;
-			newUnit = usedBuilding2.recruit();
-			currentCity.getDefendingArmy().getUnits().add(newUnit);
+			newUnit = usedBuilding2.recruit();			
 			if (usedBuilding2.getLevel() == 1)
 				neededCost = 600;
 			if (usedBuilding2.getLevel() == 2)
@@ -90,13 +85,66 @@ public class Player {
 			System.out.println("Not Enough Gold");
 			throw new NotEnoughGoldException();
 			}
-			
+		else {
+			currentCity.getDefendingArmy().getUnits().add(newUnit);
 			newUnit.setParentArmy(currentCity.getDefendingArmy());
 			treasury = treasury - neededCost;
+			}
 	}
 	
+	
+		
+		
+	
+	 public void build(String type,String cityName) throws NotEnoughGoldException{
+		City currentCity = null;
+		boolean found = false;
+		int i =0;
+		Building newBuilding = null;
+		while (!found) {
+			
+			currentCity = controlledCities.get(i);
+			if(cityName == currentCity.getName())
+				found = true;
+		
+		
+		
+				i++;
+		}
+		//need to check for type of building to add 
+		
+		if (type == "Farm" && !currentCity.checkDuplicateBuilding("Farm")) {
+			 newBuilding = new Farm();
+		}
+		else if (type == "Market" && !currentCity.checkDuplicateBuilding("Market")) {
+			 newBuilding = new Market();
+		}
+		else if (type == "Stable" && !currentCity.checkDuplicateBuilding("Stable")) {
+			 newBuilding = new Stable();
+			
+		}
+		else if (type == "ArcheryRange" && !currentCity.checkDuplicateBuilding("ArcheryRange")) {
+			newBuilding = new ArcheryRange();
+			
+		}
+		else if (type == "Barracks" && !currentCity.checkDuplicateBuilding("Barracks")) {
+			newBuilding = new Barracks();
+				}
+		//check for gold before adding
+		if (treasury < newBuilding.getCost())
+			throw new NotEnoughGoldException();
+		else if (newBuilding instanceof EconomicBuilding)
+			currentCity.getEconomicalBuildings().add((EconomicBuilding) newBuilding);
+		else 
+			currentCity.getMilitaryBuildings().add((MilitaryBuilding) newBuilding);
 
 
+
+		
+	 }
+	
+	
+	
 
 	//Setters and Getters
 	public double getTreasury() {

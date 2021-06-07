@@ -71,7 +71,63 @@ public class City {
 		return usedBuilding;
 		
 	}
+
 	
+	
+
+	public boolean checkDuplicateBuilding(String type) {
+		
+		int i =0;
+		boolean found = false;
+		if(type == "Farm")
+		{
+			while (!found) {
+				if (economicalBuildings.get(i) instanceof Farm )
+				{
+					found = true;
+				}
+			}
+		}
+		if(type == "Stable")
+		{
+			while (!found) {
+				if (militaryBuildings.get(i) instanceof Stable )
+				{
+					found = true;
+				}
+			}
+		}
+		if(type == "Market")
+		{
+			while (!found) {
+				if (economicalBuildings.get(i) instanceof Market)
+				{
+					found = true;
+				}
+			}
+		}
+		if(type == "ArcheryRange")
+		{
+			while (!found) {
+				if (militaryBuildings.get(i) instanceof ArcheryRange)
+				{
+					found = true;
+				}
+			}
+		}
+		if(type == "Barracks")
+		{
+			while (!found) {
+				if (militaryBuildings.get(i) instanceof Barracks )
+				{
+					found = true;
+				}
+			}
+		}
+		
+		
+		return found;
+	}
 //Getters
 	public String getName() { 
 		return name;
