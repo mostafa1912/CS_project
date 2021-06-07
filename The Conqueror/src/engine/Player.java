@@ -228,6 +228,20 @@ public class Player {
 		 
 		 
 	 }
+	 
+	 
+	 
+	 
+	 public void laySiege(Army army,City city) throws TargetNotReachedException, FriendlyCityException {
+		 if (city.getDefendingArmy().equals(army))
+			 throw new FriendlyCityException ("A defending army can't lay siege on a city it is defending");
+		 
+		 
+		 // I don't know whether I should start the Siege turns here or wait and they will be started in the game class 
+		 city.setUnderSiege(true);
+		 army.setCurrentStatus(Status.BESIEGING);
+		 
+	 }
 	
 	
 	
