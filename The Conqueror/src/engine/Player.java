@@ -1,8 +1,11 @@
 package engine;
-
 import java.util.ArrayList;
 
+import buildings.*;
+import exceptions.*;
 import units.Army;
+import units.Unit;
+import units.*;
 
 public class Player {
 	
@@ -15,15 +18,55 @@ public class Player {
 	
 	
 	
-	
 // Constructor
 	public Player(String name) {
 		this.name = name;
 	}
 	
 	
-	
 
+	public void recruitUnit(String type,String cityName) throws
+	BuildingInCoolDownException, MaxRecruitedException, NotEnoughGoldException	
+	{	int i = 0;
+		boolean flag = false;
+		City currentCity = null;
+		Building usedBuilding ;
+		while (!flag) 
+		{
+			
+			currentCity = (City)controlledCities.get(i);
+			i++;
+			if (currentCity.getName() == cityName)
+			{	
+				flag = true;
+			}
+		}
+		
+		usedBuilding = currentCity.searchBuilding(type);
+		
+		if (type == "Archer")
+		{
+			ArcheryRange usedBuilding2 = (ArcheryRange) usedBuilding ;
+			usedBuilding2.recruit();
+			treasury = treasury - 
+			
+		}
+		if (type == "Infantry")
+		{
+			Barracks usedBuilding2 = (Barracks) usedBuilding ;
+			usedBuilding2.recruit();
+			
+		}
+		if (type == "Cavalry")
+		{
+			Stable usedBuilding2 = (Stable) usedBuilding ;
+			usedBuilding2.recruit();
+			
+		}
+	
+	
+	}
+	
 
 
 

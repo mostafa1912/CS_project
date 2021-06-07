@@ -1,7 +1,8 @@
 package engine;
 
 import java.util.ArrayList;
-
+import buildings.*;
+import buildings.Building;
 import buildings.EconomicBuilding;
 import buildings.MilitaryBuilding;
 import units.Army;
@@ -24,7 +25,52 @@ public class City {
 		
 	}
 	
-	
+	public Building searchBuilding (String type)
+	{
+		int i = 0;
+		boolean found = false;
+		Building usedBuilding = null ; 
+		if(type == "Archer")
+		{
+			while (!found) {
+				
+				usedBuilding = militaryBuildings.get(i);
+				i++;
+				if (usedBuilding instanceof ArcheryRange)
+				{
+					found = true;
+				}
+			}
+		}
+		if(type == "Infantry")
+		{
+			while (!found) {
+				
+				usedBuilding = militaryBuildings.get(i);
+				i++;
+				if (usedBuilding instanceof Barracks)
+				{
+					found = true;
+				}
+			}
+		}
+		
+		if(type == "Cavalry")
+		{
+			while (!found) {
+				
+				usedBuilding = militaryBuildings.get(i);
+				i++;
+				if (usedBuilding instanceof Stable)
+				{
+					found = true;
+				}
+			}
+		}
+		
+		return usedBuilding;
+		
+	}
 	
 //Getters
 	public String getName() { 
