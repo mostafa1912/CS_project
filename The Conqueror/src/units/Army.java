@@ -10,6 +10,9 @@ public class Army{
     private String currentLocation ;
     private int maxToHold = 10;
     
+    public Army(String currentLocation) {
+    	this.currentLocation = currentLocation;
+    }
 	
 	public Status getCurrentStatus() {
 		return currentStatus;
@@ -55,9 +58,7 @@ public class Army{
 	public int getMaxToHold() {
 		return maxToHold;
 	}
-    public Army(String currentLocation) {
-    	this.currentLocation = currentLocation;
-    }
+   
 
     
     public void relocateUnit(Unit unit) throws MaxCapacityException { 

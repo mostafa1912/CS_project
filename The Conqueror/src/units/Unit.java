@@ -75,6 +75,10 @@ public class Unit{
 	
 	 public void attack(Unit target) throws FriendlyFireException , IOException
 	    {	
+		 
+		 	if (this.getParentArmy().equals(target.getParentArmy()))
+		 		throw new FriendlyFireException("The current unit can't attack this target as they belong to the same Army ");
+		 	
 	    	String type = "";
 	    	double factor =0.0;
 	    	if (this instanceof Archer)

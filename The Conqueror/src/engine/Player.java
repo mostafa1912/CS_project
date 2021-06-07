@@ -203,6 +203,45 @@ public class Player {
 			 }
 		 }
 	 }
+	 
+	 
+	 public void initiateArmy(City city,Unit unit) {
+		 
+		 
+		 Army newArmy = new Army (city.getName());
+		 
+		 // ArrayList containing the input unit to be added to the new army 
+		 ArrayList<Unit> newArmyUnits = new ArrayList<>();
+		 
+		 //add the given units to the new army units
+		 newArmyUnits.add(unit);
+		 newArmy.setUnits(newArmyUnits);
+		 
+		 //remove the given unit from the given city's defending army
+		 city.getDefendingArmy().getUnits().remove(unit);
+		 
+		 //update the parentArmy of the given unit.
+		 unit.setParentArmy(newArmy);
+		 
+		 //adds the new army to the controlled armies.
+		 this.controlledArmies.add(newArmy);
+		 
+		 
+	 }
+	 
+	 
+	 
+	 
+	 public void laySiege(Army army,City city) throws TargetNotReachedException, FriendlyCityException {
+		 if (city.getDefendingArmy().equals(army))
+			 throw new FriendlyCityException ("A defending army can't lay siege on a city it is defending");
+		 
+		 
+		 // I don't know whether I should start the Siege turns here or wait and they will be started in the game class 
+		 city.setUnderSiege(true);
+		 army.setCurrentStatus(Status.BESIEGING);
+		 
+	 }
 	
 	
 <<<<<<< Updated upstream
