@@ -150,6 +150,10 @@ public City(String name) {
 			return this.turnsUnderSiege;
 		}
 		
+		public boolean getUnderSiege() {
+			return this.underSiege;
+		}
+		
 		public boolean isUnderSiege() {
 			return underSiege;
 		}
