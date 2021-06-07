@@ -239,13 +239,14 @@ public class Player {
 		 
 		 
 		 // I don't know whether I should start the Siege turns here or wait and they will be started in the game class 
+		 //la keda tmam , mostafa mo3taz
 		 city.setUnderSiege(true);
 		 army.setCurrentStatus(Status.BESIEGING);
 		 
 	 }
 	
 	
-	
+
 	
 
 }

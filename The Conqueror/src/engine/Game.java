@@ -9,6 +9,7 @@ import units.Archer;
 import units.Army;
 import units.Cavalry;
 import units.Infantry;
+import units.Status;
 import units.Unit;
 
 public class Game {
@@ -265,6 +266,35 @@ public class Game {
 		
 		
 	}
+	
+	//code for milestone 2
+	public void targetCity(Army army, String targetName) /*This method assigns a target to
+	the given army by updating the distancetoTarget to be the distance between the current city
+	and the target city. Think about how you will get the correct distance between the two cities. If
+	the army is on road to another city then you can’t send it to another city unless it reaches the
+	target city first.*/
+	{
+
+		int distanceToTarget = 0;
+		String currentArmyLocation = army.getCurrentLocation();
+		army.setTarget(targetName);
+		
+		for (Distance d : distances)
+		{
+			if ((d.getFrom() ==currentArmyLocation && d.getTo() == targetName) ||
+					(d.getFrom() == targetName && d.getTo() == currentArmyLocation))
+			{
+				distanceToTarget = d.getDistance();
+				
+			}
+		}
+		if (army.getCurrentStatus()!= Status.MARCHING)
+			army.setDistancetoTarget(distanceToTarget);
+		
+		
+	}
+	
+	
 	
 	
 	
