@@ -122,6 +122,7 @@ public class Game {
 		
 		//This List holds all units read from the csv file
 		ArrayList<Unit> unitsFromCSVFile = new ArrayList<>() ; 
+		
 		//TYPE,LEVEL
 		
 		// The buffer reader part
@@ -148,6 +149,9 @@ public class Game {
 				//Create archer unit and add it to the units read from the csv file
 				Unit newArcher = new Archer(level,maxSoldier,idleKeep,marchkeep,siegeKeep);
 				unitsFromCSVFile.add(newArcher);
+				
+				// MileStone 2 Setting the Parent Army of the new Unit
+				newArcher.setParentArmy(newArmy);
 			}
 			
 			if (type.equals("Infantry")) {
@@ -159,6 +163,9 @@ public class Game {
 				//Create archer unit and add it to the units read from the csv file
 				Unit newInfantry = new Infantry(level,maxSoldier,idleKeep,marchkeep,siegeKeep);
 				unitsFromCSVFile.add(newInfantry);
+				
+				// MileStone 2 Setting the Parent Army of the new Unit
+				newInfantry.setParentArmy(newArmy);
 			}
 			
 			
@@ -171,6 +178,9 @@ public class Game {
 				//Create archer unit and add it to the units read from the csv file
 				Unit newCavalry = new Cavalry(level,maxSoldier,idleKeep,marchkeep,siegeKeep);
 				unitsFromCSVFile.add(newCavalry);
+				
+				// MileStone 2 Setting the Parent Army of the new Unit
+				newCavalry.setParentArmy(newArmy);
 			}
 			
 			
