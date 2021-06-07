@@ -177,6 +177,32 @@ public class Player {
 
 		
 	 }
+	 
+	 
+	 public void upgradeBuilding(Building b) throws NotEnoughGoldException,BuildingInCoolDownException, MaxLevelException{
+		 for (City c : this.getControlledCities()) {
+			 ArrayList<EconomicBuilding> currentCityEconomicalBuildings = c.getEconomicalBuildings();
+			 ArrayList<MilitaryBuilding> currentCityMilitaryBuildings = c.getMilitaryBuildings();
+			 
+			 if (currentCityEconomicalBuildings.contains(b)) {
+				 if (b.getCost()> this.getTreasury())
+					 throw new NotEnoughGoldException ("Not enough gold to upgrade this Building");
+				 else { 
+					 this.setTreasury(this.getTreasury()-b.getUpgradeCost());
+					 b.upgrade();
+				 }
+			 }
+			 
+			 if (currentCityMilitaryBuildings.contains(b)) {
+				 if (b.getCost()> this.getTreasury())
+					 throw new NotEnoughGoldException ("Not enough gold to upgrade this Building");
+				 else { 
+					 this.setTreasury(this.getTreasury()-b.getUpgradeCost());
+					 b.upgrade();
+				 }
+			 }
+		 }
+	 }
 	
 	
 	
