@@ -32,6 +32,7 @@ public class Player {
 		boolean flag = false;
 		City currentCity = null;
 		Building usedBuilding ;
+		Unit newUnit =null  ;
 		while (!flag) 
 		{
 			
@@ -44,10 +45,14 @@ public class Player {
 		}
 		
 		usedBuilding = currentCity.searchBuilding(type);
+		
 		if (type == "Archer")
 		{
 			ArcheryRange usedBuilding2 = (ArcheryRange) usedBuilding ;
-			usedBuilding2.recruit();
+			newUnit = usedBuilding2.recruit();
+			currentCity.getDefendingArmy().getUnits().add(newUnit);
+			
+			
 			if (usedBuilding2.getLevel() == 1)
 				neededCost = 400;
 			if (usedBuilding2.getLevel() == 2)
@@ -59,7 +64,8 @@ public class Player {
 		if (type == "Infantry")
 		{
 			Barracks usedBuilding2 = (Barracks) usedBuilding ;
-			usedBuilding2.recruit();
+			newUnit = usedBuilding2.recruit();
+			currentCity.getDefendingArmy().getUnits().add(newUnit);
 			if (usedBuilding2.getLevel() == 1)
 				neededCost = 500;
 			if (usedBuilding2.getLevel() == 2)
@@ -71,7 +77,8 @@ public class Player {
 		if (type == "Cavalry")
 		{
 			Stable usedBuilding2 = (Stable) usedBuilding ;
-			usedBuilding2.recruit();
+			newUnit = usedBuilding2.recruit();
+			currentCity.getDefendingArmy().getUnits().add(newUnit);
 			if (usedBuilding2.getLevel() == 1)
 				neededCost = 600;
 			if (usedBuilding2.getLevel() == 2)
@@ -79,11 +86,13 @@ public class Player {
 			if (usedBuilding2.getLevel() == 3)
 				neededCost = 700;
 		}
-		if (treasury < neededCost)
-			throw new NotEnoughGoldException();
+		if (treasury < neededCost) {
 			System.out.println("Not Enough Gold");
+			throw new NotEnoughGoldException();
+			}
 			
-	
+			newUnit.setParentArmy(currentCity.getDefendingArmy());
+			treasury = treasury - neededCost;
 	}
 	
 
