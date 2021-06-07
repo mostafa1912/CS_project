@@ -203,6 +203,31 @@ public class Player {
 			 }
 		 }
 	 }
+	 
+	 
+	 public void initiateArmy(City city,Unit unit) {
+		 
+		 
+		 Army newArmy = new Army (city.getName());
+		 
+		 // ArrayList containing the input unit to be added to the new army 
+		 ArrayList<Unit> newArmyUnits = new ArrayList<>();
+		 
+		 //add the given units to the new army units
+		 newArmyUnits.add(unit);
+		 newArmy.setUnits(newArmyUnits);
+		 
+		 //remove the given unit from the given city's defending army
+		 city.getDefendingArmy().getUnits().remove(unit);
+		 
+		 //update the parentArmy of the given unit.
+		 unit.setParentArmy(newArmy);
+		 
+		 //adds the new army to the controlled armies.
+		 this.controlledArmies.add(newArmy);
+		 
+		 
+	 }
 	
 	
 	
