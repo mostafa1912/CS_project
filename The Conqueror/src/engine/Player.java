@@ -28,6 +28,7 @@ public class Player {
 	public void recruitUnit(String type,String cityName) throws
 	BuildingInCoolDownException, MaxRecruitedException, NotEnoughGoldException	
 	{	int i = 0;
+		double neededCost = 0;
 		boolean flag = false;
 		City currentCity = null;
 		Building usedBuilding ;
@@ -43,27 +44,45 @@ public class Player {
 		}
 		
 		usedBuilding = currentCity.searchBuilding(type);
-		
 		if (type == "Archer")
 		{
 			ArcheryRange usedBuilding2 = (ArcheryRange) usedBuilding ;
 			usedBuilding2.recruit();
-			treasury = treasury - 
+			if (usedBuilding2.getLevel() == 1)
+				neededCost = 400;
+			if (usedBuilding2.getLevel() == 2)
+				neededCost = 450;
+			if (usedBuilding2.getLevel() == 3)
+				neededCost = 500;
 			
 		}
 		if (type == "Infantry")
 		{
 			Barracks usedBuilding2 = (Barracks) usedBuilding ;
 			usedBuilding2.recruit();
+			if (usedBuilding2.getLevel() == 1)
+				neededCost = 500;
+			if (usedBuilding2.getLevel() == 2)
+				neededCost = 550;
+			if (usedBuilding2.getLevel() == 3)
+				neededCost = 600;
 			
 		}
 		if (type == "Cavalry")
 		{
 			Stable usedBuilding2 = (Stable) usedBuilding ;
 			usedBuilding2.recruit();
-			
+			if (usedBuilding2.getLevel() == 1)
+				neededCost = 600;
+			if (usedBuilding2.getLevel() == 2)
+				neededCost = 650;
+			if (usedBuilding2.getLevel() == 3)
+				neededCost = 700;
 		}
-	
+		if (treasury < neededCost)
+			throw new NotEnoughGoldException();
+			System.out.println("Not Enough Gold");
+			
 	
 	}
 	
