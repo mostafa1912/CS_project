@@ -107,4 +107,19 @@ public class Army{
     	return amountOfFoodNeeded;
     }
    
+    //helper method to be used in autoresolve in the game class
+    public int findArmySize()
+    {
+    	int size = 0;
+    	for(Unit u :units)
+    	{
+    		size += u.getCurrentSoldierCount();
+    	}
+    	return size;
+    }
+    
+    
+    
+    
+    
 }
