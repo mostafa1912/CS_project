@@ -7,6 +7,7 @@ import exceptions.*;
 import units.*;
 
 public class Player {
+	// Player class finished 
 	
 //Instance variables
 	private String name;
