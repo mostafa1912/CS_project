@@ -245,12 +245,11 @@ public class Player {
 		 if (this.controlledCities.contains(city))
 			 throw new FriendlyCityException ("A player can't lay Siege on a city he is defending ");
 		 
-		 if (!army.getCurrentLocation().equals(city))
-			 throw new TargetNotReachedException("You haven't reached this city yet");
+		 if (!(army.getCurrentLocation() == city.getName()))
+			 throw new TargetNotReachedException();
 		 
 		 
-		 // I don't know whether I should start the Siege turns here or wait and they will be started in the game class 
-		 //la keda tmam , mostafa mo3taz
+		 
 		 city.setUnderSiege(true);
 		 army.setCurrentStatus(Status.BESIEGING);
 		 
