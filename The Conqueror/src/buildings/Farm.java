@@ -21,7 +21,7 @@ public class Farm extends EconomicBuilding {
 	// Milestone 2 Code 
 	
 	public void upgrade() throws BuildingInCoolDownException, MaxLevelException {
-		if (this.getCoolDown())
+		if (this.isCoolDown())
 			throw new BuildingInCoolDownException ();
 		if (this.getLevel()>= 2)
 			throw new MaxLevelException ();

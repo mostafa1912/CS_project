@@ -373,21 +373,72 @@ public class Game {
 	}
 	
 	public void autoResolve(Army attacker, Army defender) throws
-	FriendlyFireException {
-		boolean attackerTurn = true;
-		int randomNumAttacker =0;
+	FriendlyFireException, IOException {
+		
+		
+		 
+		
 		//armies take turns attacking during the battle until one of them reaches zero unit size
 		if(player.getControlledArmies().contains(defender) && player.getControlledArmies().contains(attacker))
 			throw new FriendlyFireException("both armies belong to the same player");
+		
+		boolean attackerTurn = true;
+		
+		
+		// Two armies facing each other till one ends 
 		while (attacker.findArmySize() >0 && defender.findArmySize()>0)
 		{
 			
-			randomNumAttacker =  (int)(Math.random() * attacker.getUnits().size());
+			int randomNumAttacker =  (int)(Math.random() * attacker.getUnits().size());
+			int randomNumDefender =  (int)(Math.random() * defender.getUnits().size());
+			Unit attackerUnit = attacker.getUnits().get(randomNumAttacker);
+			Unit defenderUnit = defender.getUnits().get(randomNumDefender);
+			
+			
+			
+			
+			// Two Units facing each other till one ends 
+			while (attackerUnit.getCurrentSoldierCount()> 0 && defenderUnit.getCurrentSoldierCount()> 0) {
+				if (attackerTurn) {
+					attackerUnit.attack(defenderUnit);
+					
+				}
+				else {
+					defenderUnit.attack(attackerUnit);
+				}
+				attackerTurn = !attackerTurn;
+			}
+			
+			attacker.handleAttackedUnit(attackerUnit);
+			defender.handleAttackedUnit(defenderUnit);
 		
 		}
 		
+		// Check whether to remove the Army from contolled armies or not 
+		
+		// Attacker army won 
+		if (attacker.findArmySize() >0) {
+			this.occupy(attacker, defender.getCurrentLocation());
+		}
+		
+		
+		
+		
 	}
 	
+	
+	
+	public boolean isGameOver() {
+		if (currentTurnCount > this.maxTurnCount)
+			return true; 
+		
+		for (City currentAvaliableCity  : this.availableCities) {
+			
+			if (!this.player.getControlledCities().contains(currentAvaliableCity))
+				return false;
+		}
+		return true;
+	}
 	
 	
 	

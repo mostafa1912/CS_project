@@ -29,7 +29,7 @@ public abstract class Building {
 	public void setCoolDown(boolean coolDown) {
 		this.coolDown = coolDown;
 	}
-	public boolean getCoolDown() {
+	public boolean isCoolDown() {
 		return this.coolDown;
 	}
 	public int getCost() {

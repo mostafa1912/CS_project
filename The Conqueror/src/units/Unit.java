@@ -50,15 +50,15 @@ public class Unit{
         this.currentSoldierCount = n ;
         return ;
     }
-    public double getIdleUpKeep(){
+    public double getIdleUpkeep(){
         return this.idleUpKeep;
     }
 
-    public double getMarchingUpKeep(){
+    public double getMarchingUpkeep(){
         return this.marchingUpKeep ;
     }
 
-    public double getSiegeUpKeep(){
+    public double getSiegeUpkeep(){
         return this.siegeUpKeep ;
     }
     
@@ -98,7 +98,7 @@ public class Unit{
 			while ((currentLine = br.readLine()) != null ) {
 				String[] line = currentLine.split(",");
 				if ( getLevel() == Integer.parseInt(line[0]))
-						factor = Integer.parseInt(line[3]);
+						factor = Integer.parseInt(line[2]);
 			}
 			}
 	    	else if (this instanceof Infantry) { 
@@ -107,7 +107,7 @@ public class Unit{
 	    		while ((currentLine = br.readLine()) != null ) {
 	    			String[] line = currentLine.split(",");
 	    			if ( getLevel() == Integer.parseInt(line[0]))
-	    					factor = Integer.parseInt(line[3]);
+	    					factor = Integer.parseInt(line[2]);
 	    		}
 	    			
 	    		
@@ -119,7 +119,7 @@ public class Unit{
 	    		while ((currentLine = br.readLine()) != null ) {
 	    			String[] line = currentLine.split(",");
 	    			if ( getLevel() == Integer.parseInt(line[0]))
-	    					factor = Integer.parseInt(line[3]);
+	    					factor = Integer.parseInt(line[2]);
 	    		}
 	    			
 	    		
@@ -130,7 +130,7 @@ public class Unit{
 	    	
 	    	currentSoldierCount = (int)(currentSoldierCount - (currentSoldierCount*factor));
 	    }
-	 
+	    
 	 
 	 
 	 	

@@ -78,7 +78,7 @@ public class Army{
     
     // If unit has no soldiers left it is deleted from Units 
     public void handleAttackedUnit(Unit u) { 
-    	if (u.getCurrentSoldierCount() == 0 )
+    	if (u.getCurrentSoldierCount() > 0 )
     		this.units.remove(u);
     }
    
@@ -89,18 +89,18 @@ public class Army{
     	
     	if (this.getCurrentStatus() == Status.IDLE) 
     		for (Unit u : this.units) 
-    			amountOfFoodNeeded = u.getIdleUpKeep() * u.getCurrentSoldierCount();
+    			amountOfFoodNeeded = u.getIdleUpkeep() * u.getCurrentSoldierCount();
         
     	
     	
     	else if (this.getCurrentStatus() == Status.MARCHING) 
     		for (Unit u : this.units) 
-    			amountOfFoodNeeded = u.getMarchingUpKeep() * u.getCurrentSoldierCount();
+    			amountOfFoodNeeded = u.getMarchingUpkeep() * u.getCurrentSoldierCount();
     	
     	
     	else if (this.getCurrentStatus() == Status.BESIEGING) 
     		for (Unit u : this.units) 
-    			amountOfFoodNeeded = u.getSiegeUpKeep() * u.getCurrentSoldierCount();
+    			amountOfFoodNeeded = u.getSiegeUpkeep() * u.getCurrentSoldierCount();
     	
     	
     	

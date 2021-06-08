@@ -28,7 +28,7 @@ public class Stable extends MilitaryBuilding{
 	
 	
 	public void upgrade() throws BuildingInCoolDownException, MaxLevelException {
-		if (this.getCoolDown())
+		if (this.isCoolDown())
 			throw new BuildingInCoolDownException ();
 		if (this.getLevel()>= 3)
 			throw new MaxLevelException ();
@@ -53,7 +53,7 @@ public class Stable extends MilitaryBuilding{
 	public Unit recruit() throws BuildingInCoolDownException, MaxRecruitedException {
 		if (this.getCurrentRecruit() == this.getMaxRecruit())
 			throw new MaxRecruitedException();
-		if (this.getCoolDown())
+		if (this.isCoolDown())
 			throw new BuildingInCoolDownException ();
 		
 		// Incrementing Current Recruit 
