@@ -276,7 +276,7 @@ public class Game {
 	the army is on road to another city then you can’t send it to another city unless it reaches the
 	target city first.*/
 	{
-
+		//put targets in queue?? or ignore
 		int distanceToTarget = 0;
 		String currentArmyLocation = army.getCurrentLocation();
 		army.setTarget(targetName);
@@ -374,6 +374,17 @@ public class Game {
 	
 	public void autoResolve(Army attacker, Army defender) throws
 	FriendlyFireException {
+		boolean attackerTurn = true;
+		int randomNumAttacker =0;
+		//armies take turns attacking during the battle until one of them reaches zero unit size
+		if(player.getControlledArmies().contains(defender) && player.getControlledArmies().contains(attacker))
+			throw new FriendlyFireException("both armies belong to the same player");
+		while (attacker.findArmySize() >0 && defender.findArmySize()>0)
+		{
+			
+			randomNumAttacker =  (int)(Math.random() * attacker.getUnits().size());
+		
+		}
 		
 	}
 	
