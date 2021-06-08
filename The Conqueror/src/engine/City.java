@@ -13,7 +13,7 @@ public class City {
 	private String name ;
 	private ArrayList <EconomicBuilding> economicalBuildings = new ArrayList<EconomicBuilding>();
 	private ArrayList<MilitaryBuilding> militaryBuildings = new ArrayList<MilitaryBuilding>();
-	private Army defendingArmy = new Army (name) ;
+	private Army defendingArmy ;
 	private int turnsUnderSiege;
 	private boolean underSiege = false;
 	
@@ -82,47 +82,60 @@ public City(String name) {
 		boolean found = false;
 		if(type == "Farm")
 		{
-			while (!found) {
+			while (!found && i < economicalBuildings.size()) {
 				if (economicalBuildings.get(i) instanceof Farm )
 				{
 					found = true;
+					
 				}
+				i++;
 			}
 		}
-		if(type == "Stable")
+		else if(type == "Stable")
 		{
-			while (!found) {
+			while (!found  && i < militaryBuildings.size()) {
 				if (militaryBuildings.get(i) instanceof Stable )
 				{
 					found = true;
 				}
+				i++;
+
 			}
 		}
-		if(type == "Market")
+		else if(type == "Market")
 		{
-			while (!found) {
+			while (!found && i < economicalBuildings.size()) {
 				if (economicalBuildings.get(i) instanceof Market)
 				{
 					found = true;
+
 				}
+				i++;
+
 			}
 		}
-		if(type == "ArcheryRange")
+		else if(type == "ArcheryRange")
 		{
-			while (!found) {
+			while (!found && i < militaryBuildings.size()) {
 				if (militaryBuildings.get(i) instanceof ArcheryRange)
 				{
 					found = true;
+
 				}
+				i++;
+
 			}
 		}
-		if(type == "Barracks")
+		else if(type == "Barracks")
 		{
-			while (!found) {
+			while (!found && i < militaryBuildings.size()) {
 				if (militaryBuildings.get(i) instanceof Barracks )
 				{
 					found = true;
+
 				}
+				i++;
+
 			}
 		}
 		

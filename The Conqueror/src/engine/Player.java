@@ -11,7 +11,7 @@ public class Player {
 	
 //Instance variables
 	private String name;
-	private ArrayList<City> controlledCities;
+	private ArrayList<City> controlledCities = new ArrayList<City>();
 	private ArrayList<Army> controlledArmies;
 	private double treasury;
 	private double food;
@@ -64,68 +64,73 @@ public class Player {
 	{	int i = 0;
 		double neededCost = 0;
 		boolean flag = false;
-		City currentCity = null;
+		City currentCity ;
 		Building usedBuilding ;
 		Unit newUnit =null  ;
-		while (!flag) 
+		
+		
+		while (!flag && i < controlledCities.size()) 
 		{
 			
 			currentCity = (City)controlledCities.get(i);
-			i++;
+			
 			if (currentCity.getName() == cityName)
 			{	
+				usedBuilding = currentCity.searchBuilding(type);
+				
+				if (type == "Archer")
+				{
+					ArcheryRange usedBuilding2 = (ArcheryRange) usedBuilding ;
+					newUnit = usedBuilding2.recruit();			
+					
+					if (usedBuilding2.getLevel() == 1)
+						neededCost = 400;
+					if (usedBuilding2.getLevel() == 2)
+						neededCost = 450;
+					if (usedBuilding2.getLevel() == 3)
+						neededCost = 500;
+					
+				}
+				if (type == "Infantry")
+				{
+					Barracks usedBuilding2 = (Barracks) usedBuilding ;
+					newUnit = usedBuilding2.recruit();
+					if (usedBuilding2.getLevel() == 1)
+						neededCost = 500;
+					if (usedBuilding2.getLevel() == 2)
+						neededCost = 550;
+					if (usedBuilding2.getLevel() == 3)
+						neededCost = 600;
+					
+				}
+				if (type == "Cavalry")
+				{
+					Stable usedBuilding2 = (Stable) usedBuilding ;
+					newUnit = usedBuilding2.recruit();			
+					if (usedBuilding2.getLevel() == 1)
+						neededCost = 600;
+					if (usedBuilding2.getLevel() == 2)
+						neededCost = 650;
+					if (usedBuilding2.getLevel() == 3)
+						neededCost = 700;
+				}
+				if (treasury < neededCost) {
+					
+					throw new NotEnoughGoldException("Not Enough Gold");
+					}
+				else  {
+					currentCity.getDefendingArmy().getUnits().add(newUnit);
+					newUnit.setParentArmy(currentCity.getDefendingArmy());
+					treasury = treasury - neededCost;
+					}
 				flag = true;
 			}
 			
+			i++;
+			
 		}
 		
-		usedBuilding = currentCity.searchBuilding(type);
 		
-		if (type == "Archer")
-		{
-			ArcheryRange usedBuilding2 = (ArcheryRange) usedBuilding ;
-			newUnit = usedBuilding2.recruit();			
-			
-			if (usedBuilding2.getLevel() == 1)
-				neededCost = 400;
-			if (usedBuilding2.getLevel() == 2)
-				neededCost = 450;
-			if (usedBuilding2.getLevel() == 3)
-				neededCost = 500;
-			
-		}
-		if (type == "Infantry")
-		{
-			Barracks usedBuilding2 = (Barracks) usedBuilding ;
-			newUnit = usedBuilding2.recruit();
-			if (usedBuilding2.getLevel() == 1)
-				neededCost = 500;
-			if (usedBuilding2.getLevel() == 2)
-				neededCost = 550;
-			if (usedBuilding2.getLevel() == 3)
-				neededCost = 600;
-			
-		}
-		if (type == "Cavalry")
-		{
-			Stable usedBuilding2 = (Stable) usedBuilding ;
-			newUnit = usedBuilding2.recruit();			
-			if (usedBuilding2.getLevel() == 1)
-				neededCost = 600;
-			if (usedBuilding2.getLevel() == 2)
-				neededCost = 650;
-			if (usedBuilding2.getLevel() == 3)
-				neededCost = 700;
-		}
-		if (treasury < neededCost) {
-			
-			throw new NotEnoughGoldException("Not Enough Gold");
-			}
-		else {
-			currentCity.getDefendingArmy().getUnits().add(newUnit);
-			newUnit.setParentArmy(currentCity.getDefendingArmy());
-			treasury = treasury - neededCost;
-			}
 	}
 	
 	
@@ -137,7 +142,7 @@ public class Player {
 		boolean found = false;
 		int i =0;
 		Building newBuilding = null;
-		while (!found) {
+		while (!found && i < controlledCities.size()) {
 			
 			currentCity = controlledCities.get(i);
 			if(cityName == currentCity.getName())
@@ -167,12 +172,14 @@ public class Player {
 			newBuilding = new Barracks();
 				}
 		//check for gold before adding
+		if( newBuilding != null) {
 		if (treasury < newBuilding.getCost())
 			throw new NotEnoughGoldException();
 		else if (newBuilding instanceof EconomicBuilding)
 			currentCity.getEconomicalBuildings().add((EconomicBuilding) newBuilding);
 		else 
 			currentCity.getMilitaryBuildings().add((MilitaryBuilding) newBuilding);
+		}
 
 
 

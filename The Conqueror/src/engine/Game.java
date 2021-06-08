@@ -357,18 +357,21 @@ public class Game {
 	
 	
 	public void occupy(Army a,String cityName) {
-		City currentCity  = null;
+		City currentCity ;
+		
 		for(City c : availableCities)
-		{
-			if(c.getName() == "cityName")
+		{	
+			if(c.getName() == cityName)
 			{
 				currentCity = c ;
+				player.getControlledCities().add(currentCity);
+				currentCity.setDefendingArmy(a);
+				currentCity.setTurnsUnderSiege(0);
+				currentCity.setUnderSiege(false);
 			}
+		
 		}
-		player.getControlledCities().add(currentCity);
-		currentCity.setDefendingArmy(a);
-		currentCity.setTurnsUnderSiege(0);
-		currentCity.setUnderSiege(false);
+		
 		
 	}
 	
