@@ -4,7 +4,7 @@ import java.util.*;
 import exceptions.MaxCapacityException;
 public class Army{
     private Status currentStatus = Status.IDLE;
-    private ArrayList<Unit> units ;
+    private ArrayList<Unit> units = new ArrayList<Unit>();
     private int distancetoTarget = -1;
     private String target = "";
     private String currentLocation ;

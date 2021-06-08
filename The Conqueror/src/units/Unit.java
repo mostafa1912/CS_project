@@ -9,9 +9,9 @@ public class Unit{
     private int level ;
     private int maxSoldierCount ;
     private int currentSoldierCount = maxSoldierCount;
-    private double idleUpKeep;
-    private double marchingUpKeep;
-    private double siegeUpKeep;
+    private double idleUpkeep;
+    private double marchingUpkeep;
+    private double siegeUpkeep;
     private Army parentArmy;
     
     
@@ -21,9 +21,9 @@ public class Unit{
             
                 this.level = level;
                 this.maxSoldierCount = maxSoldierCount;
-                this.idleUpKeep = idleUpkeep ;
-                this.marchingUpKeep = marchingUpkeep;
-                this.siegeUpKeep = siegeUpkeep;
+                this.idleUpkeep = idleUpkeep ;
+                this.marchingUpkeep = marchingUpkeep;
+                this.siegeUpkeep = siegeUpkeep;
                
                 // Implementing in the constructor for any future update 
                 this.currentSoldierCount = this.maxSoldierCount;
@@ -51,15 +51,15 @@ public class Unit{
         return ;
     }
     public double getIdleUpkeep(){
-        return this.idleUpKeep;
+        return this.idleUpkeep;
     }
 
     public double getMarchingUpkeep(){
-        return this.marchingUpKeep ;
+        return this.marchingUpkeep ;
     }
 
     public double getSiegeUpkeep(){
-        return this.siegeUpKeep ;
+        return this.siegeUpkeep ;
     }
     
 
@@ -152,29 +152,29 @@ public class Unit{
 		 if (this instanceof Archer) { 
 			 
 				 if (target instanceof Archer) {
-						 if (target.getLevel() ==1)
+						 if (this.getLevel() ==1)
 							 factor  =0.3;
-						 if (target.getLevel() ==2)
+						 if (this.getLevel() ==2)
 							 factor  =0.4;
-						 if (target.getLevel() ==3)
+						 if (this.getLevel() ==3)
 							 factor  =0.5;
 				 }
 				 
 				 if (target instanceof Infantry) {
-					 if (target.getLevel() ==1)
+					 if (this.getLevel() ==1)
 						 factor  =0.2;
-					 if (target.getLevel() ==2)
+					 if (this.getLevel() ==2)
 						 factor  =0.3;
-					 if (target.getLevel() ==3)
+					 if (this.getLevel() ==3)
 						 factor  =0.4;
 				 }
 				 
 				 if (target instanceof Cavalry) {
-					 if (target.getLevel() ==1)
+					 if (this.getLevel() ==1)
 						 factor  =0.1;
-					 if (target.getLevel() ==2)
+					 if (this.getLevel() ==2)
 						 factor  =0.1;
-					 if (target.getLevel() ==3)
+					 if (this.getLevel() ==3)
 						 factor  =0.2;
 				 }
 			 
@@ -187,29 +187,29 @@ public class Unit{
 		 if (this instanceof Infantry) { 
 			 
 			 if (target instanceof Archer) {
-					 if (target.getLevel() ==1)
+					 if (this.getLevel() ==1)
 						 factor  =0.3;
-					 if (target.getLevel() ==2)
+					 if (this.getLevel() ==2)
 						 factor  =0.4;
-					 if (target.getLevel() ==3)
+					 if (this.getLevel() ==3)
 						 factor  =0.5;
 			 }
 			 
 			 if (target instanceof Infantry) {
-				 if (target.getLevel() ==1)
+				 if (this.getLevel() ==1)
 					 factor  =0.1;
-				 if (target.getLevel() ==2)
+				 if (this.getLevel() ==2)
 					 factor  =0.2;
-				 if (target.getLevel() ==3)
+				 if (this.getLevel() ==3)
 					 factor  =0.3;
 			 }
 			 
 			 if (target instanceof Cavalry) {
-				 if (target.getLevel() ==1)
+				 if (this.getLevel() ==1)
 					 factor  =0.1;
-				 if (target.getLevel() ==2)
+				 if (this.getLevel() ==2)
 					 factor  =0.2;
-				 if (target.getLevel() ==3)
+				 if (this.getLevel() ==3)
 					 factor  =0.25;
 			 }
 			 
@@ -224,29 +224,29 @@ public class Unit{
 		 if (this instanceof Cavalry) { 
 			 
 			 if (target instanceof Archer) {
-					 if (target.getLevel() ==1)
+					 if (this.getLevel() ==1)
 						 factor  =0.5;
-					 if (target.getLevel() ==2)
+					 if (this.getLevel() ==2)
 						 factor  =0.6;
-					 if (target.getLevel() ==3)
+					 if (this.getLevel() ==3)
 						 factor  =0.7;
 			 }
 			 
 			 if (target instanceof Infantry) {
-				 if (target.getLevel() ==1)
+				 if (this.getLevel() ==1)
 					 factor  =0.3;
-				 if (target.getLevel() ==2)
+				 if (this.getLevel() ==2)
 					 factor  =0.4;
-				 if (target.getLevel() ==3)
+				 if (this.getLevel() ==3)
 					 factor  =0.5;
 			 }
 			 
 			 if (target instanceof Cavalry) {
-				 if (target.getLevel() ==1)
+				 if (this.getLevel() ==1)
 					 factor  =0.2;
-				 if (target.getLevel() ==2)
+				 if (this.getLevel() ==2)
 					 factor  =0.2;
-				 if (target.getLevel() ==3)
+				 if (this.getLevel() ==3)
 					 factor  =0.3;
 			 }
 		 
@@ -256,7 +256,7 @@ public class Unit{
 	 }
 		 
 		 
-		 target.setCurrentSoldierCount( (int) (this.currentSoldierCount*factor));
+		 target.setCurrentSoldierCount( target.getCurrentSoldierCount() -( (int)( factor * this.currentSoldierCount )) );
 	 }
 	    
 	 

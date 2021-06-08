@@ -11,9 +11,9 @@ public class City {
 
 // Instance Variables
 	private String name ;
-	private ArrayList <EconomicBuilding> economicalBuildings;
-	private ArrayList<MilitaryBuilding> militaryBuildings;
-	private Army defendingArmy ;
+	private ArrayList <EconomicBuilding> economicalBuildings = new ArrayList<EconomicBuilding>();
+	private ArrayList<MilitaryBuilding> militaryBuildings = new ArrayList<MilitaryBuilding>();
+	private Army defendingArmy = new Army (name) ;
 	private int turnsUnderSiege;
 	private boolean underSiege = false;
 	

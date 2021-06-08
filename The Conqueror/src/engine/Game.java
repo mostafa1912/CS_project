@@ -302,7 +302,7 @@ public class Game {
 		currentTurnCount++;
 		for (City currentCity:player.getControlledCities()) {
 			for(EconomicBuilding b : currentCity.getEconomicalBuildings()) {
-				b.setCoolDown(true);
+				b.setCoolDown(false);
 				if (b instanceof Market) {
 				player.setTreasury(player.getTreasury()+b.harvest());	
 				}
@@ -311,7 +311,7 @@ public class Game {
 				}
 				}
 			for(MilitaryBuilding b : currentCity.getMilitaryBuildings()) {
-				b.setCoolDown(true);
+				b.setCoolDown(false);
 				b.setCurrentRecruit(0);
 			}
 			if (currentCity.getUnderSiege()) {

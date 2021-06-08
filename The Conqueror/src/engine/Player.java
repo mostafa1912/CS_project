@@ -181,26 +181,34 @@ public class Player {
 	 
 	 
 	 public void upgradeBuilding(Building b) throws NotEnoughGoldException,BuildingInCoolDownException, MaxLevelException{
+		 if (b.getLevel() == 3) {
+			 throw new MaxLevelException ("This building can't be upgraded");
+		 }
+		 
+		 if (b.getUpgradeCost() > this.treasury)
+			 throw new NotEnoughGoldException ("Not enough gold to upgrade this Building"); 
+		 
+		 if (b.isCoolDown())
+			 throw new BuildingInCoolDownException("Building in Cooldown");
+		 
 		 for (City c : this.getControlledCities()) {
 			 ArrayList<EconomicBuilding> currentCityEconomicalBuildings = c.getEconomicalBuildings();
 			 ArrayList<MilitaryBuilding> currentCityMilitaryBuildings = c.getMilitaryBuildings();
 			 
 			 if (currentCityEconomicalBuildings.contains(b)) {
-				 if (b.getCost()> this.getTreasury())
-					 throw new NotEnoughGoldException ("Not enough gold to upgrade this Building");
-				 else { 
+				 
+				  
 					 this.setTreasury(this.getTreasury()-b.getUpgradeCost());
 					 b.upgrade();
-				 }
+				 
 			 }
 			 
 			 if (currentCityMilitaryBuildings.contains(b)) {
-				 if (b.getCost()> this.getTreasury())
-					 throw new NotEnoughGoldException ("Not enough gold to upgrade this Building");
-				 else { 
+				 
+				 
 					 this.setTreasury(this.getTreasury()-b.getUpgradeCost());
 					 b.upgrade();
-				 }
+				 
 			 }
 		 }
 	 }
@@ -234,8 +242,11 @@ public class Player {
 	 
 	 
 	 public void laySiege(Army army,City city) throws TargetNotReachedException, FriendlyCityException {
-		 if (city.getDefendingArmy().equals(army))
-			 throw new FriendlyCityException ("A defending army can't lay siege on a city it is defending");
+		 if (this.controlledCities.contains(city))
+			 throw new FriendlyCityException ("A player can't lay Siege on a city he is defending ");
+		 
+		 if (!army.getCurrentLocation().equals(city))
+			 throw new TargetNotReachedException("You haven't reached this city yet");
 		 
 		 
 		 // I don't know whether I should start the Siege turns here or wait and they will be started in the game class 
