@@ -63,7 +63,6 @@ public class ArcheryRange extends MilitaryBuilding {
 		if (this.getLevel() == 1 ) 
 			recruitedArcher=  new Archer (1,60, 0.4, 0.5,0.6);
 		
-		
 		if (this.getLevel() == 2)
 			recruitedArcher = new Archer (2,60,0.4,0.5,0.6);
 		
