@@ -12,7 +12,7 @@ public class Player {
 //Instance variables
 	private String name;
 	private ArrayList<City> controlledCities = new ArrayList<City>();
-	private ArrayList<Army> controlledArmies;
+	private ArrayList<Army> controlledArmies = new ArrayList<Army>();
 	private double treasury;
 	private double food;
 	
