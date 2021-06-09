@@ -4,7 +4,7 @@ import java.util.*;
 
 import exceptions.*;
 
-public class Unit{
+public abstract class Unit{
 	
     private int level ;
     private int maxSoldierCount ;
