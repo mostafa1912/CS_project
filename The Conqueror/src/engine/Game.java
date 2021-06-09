@@ -337,10 +337,11 @@ public class Game {
 			// Assuming zero distance to target if no target so no need to check for target (for Seif)
 			// This Resulted in EndTurn method logic 7 error 
 			
-			if (currentArmy.getDistancetoTarget() != 0 && currentArmy.getTarget()!="" ) {
+			if (currentArmy.getDistancetoTarget() > 0 && currentArmy.getTarget()!="" ) {
 				currentArmy.setDistancetoTarget(currentArmy.getDistancetoTarget() -1);
 			}
-			else if (currentArmy.getDistancetoTarget() == 0 ) {
+			if (currentArmy.getDistancetoTarget() == 0 ) {
+				currentArmy.setCurrentStatus(Status.IDLE);
 				currentArmy.setCurrentLocation(currentArmy.getTarget());
 				currentArmy.setTarget("");
 				currentArmy.setDistancetoTarget(-1);
@@ -427,6 +428,7 @@ public class Game {
 					defenderUnit.attack(attackerUnit);
 				}
 				attackerTurn = !attackerTurn;
+				
 			}
 			
 			attacker.handleAttackedUnit(attackerUnit);
