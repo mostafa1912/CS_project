@@ -300,7 +300,10 @@ public class Game {
 	
 	public void endTurn() {
 		currentTurnCount++;
-		for (City currentCity:player.getControlledCities()) {
+		
+		for (City currentCity: player.getControlledCities()) {
+			
+			
 			for(EconomicBuilding b : currentCity.getEconomicalBuildings()) {
 				b.setCoolDown(false);
 				if (b instanceof Market) {
@@ -314,37 +317,51 @@ public class Game {
 				b.setCoolDown(false);
 				b.setCurrentRecruit(0);
 			}
-			if (currentCity.getUnderSiege()) {
-				currentCity.setTurnsUnderSiege(currentCity.getTurnsUnderSiege() + 1);
-				Army a = currentCity.getDefendingArmy();
-				for(Unit u : a.getUnits()) {
-					int decay = (int) (u.getCurrentSoldierCount()*0.1);
-					u.setCurrentSoldierCount(u.getCurrentSoldierCount()-decay);
-				}
 			
-			}
 		}
 		
 		int f = 1;
-		for (Army currentArmy:player.getControlledArmies()) {
+		for (Army currentArmy :  player.getControlledArmies()) {
 			if(player.getFood()<currentArmy.foodNeeded()) {
 			f = (int)player.getFood()/(int)currentArmy.foodNeeded();
 			player.setFood(0);
 			}
 			player.setFood(player.getFood()-currentArmy.foodNeeded());
-			// Assuming zero distance to target if no target so no need to check for target (for Seif)
-			if (currentArmy.getDistancetoTarget() != 0) {
-				currentArmy.setDistancetoTarget(currentArmy.getDistancetoTarget() -1);
-			}
-			else {
-				currentArmy.setTarget("");
-			}
 			int decay = (int) (f * 0.1);
 			if (player.getFood() == 0) {
 				for(Unit u : currentArmy.getUnits()) {
 					u.setCurrentSoldierCount(u.getCurrentSoldierCount()-u.getCurrentSoldierCount()*decay);
 				}
 			}
+			
+			// Assuming zero distance to target if no target so no need to check for target (for Seif)
+			// This Resulted in EndTurn method logic 7 error 
+			
+			if (currentArmy.getDistancetoTarget() != 0 && currentArmy.getTarget()!="" ) {
+				currentArmy.setDistancetoTarget(currentArmy.getDistancetoTarget() -1);
+			}
+			else if (currentArmy.getDistancetoTarget() == 0 ) {
+				currentArmy.setCurrentLocation(currentArmy.getTarget());
+				currentArmy.setTarget("");
+				currentArmy.setDistancetoTarget(-1);
+			}
+			
+			
+			
+		}
+		
+		
+		for (City c : this.getAvailableCities()) {
+			if (c.isUnderSiege()) {
+				c.setTurnsUnderSiege(c.getTurnsUnderSiege() + 1 );
+			
+				Army a = c.getDefendingArmy();
+				for(Unit u : a.getUnits()) {
+					int decay = (int) (u.getCurrentSoldierCount()*0.1);
+					u.setCurrentSoldierCount(u.getCurrentSoldierCount()-decay);
+				}
+			}
+			
 		}
 		
 
@@ -366,7 +383,7 @@ public class Game {
 				currentCity = c ;
 				player.getControlledCities().add(currentCity);
 				currentCity.setDefendingArmy(a);
-				currentCity.setTurnsUnderSiege(0);
+				currentCity.setTurnsUnderSiege(-1);
 				currentCity.setUnderSiege(false);
 			}
 		

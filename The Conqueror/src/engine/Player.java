@@ -144,6 +144,9 @@ public class Player {
 			if (c.getName().equals(cityName))
 				givenCity = c;
 		}
+	
+		
+			
 		
 		MilitaryBuilding buildingThatWillRecruitUnit = null;
 		
@@ -250,17 +253,17 @@ public class Player {
 			 
 			 if (currentCityEconomicalBuildings.contains(b)) {
 				 
-				  
+				   	 b.upgrade();
 					 this.setTreasury(this.getTreasury()-b.getUpgradeCost());
-					 b.upgrade();
+					
 				 
 			 }
 			 
 			 if (currentCityMilitaryBuildings.contains(b)) {
 				 
-				 
+				 	 b.upgrade();
 					 this.setTreasury(this.getTreasury()-b.getUpgradeCost());
-					 b.upgrade();
+					 
 				 
 			 }
 		 }

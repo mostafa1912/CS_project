@@ -89,18 +89,18 @@ public class Army{
     	
     	if (this.getCurrentStatus() == Status.IDLE) 
     		for (Unit u : this.units) 
-    			amountOfFoodNeeded = u.getIdleUpkeep() * u.getCurrentSoldierCount();
+    			amountOfFoodNeeded += u.getIdleUpkeep() * u.getCurrentSoldierCount();
         
     	
     	
     	else if (this.getCurrentStatus() == Status.MARCHING) 
     		for (Unit u : this.units) 
-    			amountOfFoodNeeded = u.getMarchingUpkeep() * u.getCurrentSoldierCount();
+    			amountOfFoodNeeded += u.getMarchingUpkeep() * u.getCurrentSoldierCount();
     	
     	
     	else if (this.getCurrentStatus() == Status.BESIEGING) 
     		for (Unit u : this.units) 
-    			amountOfFoodNeeded = u.getSiegeUpkeep() * u.getCurrentSoldierCount();
+    			amountOfFoodNeeded += u.getSiegeUpkeep() * u.getCurrentSoldierCount();
     	
     	
     	
