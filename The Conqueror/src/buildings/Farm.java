@@ -25,12 +25,12 @@ public class Farm extends EconomicBuilding {
 			throw new BuildingInCoolDownException ();
 		if (this.getLevel()==3)
 			throw new MaxLevelException ();
-		if (this.getLevel() == 1) {
+		else if (this.getLevel() == 1) {
 			this.setLevel(2);
 			this.setUpgradeCost(700);
 			this.setCoolDown(true);
 		}
-		if (this.getLevel() == 2) {
+		else if (this.getLevel() == 2) {
 			this.setLevel(3);
 			
 			this.setCoolDown(true);

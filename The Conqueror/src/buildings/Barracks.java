@@ -34,13 +34,13 @@ public class Barracks extends MilitaryBuilding{
 		if (this.getLevel()==3)
 			throw new MaxLevelException ();
 		
-		if (this.getLevel() == 1) {
-			this.setLevel(2);
+		else if (this.getLevel() == 1) {
+			 this.setLevel(2);
 			this.setUpgradeCost(1500);
 			this.setRecruitmentCost(550);
 		}
 		
-		if (this.getLevel() == 2) {
+		else if (this.getLevel() == 2) {
 			this.setLevel(3);
 			this.setRecruitmentCost(600);
 		}

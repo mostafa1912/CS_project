@@ -243,30 +243,22 @@ public class Player {
 		 
 		 if (b.getUpgradeCost() > this.treasury)
 			 throw new NotEnoughGoldException ("Not enough gold to upgrade this Building"); 
+
 		 
-		 if (b.isCoolDown())
-			 throw new BuildingInCoolDownException("Building in Cooldown");
-		
-		 for (City c : this.getControlledCities()) {
-			 ArrayList<EconomicBuilding> currentCityEconomicalBuildings = c.getEconomicalBuildings();
-			 ArrayList<MilitaryBuilding> currentCityMilitaryBuildings = c.getMilitaryBuildings();
-	
-			 if (currentCityEconomicalBuildings.contains(b)) {
-				 
-				   	 b.upgrade();
-					 this.setTreasury(this.getTreasury()-b.getUpgradeCost());
+		 b.upgrade();
+		 this.setTreasury(this.getTreasury() - b.getUpgradeCost());
 					
 				 
-			 }
+			 
 			
-			 if (currentCityMilitaryBuildings.contains(b)) {
+			
 				 
-				 	 b.upgrade();
-					 this.setTreasury(this.getTreasury()-b.getUpgradeCost());
+		 b.upgrade();
+		 this.setTreasury(this.getTreasury() - b.getUpgradeCost());
 					 
 				 
-			 }
-		 }
+			 
+		 
 	 }
 	 
 	 

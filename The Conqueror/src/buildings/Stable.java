@@ -30,16 +30,16 @@ public class Stable extends MilitaryBuilding{
 	public void upgrade() throws BuildingInCoolDownException, MaxLevelException {
 		if (this.isCoolDown())
 			throw new BuildingInCoolDownException ();
-		if (this.getLevel()== 3)
+		 if (this.getLevel()== 3)
 			throw new MaxLevelException ();
 		
-		if (this.getLevel() == 1) {
+		else if (this.getLevel() == 1) {
 			this.setLevel(2);
 			this.setUpgradeCost(2000);
 			this.setRecruitmentCost(650);
 		}
 		
-		if (this.getLevel() == 2) {
+		else if (this.getLevel() == 2) {
 			this.setLevel(3);
 			this.setRecruitmentCost(700);
 		}

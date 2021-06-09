@@ -29,7 +29,7 @@ public class ArcheryRange extends MilitaryBuilding {
 	
 	public void upgrade() throws BuildingInCoolDownException, MaxLevelException {
 		if (this.isCoolDown())
-			throw new BuildingInCoolDownException ();
+			throw new BuildingInCoolDownException ("Archery Range in CoolDown");
 		if (this.getLevel()==3)
 			throw new MaxLevelException ();
 		
