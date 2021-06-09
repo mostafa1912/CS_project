@@ -250,7 +250,7 @@ public class Player {
 		 for (City c : this.getControlledCities()) {
 			 ArrayList<EconomicBuilding> currentCityEconomicalBuildings = c.getEconomicalBuildings();
 			 ArrayList<MilitaryBuilding> currentCityMilitaryBuildings = c.getMilitaryBuildings();
-			 
+	
 			 if (currentCityEconomicalBuildings.contains(b)) {
 				 
 				   	 b.upgrade();
@@ -258,7 +258,7 @@ public class Player {
 					
 				 
 			 }
-			 
+			
 			 if (currentCityMilitaryBuildings.contains(b)) {
 				 
 				 	 b.upgrade();
