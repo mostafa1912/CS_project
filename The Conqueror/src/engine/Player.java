@@ -246,7 +246,7 @@ public class Player {
 		 
 		 if (b.isCoolDown())
 			 throw new BuildingInCoolDownException("Building in Cooldown");
-		 
+		
 		 for (City c : this.getControlledCities()) {
 			 ArrayList<EconomicBuilding> currentCityEconomicalBuildings = c.getEconomicalBuildings();
 			 ArrayList<MilitaryBuilding> currentCityMilitaryBuildings = c.getMilitaryBuildings();
@@ -268,6 +268,7 @@ public class Player {
 			 }
 		 }
 	 }
+	 
 	 
 	 
 	 public void initiateArmy(City city,Unit unit) {

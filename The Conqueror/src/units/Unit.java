@@ -257,7 +257,7 @@ public class Unit{
 		 
 		 
 		 target.setCurrentSoldierCount( target.getCurrentSoldierCount() -( (int)( factor * this.currentSoldierCount )) );
-		 
+		 target.parentArmy.handleAttackedUnit(target);
 		 if (target.getCurrentSoldierCount() < 0 )
 			 target.setCurrentSoldierCount(0);
 	 }
