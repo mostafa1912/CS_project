@@ -66,10 +66,10 @@ public class Stable extends MilitaryBuilding{
 			
 			recruitedCavalry = new Cavalry (1, 40, 0.6, 0.7,0.75);
 		
-		if (this.getLevel() == 2)
+		else if (this.getLevel() == 2)
 			recruitedCavalry = new Cavalry (2, 40, 0.6, 0.7,0.75 );
 		
-		if (this.getLevel() == 3)
+		else if (this.getLevel() == 3)
 			recruitedCavalry = new Cavalry (3,60,0.7,0.8,0.9);
 			
 		

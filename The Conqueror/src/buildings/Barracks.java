@@ -63,10 +63,10 @@ public class Barracks extends MilitaryBuilding{
 			
 			recruitedInfantry = new Infantry (1, 50, 0.5,0.6,0.7);
 		
-		if (this.getLevel() == 2)
+		else if (this.getLevel() == 2)
 			recruitedInfantry = new Infantry (2 ,50  ,0.5 ,0.6 ,0.7);
 		
-		if (this.getLevel() == 3)
+		else if (this.getLevel() == 3)
 			recruitedInfantry = new Infantry (3,60 ,0.6 ,0.7 ,0.8);
 			
 		

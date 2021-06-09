@@ -139,7 +139,7 @@ public class Player {
 	
 	public void recruitUnit(String type,String cityName) throws BuildingInCoolDownException, MaxRecruitedException, NotEnoughGoldException {
 		
-		City givenCity = null;
+		City givenCity = new City("cityName");
 		for (City c : this.controlledCities) {
 			if (c.getName().equals(cityName))
 				givenCity = c;
@@ -148,7 +148,7 @@ public class Player {
 		
 			
 		
-		MilitaryBuilding buildingThatWillRecruitUnit = null;
+		MilitaryBuilding buildingThatWillRecruitUnit = null ;
 		
 		for (MilitaryBuilding b : givenCity.getMilitaryBuildings()) {
 			
@@ -237,27 +237,18 @@ public class Player {
 	 
 	 
 	 public void upgradeBuilding(Building b) throws NotEnoughGoldException,BuildingInCoolDownException, MaxLevelException{
-		 if (b.getLevel() == 3) {
-			 throw new MaxLevelException ("This building can't be upgraded");
-		 }
-		 
+		
+		
 		 if (b.getUpgradeCost() > this.treasury)
 			 throw new NotEnoughGoldException ("Not enough gold to upgrade this Building"); 
 
-		 
-		 b.upgrade();
+	
+		 if (b.isCoolDown())
+				throw new BuildingInCoolDownException ("Archery Range in CoolDown");
+		if (b.getLevel()==3)
+				throw new MaxLevelException ();
 		 this.setTreasury(this.getTreasury() - b.getUpgradeCost());
-					
-				 
-			 
-			
-			
-				 
-		 b.upgrade();
-		 this.setTreasury(this.getTreasury() - b.getUpgradeCost());
-					 
-				 
-			 
+		 b.upgrade();	 
 		 
 	 }
 	 

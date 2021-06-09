@@ -52,7 +52,7 @@ public class ArcheryRange extends MilitaryBuilding {
 	
 	@Override
 	public Unit recruit() throws BuildingInCoolDownException, MaxRecruitedException {
-		if (this.getCurrentRecruit() == this.getMaxRecruit())
+		if (this.getCurrentRecruit() >= this.getMaxRecruit())
 			throw new MaxRecruitedException();
 		if (this.isCoolDown())
 			throw new BuildingInCoolDownException ();
@@ -66,10 +66,10 @@ public class ArcheryRange extends MilitaryBuilding {
 		if (this.getLevel() == 1 ) 
 			recruitedArcher=  new Archer (1,60, 0.4, 0.5,0.6);
 		
-		if (this.getLevel() == 2)
+		else if (this.getLevel() == 2)
 			recruitedArcher = new Archer (2,60,0.4,0.5,0.6);
 		
-		if (this.getLevel() == 3)
+		else if (this.getLevel() == 3)
 			recruitedArcher = new Archer (3, 70, 0.5, 0.6,0.7);
 			
 		

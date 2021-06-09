@@ -46,9 +46,9 @@ public class Market extends EconomicBuilding {
 	public int harvest() {
 		if (this.getLevel() == 1 )
 			return 1000;
-		if (this.getLevel() == 2 )
+		else if (this.getLevel() == 2 )
 			return 1500;
-		if (this.getLevel() == 3)
+		else if (this.getLevel() == 3)
 			return 2000;
 		return 0;
 	}
