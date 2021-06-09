@@ -322,18 +322,25 @@ public class Game {
 		
 		int f = 1;
 		for (Army currentArmy :  player.getControlledArmies()) {
-			if(player.getFood()<currentArmy.foodNeeded()) {
-			f = (int)player.getFood()/(int)currentArmy.foodNeeded();
-			player.setFood(0);
-			}
-			player.setFood(player.getFood()-currentArmy.foodNeeded());
-			int decay = (int) (f * 0.1);
-			if (player.getFood() == 0) {
-				for(Unit u : currentArmy.getUnits()) {
-					u.setCurrentSoldierCount(u.getCurrentSoldierCount()-u.getCurrentSoldierCount()*decay);
+			
+			
+			double foodNeededByCurrentArmy = currentArmy.foodNeeded();
+			
+			player.setFood(player.getFood() - foodNeededByCurrentArmy);
+			
+			if (player.getFood() < 0 )
+				player.setFood(0);
+			
+			if (player.getFood() == 0) { 
+				for (Unit u : currentArmy.getUnits()) {
+					u.setCurrentSoldierCount((int) (u.getCurrentSoldierCount() - (0.1 * u.getCurrentSoldierCount())));
+					
+					if (u.getCurrentSoldierCount() < 0 ) { 
+						u.setCurrentSoldierCount(0);
+						currentArmy.getUnits().remove(u);
+					}
 				}
 			}
-			
 			// Assuming zero distance to target if no target so no need to check for target (for Seif)
 			// This Resulted in EndTurn method logic 7 error 
 			
