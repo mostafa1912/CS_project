@@ -98,6 +98,8 @@ public class Game {
 				else
 					u = (new Cavalry(3, 60, 0.7, 0.8, 0.9));
 			}
+			// Only added Line From MileStone  2
+			u.setParentArmy(resultArmy);
 			resultArmy.getUnits().add(u);
 			currentLine = br.readLine();
 		}
@@ -105,6 +107,7 @@ public class Game {
 		for (City c : availableCities) {
 			if (c.getName().toLowerCase().equals(cityName.toLowerCase()))
 				c.setDefendingArmy(resultArmy);
+				
 		}
 	}
 
