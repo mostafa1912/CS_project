@@ -144,7 +144,7 @@ public class Unit{
 	 
 	 public void attack(Unit target) throws FriendlyFireException { 
 		 
-		 if (this.getParentArmy().equals(target.getParentArmy()))
+		 if (this.getParentArmy().equals(target.getParentArmy()) || this.parentArmy == null || target.parentArmy ==null)
 		 		throw new FriendlyFireException("The current unit can't attack this target as they belong to the same Army ");
 		 	
 		 double factor = 0.0 ; 
