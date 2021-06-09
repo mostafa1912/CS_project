@@ -78,7 +78,7 @@ public class Army{
     
     // If unit has no soldiers left it is deleted from Units 
     public void handleAttackedUnit(Unit u) { 
-    	if (u.getCurrentSoldierCount() > 0 )
+    	if (u.getCurrentSoldierCount() <= 0 )
     		this.units.remove(u);
     }
    
@@ -108,14 +108,9 @@ public class Army{
     }
    
     //helper method to be used in autoresolve in the game class
-    public int findArmySize()
+    public boolean armyStillHasUnits()
     {
-    	int size = 0;
-    	for(Unit u :units)
-    	{
-    		size += u.getCurrentSoldierCount();
-    	}
-    	return size;
+    	return !units.isEmpty();
     }
     
     

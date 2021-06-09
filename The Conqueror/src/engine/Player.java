@@ -58,7 +58,7 @@ public class Player {
 	/*****************************************/
 	/*MileStone 2 Code*/
 	
-
+/*
 	public void recruitUnit(String type,String cityName) throws
 	BuildingInCoolDownException, MaxRecruitedException, NotEnoughGoldException	
 	{	int i = 0;
@@ -135,7 +135,51 @@ public class Player {
 	
 	
 		
+	*/
+	
+	public void recruitUnit(String type,String cityName) throws BuildingInCoolDownException, MaxRecruitedException, NotEnoughGoldException {
 		
+		City givenCity = null;
+		for (City c : this.controlledCities) {
+			if (c.getName().equals(cityName))
+				givenCity = c;
+		}
+		
+		MilitaryBuilding buildingThatWillRecruitUnit = null;
+		
+		for (MilitaryBuilding b : givenCity.getMilitaryBuildings()) {
+			
+			if (type.equals("Archer") && b instanceof ArcheryRange) {
+				buildingThatWillRecruitUnit = b;
+			}
+			
+			if (type.equals("Infantry") && b instanceof Barracks) {
+				buildingThatWillRecruitUnit = b;
+			}
+			
+			if (type.equals("Cavalry") && b instanceof Stable) {
+				buildingThatWillRecruitUnit = b;
+				
+			}
+			
+		}
+		
+		Unit recruitedUnit = buildingThatWillRecruitUnit.recruit();
+		
+		
+		if (buildingThatWillRecruitUnit.getRecruitmentCost() > treasury)
+			throw new NotEnoughGoldException ("Not Enough gold to Recrit Units from that building");
+
+		else {
+			recruitedUnit.setParentArmy(givenCity.getDefendingArmy());
+			givenCity.getDefendingArmy().getUnits().add(recruitedUnit);
+			this.setTreasury(this.getTreasury() - buildingThatWillRecruitUnit.getRecruitmentCost());
+			
+		}
+		
+	}
+	
+	
 	
 	 public void build(String type,String cityName) throws NotEnoughGoldException{
 		City currentCity = null;
@@ -179,6 +223,8 @@ public class Player {
 			currentCity.getEconomicalBuildings().add((EconomicBuilding) newBuilding);
 		else 
 			currentCity.getMilitaryBuildings().add((MilitaryBuilding) newBuilding);
+		
+		this.setTreasury(getTreasury()  - newBuilding.getCost()); 
 		}
 
 

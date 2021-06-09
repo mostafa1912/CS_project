@@ -13,7 +13,7 @@ public class City {
 	private String name ;
 	private ArrayList <EconomicBuilding> economicalBuildings = new ArrayList<EconomicBuilding>();
 	private ArrayList<MilitaryBuilding> militaryBuildings = new ArrayList<MilitaryBuilding>();
-	private Army defendingArmy ;
+	private Army defendingArmy = new Army(name) ;
 	private int turnsUnderSiege;
 	private boolean underSiege = false;
 	

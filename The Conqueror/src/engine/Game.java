@@ -361,7 +361,7 @@ public class Game {
 		
 		for(City c : availableCities)
 		{	
-			if(c.getName() == cityName)
+			if(c.getName().equals(cityName))
 			{
 				currentCity = c ;
 				player.getControlledCities().add(currentCity);
@@ -389,7 +389,7 @@ public class Game {
 		
 		
 		// Two armies facing each other till one ends 
-		while (attacker.findArmySize() >0 && defender.findArmySize()>0)
+		while (attacker.armyStillHasUnits() && defender.armyStillHasUnits())
 		{
 			
 			int randomNumAttacker =  (int)(Math.random() * attacker.getUnits().size());
@@ -418,9 +418,11 @@ public class Game {
 		}
 		
 		// Check whether to remove the Army from contolled armies or not 
+		if (attacker.getUnits().isEmpty())
+			this.player.getControlledArmies().remove(attacker);
 		
 		// Attacker army won 
-		if (attacker.findArmySize() >0) {
+		if (attacker.armyStillHasUnits()) {
 			this.occupy(attacker, defender.getCurrentLocation());
 		}
 		
