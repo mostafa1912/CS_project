@@ -149,36 +149,60 @@ public class Player {
 			
 		
 		MilitaryBuilding buildingThatWillRecruitUnit = null ;
-		
+		Unit recruitedUnit = null;
 		for (MilitaryBuilding b : givenCity.getMilitaryBuildings()) {
 			
 			if (type.equals("Archer") && b instanceof ArcheryRange) {
 				buildingThatWillRecruitUnit = b;
+				 recruitedUnit = buildingThatWillRecruitUnit.recruit();
+				 if (buildingThatWillRecruitUnit.getRecruitmentCost() > treasury)
+						throw new NotEnoughGoldException ("Not Enough gold to Recrit Units from that building");
+
+					else {
+						recruitedUnit.setParentArmy(givenCity.getDefendingArmy());
+						givenCity.getDefendingArmy().getUnits().add(recruitedUnit);
+						this.setTreasury(this.getTreasury() - buildingThatWillRecruitUnit.getRecruitmentCost());
+						
+					}
+
 			}
 			
 			if (type.equals("Infantry") && b instanceof Barracks) {
 				buildingThatWillRecruitUnit = b;
+				 recruitedUnit = buildingThatWillRecruitUnit.recruit();
+				 if (buildingThatWillRecruitUnit.getRecruitmentCost() > treasury)
+						throw new NotEnoughGoldException ("Not Enough gold to Recrit Units from that building");
+
+					else {
+						recruitedUnit.setParentArmy(givenCity.getDefendingArmy());
+						givenCity.getDefendingArmy().getUnits().add(recruitedUnit);
+						this.setTreasury(this.getTreasury() - buildingThatWillRecruitUnit.getRecruitmentCost());
+						
+					}
+
 			}
 			
 			if (type.equals("Cavalry") && b instanceof Stable) {
 				buildingThatWillRecruitUnit = b;
+				 recruitedUnit = buildingThatWillRecruitUnit.recruit();
+				 if (buildingThatWillRecruitUnit.getRecruitmentCost() > treasury)
+						throw new NotEnoughGoldException ("Not Enough gold to Recrit Units from that building");
+
+					else {
+						recruitedUnit.setParentArmy(givenCity.getDefendingArmy());
+						givenCity.getDefendingArmy().getUnits().add(recruitedUnit);
+						this.setTreasury(this.getTreasury() - buildingThatWillRecruitUnit.getRecruitmentCost());
+						
+					}
+
 				
 			}
 			
 		}
 		
-		Unit recruitedUnit = buildingThatWillRecruitUnit.recruit();
 		
 		
-		if (buildingThatWillRecruitUnit.getRecruitmentCost() > treasury)
-			throw new NotEnoughGoldException ("Not Enough gold to Recrit Units from that building");
-
-		else {
-			recruitedUnit.setParentArmy(givenCity.getDefendingArmy());
-			givenCity.getDefendingArmy().getUnits().add(recruitedUnit);
-			this.setTreasury(this.getTreasury() - buildingThatWillRecruitUnit.getRecruitmentCost());
-			
-		}
+		
 		
 	}
 	
