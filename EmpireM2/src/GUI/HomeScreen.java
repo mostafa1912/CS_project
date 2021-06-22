@@ -111,13 +111,11 @@ public class HomeScreen extends Application {
 		
 // Making Image as wallpaper 
 // will add start pic and button
-		Image startImage = new Image("file:images/gameHomeScreen.jpg");
-		ImageView startview = new ImageView(startImage);
-		// Fitting Image to scene dimentions 
-		startview.setFitHeight(680);
-		startview.setFitWidth(1275);
-		Group startg = new Group();
-		startg.getChildren().addAll(startview);
+		BackgroundImage bg = new BackgroundImage(new Image("file:images/gameHomeScreen.jpg"),
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+		
+		startlayout.setBackground(new Background(bg));
 		
 		
 		
@@ -128,7 +126,7 @@ public class HomeScreen extends Application {
 		
 		
 		startButton.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
-		startlayout.getChildren().addAll(startg, startButton);
+		startlayout.getChildren().addAll( startButton);
 		// Default scene dimentions 
 		Scene startScene = new Scene(startlayout, 1275, 680);
 		window.setScene(startScene);
@@ -178,8 +176,7 @@ public class HomeScreen extends Application {
 		nameg.getChildren().addAll(nameview);
 		BackgroundImage bg = new BackgroundImage(new Image("file:images/gameHomeScreen.jpg"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-				BackgroundPosition.CENTER, new BackgroundSize(1275, 680, false,
-						false, false, true));
+				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
 
 		namelayout.setPadding(new Insets(50, 50, 50, 50));
 		namelayout.setHgap(20);
@@ -378,13 +375,39 @@ public class HomeScreen extends Application {
 		pageLayout.setTop(hBox);
 
 		//city vboxes
-		HBox citiesHBox = new HBox();
-		VBox cairoVBox = new VBox();
-		VBox romeVBox = new VBox();
-		VBox spartaVBox = new VBox();
-
+		HBox citiesHBox = new HBox(50);
+		
+		ToggleButton cairoButton = new ToggleButton ();
+		ToggleButton spartaButton = new ToggleButton ();
+		ToggleButton romeButton = new ToggleButton ();
+		
+		
+		Image cairoImage = new Image("file:images/cairotextlogo.png");
+		ImageView cairoImageView = new ImageView(cairoImage);
+		cairoImageView.setFitHeight(200);;
+		cairoImageView.setFitWidth(200);
+		cairoButton.setGraphic(cairoImageView);
+		Image spartaImage = new Image("file:images/spartatextlogo.png");
+		ImageView spartaImageView = new ImageView(spartaImage);
+		spartaImageView.setFitHeight(200);;
+		spartaImageView.setFitWidth(200);
+		spartaButton.setGraphic(spartaImageView);
+		
+		Image romeImage = new Image("file:images/rometextlogo.png");
+		ImageView romeImageView = new ImageView(romeImage);
+		romeImageView.setFitHeight(200);;
+		romeImageView.setFitWidth(200);
+		romeButton.setGraphic(romeImageView);
+		romeButton.setGraphic(romeImageView);
+		
+		
+		citiesHBox.getChildren().addAll(cairoButton,spartaButton,romeButton);
+		citiesHBox.setAlignment(Pos.CENTER);
+		
+		pageLayout.setCenter(citiesHBox);
 		Scene worldMapView = new Scene(pageLayout , 1275, 680);
 
+		
 		window.setScene(worldMapView);
 
 
