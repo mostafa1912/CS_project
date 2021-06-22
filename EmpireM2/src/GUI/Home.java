@@ -2,15 +2,19 @@ package GUI;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Stack;
 
 public class Home extends Application {
     Stage window;
     Scene StartingView;
+    Scene Scene1 ;
+    Button StartButton ;
 
 
     public static void main(String[] args) {
@@ -27,6 +31,13 @@ public class Home extends Application {
             window.setTitle("The Conqueror");
         //creating the first scene and setting its layout
             StartingView = new Scene(Layout1_Border_pane );
+        //creating and adding start button
+        StartButton = new Button("Start");
+        VBox vBox = new VBox(StartButton);
+        StackPane sp = new StackPane(StartButton);
+
+        Layout1_Border_pane.setCenter(sp);
+
         //setting stage size to full screen
             window.setFullScreen(true);
         //creating a background image object
