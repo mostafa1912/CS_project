@@ -1,9 +1,6 @@
 package view;
-
-
 import engine.Game;
 import engine.Player;
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -43,11 +40,8 @@ public class HomeScreen extends Application {
 
         Stage window = new Stage();
         primaryWindow = window;
-        window.setTitle("The Conqueror");
+       window.setTitle("The conquerer");
 
-        game = null;
-
-        player = null;
 
 
 
@@ -102,19 +96,19 @@ public class HomeScreen extends Application {
         // will add start pic and button
         Image startImage = new Image("file:images/gameHomeScreen.png");
         ImageView startview = new ImageView(startImage);
-        // Fitting Image to scene dimentions
+        // Fitting Image to scene dimensions
         startview.setFitHeight(680);
         startview.setFitWidth(1275);
 
-        Group startg = new Group();
-        startg.getChildren().addAll(startview);
+        Group start = new Group();
+        start.getChildren().addAll(startview);
         Button startButton = new Button("PLAY");
 
         startButton.setMaxHeight(50);
         startButton.setMaxWidth(125);
 
         startButton.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
-        startlayout.getChildren().addAll(startg, startButton);
+        startlayout.getChildren().addAll(start, startButton);
         // Default scene dimentions
         Scene startScene = new Scene(startlayout, 1275, 680);
         window.setScene(startScene);
