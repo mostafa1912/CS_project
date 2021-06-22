@@ -1,4 +1,4 @@
-package view;
+package GUI;
 import engine.Game;
 import engine.Player;
 import javafx.application.Application;
