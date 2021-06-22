@@ -10,6 +10,7 @@ import engine.*;
 import javafx.application.Application;
 
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -107,6 +108,22 @@ public class HomeScreen extends Application {
         
 		StackPane startlayout = new StackPane();// Start pane
 
+		Image gamenamelogo = new Image("file:images/gamenamelogo.png");
+		ImageView gamenamelogoView = new ImageView(gamenamelogo);
+		
+		VBox gamenamelogoViewVBox = new VBox();
+		gamenamelogoViewVBox.getChildren().add(gamenamelogoView);
+		
+		gamenamelogoViewVBox.setAlignment(Pos.TOP_CENTER);
+		
+		
+		
+		Image deepquote = new Image("file:images/deepquote.png");
+		ImageView deepquoteView = new ImageView(deepquote);
+		
+		VBox deepquoteViewVBox = new VBox();
+		deepquoteViewVBox.getChildren().add(deepquoteView);
+		deepquoteViewVBox.setAlignment(Pos.BOTTOM_CENTER);
 		
 		
 // Making Image as wallpaper 
@@ -122,18 +139,21 @@ public class HomeScreen extends Application {
 		Button startButton = new Button("PLAY");
 		startButton.setMaxHeight(50);
 		startButton.setMaxWidth(125);
+		startButton.setAlignment(Pos.CENTER);
 		
 		
 		
 		startButton.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
-		startlayout.getChildren().addAll( startButton);
+		startlayout.getChildren().addAll(gamenamelogoViewVBox ,startButton);
 		// Default scene dimentions 
 		Scene startScene = new Scene(startlayout, 1275, 680);
 		window.setScene(startScene);
 		
 		
 		startButton.setOnMouseClicked(e -> {
+			
 			try {
+				
 				scene2(window);
 			} catch (IOException e1) {
 				
@@ -151,9 +171,17 @@ public class HomeScreen extends Application {
 		next.setMaxHeight(50);
 		next.setMaxWidth(140);
 		next.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
+		next.setTranslateY(-40);
+		
+		next.setTranslateY(150);;
 		
 		
+		Image enteryournamelogo = new Image("file:images/enteryournamelogo.png");
+		ImageView enteryournamelogoView = new ImageView(enteryournamelogo);
 		
+		HBox enteryournamelogoViewVbox = new HBox();
+		enteryournamelogoViewVbox.getChildren().add(enteryournamelogoView);
+		enteryournamelogoViewVbox.setAlignment(Pos.TOP_CENTER);
 		
 		
 		
@@ -161,29 +189,26 @@ public class HomeScreen extends Application {
 
 		TextField playerone = new TextField();
 		playerone.setPromptText("Player Name");
-		playerone.setMaxSize(200, 80);
-		
-		
+		playerone.setMaxSize(400, 50);
+		playerone.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+		playerone.setFocusTraversable(true);
+		playerone.setAlignment(Pos.CENTER);
 		
 
 		
-		GridPane namelayout = new GridPane();
+		StackPane namelayout = new StackPane();
 		playerone.setAlignment(Pos.CENTER_RIGHT);
 		
 		Image nameimage = new Image("file:images/gameHomeScreen.jpg");
 		ImageView nameview = new ImageView(nameimage);
 		Group nameg = new Group();
 		nameg.getChildren().addAll(nameview);
-		BackgroundImage bg = new BackgroundImage(new Image("file:images/gameHomeScreen.jpg"),
+		BackgroundImage bg = new BackgroundImage(new Image("file:images/scene2wallpaper.png"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
 
-		namelayout.setPadding(new Insets(50, 50, 50, 50));
-		namelayout.setHgap(20);
-		namelayout.setVgap(20);
-		namelayout.add(playerone, 25, 12);
-		namelayout.add(next, 25, 20);
-
+		
+		namelayout.getChildren().addAll(playerone,enteryournamelogoViewVbox,next);
 		Scene writename = new Scene(namelayout, 1275, 680);
 		namelayout.setBackground(new Background(bg));
 		window.setScene(writename);
@@ -204,8 +229,13 @@ public class HomeScreen extends Application {
 		
 		next.setOnMouseClicked(e -> {
 			if (playerone.getText().isEmpty()) {
-				//Alertnames.display();
-
+			
+				try {
+					scene2(window);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			} else {
 				try {
 					scene3(window, playerone.getText());
@@ -365,6 +395,13 @@ public class HomeScreen extends Application {
 		System.out.println(game.getPlayer().getName() + " : " +playerCityName );
 		Label label = new Label("player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
 				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
+		
+		BackgroundImage bg = new BackgroundImage(new Image("file:images/calmwallpaper.jpg"),
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+
+		
+		
 		Label label1 = new Label( );
 		label1.setLayoutX(200);
 
@@ -405,6 +442,7 @@ public class HomeScreen extends Application {
 		citiesHBox.setAlignment(Pos.CENTER);
 		
 		pageLayout.setCenter(citiesHBox);
+		pageLayout.setBackground(new Background(bg));
 		Scene worldMapView = new Scene(pageLayout , 1275, 680);
 
 		
