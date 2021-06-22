@@ -51,6 +51,8 @@ public class HomeScreen extends Application {
 	
 	
 	
+	
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -239,8 +241,12 @@ public class HomeScreen extends Application {
 	}
 	
 	public void scene3(Stage window, String playerName) throws IOException	{
+		
+
+		
+		
 		//game = new Game (playerName,playerCityName);
-		System.out.println(playerName);
+		//System.out.println(game.getAvailableCities().get(0).getName());
 		
 		Image startImage = new Image("file:images/worldmap.jpg");
 		ImageView startview = new ImageView(startImage);
@@ -316,6 +322,67 @@ public class HomeScreen extends Application {
 		window.setScene(worldmap);
 		
 		
+		
+		
+
+		cairoButton.setOnMouseClicked(e -> { 
+			playerCityName = "Cairo";
+			try {
+				game = new Game (playerName,"Cairo");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				scene4(window);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		spartaButton.setOnMouseClicked(e -> { 
+			playerCityName = "Sparta" ;
+			try {
+				game = new Game (playerName,"Sparta");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				scene4(window);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		romeButton.setOnMouseClicked(e -> { 
+			
+			playerCityName = "Rome";
+					
+			try {
+				game = new Game (playerName,"Rome");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				scene4(window);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		
+		
+		
+		
+	}
+	
+	
+	public void scene4(Stage window) throws IOException	{
+		System.out.println(game.getPlayer().getName() + " : " +playerCityName );
 	}
 	
 	
