@@ -4,15 +4,11 @@ package GUI;
 
 
 
-import java.io.File;
 import java.io.IOException;
-
-import com.sun.prism.paint.ImagePattern;
 
 import engine.*;
 import javafx.application.Application;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -23,20 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 
@@ -334,7 +317,7 @@ public class HomeScreen extends Application {
 				e1.printStackTrace();
 			}
 			try {
-				scene4(window);
+				worldMapView(window);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -350,7 +333,7 @@ public class HomeScreen extends Application {
 				e1.printStackTrace();
 			}
 			try {
-				scene4(window);
+				worldMapView(window);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -367,7 +350,7 @@ public class HomeScreen extends Application {
 				e1.printStackTrace();
 			}
 			try {
-				scene4(window);
+				worldMapView(window);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -381,8 +364,68 @@ public class HomeScreen extends Application {
 	}
 	
 	
-	public void scene4(Stage window) throws IOException	{
+	public void worldMapView(Stage window) throws IOException	{
 		System.out.println(game.getPlayer().getName() + " : " +playerCityName );
+		Label label = new Label("player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
+				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
+		Label label1 = new Label( );
+		label1.setLayoutX(200);
+
+		BorderPane pageLayout = new BorderPane();
+		HBox hBox = new HBox();
+		hBox.getChildren().addAll(label);
+		hBox.setAlignment(Pos.TOP_LEFT);
+		pageLayout.setTop(hBox);
+
+		//city vboxes
+		HBox citiesHBox = new HBox();
+		VBox cairoVBox = new VBox();
+		VBox romeVBox = new VBox();
+		VBox spartaVBox = new VBox();
+
+		Scene worldMapView = new Scene(pageLayout , 1275, 680);
+
+		window.setScene(worldMapView);
+
+
+	}
+	public void cityView(Stage window) throws IOException	{
+		System.out.println(game.getPlayer().getName() + " : " +playerCityName );
+		Label label = new Label("player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
+				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
+		Label label1 = new Label( );
+		label1.setLayoutX(200);
+
+		BorderPane pageLayout = new BorderPane();
+		HBox hBox = new HBox();
+		hBox.getChildren().addAll(label);
+		hBox.setAlignment(Pos.TOP_LEFT);
+		pageLayout.setTop(hBox);
+
+		Scene cityView = new Scene(pageLayout , 1275, 680);
+
+		window.setScene(cityView);
+
+
+	}
+	public void battleView(Stage window) throws IOException	{
+		System.out.println(game.getPlayer().getName() + " : " +playerCityName );
+		Label label = new Label("player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
+				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
+		Label label1 = new Label( );
+		label1.setLayoutX(200);
+
+		BorderPane pageLayout = new BorderPane();
+		HBox hBox = new HBox();
+		hBox.getChildren().addAll(label);
+		hBox.setAlignment(Pos.TOP_LEFT);
+		pageLayout.setTop(hBox);
+
+		Scene battleView = new Scene(pageLayout , 1275, 680);
+
+		window.setScene(battleView);
+
+
 	}
 	
 	
