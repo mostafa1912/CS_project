@@ -1,9 +1,12 @@
 package GUI;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
 
 
 
-
+import java.io.File;
 import java.io.IOException;
 
 import engine.*;
@@ -21,6 +24,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 
@@ -38,6 +43,7 @@ public class HomeScreen extends Application {
 	
 	
 	public static void main(String[] args) {
+		    
 		launch(args);
 	}
 
@@ -144,7 +150,7 @@ public class HomeScreen extends Application {
 		
 		
 		startButton.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
-		startlayout.getChildren().addAll(gamenamelogoViewVBox ,startButton);
+		startlayout.getChildren().addAll(gamenamelogoViewVBox ,deepquoteViewVBox,startButton);
 		// Default scene dimentions 
 		Scene startScene = new Scene(startlayout, 1275, 680);
 		window.setScene(startScene);
@@ -230,18 +236,19 @@ public class HomeScreen extends Application {
 		next.setOnMouseClicked(e -> {
 			if (playerone.getText().isEmpty()) {
 			
+				AlertBox.display("Please Enter Your Name","You can't proceed without entering a name");
 				try {
 					scene2(window);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					AlertBox.display(e1.getMessage());
 				}
 			} else {
 				try {
 					scene3(window, playerone.getText());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					AlertBox.display(e1.getMessage());
 				}
 			}
 			
@@ -357,13 +364,13 @@ public class HomeScreen extends Application {
 				game = new Game (playerName,"Sparta");
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				AlertBox.display(e1.getMessage());
 			}
 			try {
 				worldMapView(window);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				AlertBox.display(e1.getMessage());
 			}
 		});
 		romeButton.setOnMouseClicked(e -> { 
@@ -374,13 +381,13 @@ public class HomeScreen extends Application {
 				game = new Game (playerName,"Rome");
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				AlertBox.display(e1.getMessage());
 			}
 			try {
 				worldMapView(window);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				AlertBox.display(e1.getMessage());
 			}
 		});
 		
