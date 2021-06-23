@@ -32,9 +32,9 @@ public class HomeScreen extends Application {
 
 	public static void main(String[] args) {
 		
-		// String uriString = new File("music/warmusic.wav").toURI().toString();
-		  // MediaPlayer player = new MediaPlayer( new Media(uriString));
-		    //player.play();
+		String uriString = new File("music/warmusic.wav").toURI().toString();
+		 MediaPlayer player = new MediaPlayer( new Media(uriString));
+		   player.play();
 		launch(args);
 	}
 
@@ -313,7 +313,7 @@ public class HomeScreen extends Application {
 				worldMapView(window);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				AlertBox.display(e1.getMessage());
 			}
 		});
 
@@ -326,12 +326,25 @@ public class HomeScreen extends Application {
 
 	public void worldMapView(Stage window) throws IOException	{
 		
+		//creating a borderpane to be the main layout
+				GridPane pageLayout = new GridPane();
+				
+				
+
 //Label containing Player info and game info 
 		
 		//creating label to show food, gold , and other info
-		Label label = new Label("Player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
+		Label playerInfoLabel = new Label("Player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
 				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
 
+		
+		//creating hbox for label and adding to main layout
+		HBox playerInfoHBox = new HBox();
+		playerInfoHBox.getChildren().addAll(playerInfoLabel);
+		playerInfoHBox.setAlignment(Pos.TOP_LEFT);
+		GridPane.setConstraints(playerInfoLabel,0,0);
+		
+		pageLayout.getChildren().add(playerInfoHBox);
 		
 	/*	BackgroundImage bg = new BackgroundImage(new Image("file:images/calmwallpaper.jpg"),
 			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
@@ -340,15 +353,7 @@ public class HomeScreen extends Application {
 		*/
 		
 		
-		//creating a borderpane to be the main layout
-		GridPane pageLayout = new GridPane();
-		pageLayout.setPadding(new Insets(50));
-		//creating hbox for label and adding to main layout
-		HBox hBox = new HBox();
-		hBox.getChildren().addAll(label);
-		hBox.setAlignment(Pos.TOP_LEFT);
-		GridPane.setConstraints(label,0,0);
-
+		
 //HBox containing cities Buttons 
 		
 		// Start of Cities HBox
@@ -383,6 +388,7 @@ public class HomeScreen extends Application {
 		citiesHBox.setAlignment(Pos.CENTER);
 
 		GridPane.setConstraints(citiesHBox,5,5);
+		pageLayout.getChildren().add(citiesHBox);
 		// End of Cities HBox 
 		
 		
@@ -505,26 +511,15 @@ public class HomeScreen extends Application {
 						pageLayout.getChildren().addAll(besiegingArmiesandLabelVBox);
 						
 						
+						
+						
+						
 				
 				
 				
 				
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-		
+	
 		
 		Scene worldMapView = new Scene(pageLayout , 1275, 680);
 
