@@ -1,9 +1,11 @@
 package GUI;
 
+import java.io.File;
 import java.io.IOException;
 import engine.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 
@@ -20,6 +24,10 @@ public class HomeScreen extends Application {
 	String playerCityName;
 
 	public static void main(String[] args) {
+		
+		 String uriString = new File("music/warmusic.wav").toURI().toString();
+		    MediaPlayer player = new MediaPlayer( new Media(uriString));
+		    player.play();
 		launch(args);
 	}
 
@@ -52,6 +60,23 @@ public class HomeScreen extends Application {
 	public void scene1(Stage window) {
 
 		StackPane startLayout = new StackPane();// Start pane
+		
+		Image gamenamelogo = new Image("file:images/gamenamelogo.png");
+		ImageView gamenamelogoView = new ImageView(gamenamelogo);
+		
+		VBox gamenamelogoViewVBox = new VBox();
+		gamenamelogoViewVBox.getChildren().add(gamenamelogoView);
+		
+		gamenamelogoViewVBox.setAlignment(Pos.TOP_CENTER);
+		
+		
+		
+		Image deepquote = new Image("file:images/deepquote.png");
+		ImageView deepquoteView = new ImageView(deepquote);
+		
+		VBox deepquoteViewVBox = new VBox();
+		deepquoteViewVBox.getChildren().add(deepquoteView);
+		deepquoteViewVBox.setAlignment(Pos.BOTTOM_CENTER);
 
 		//creating a background image object
 		BackgroundImage bg = new BackgroundImage(new Image("file:images/gameHomeScreen.jpg"),
@@ -67,18 +92,19 @@ public class HomeScreen extends Application {
 		startButton.setMaxWidth(125);
 		startButton.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
 		//adding start button to layout
-		startLayout.getChildren().addAll( startButton);
+		startLayout.getChildren().addAll(gamenamelogoViewVBox ,deepquoteViewVBox,startButton);
 		// setting default scene dimensions
 		Scene startScene = new Scene(startLayout, 1275, 680);
 		window.setScene(startScene);
 
+		
 		//leh try catch?
 		startButton.setOnAction(e -> {
 			try {
 				scene2(window);
 			} catch (IOException e1) {
 
-				e1.printStackTrace();
+				AlertBox.display(e1.getMessage());
 			}
 		});
 
@@ -92,26 +118,39 @@ public class HomeScreen extends Application {
 		next.setMaxHeight(50);
 		next.setMaxWidth(140);
 		next.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
+		next.setTranslateY(-40);
+		
+		next.setTranslateY(150);
+		
+		
+		Image enteryournamelogo = new Image("file:images/enteryournamelogo.png");
+		ImageView enteryournamelogoView = new ImageView(enteryournamelogo);
+		
+		HBox enteryournamelogoViewVbox = new HBox();
+		enteryournamelogoViewVbox.getChildren().add(enteryournamelogoView);
+		enteryournamelogoViewVbox.setAlignment(Pos.TOP_CENTER);
+		
+		
 		//adding a text field
 		TextField playerOne = new TextField();
 		playerOne.setPromptText("Player Name     ");
-		playerOne.setMaxSize(200, 3000);
-		//creating layout for the new scene
-		VBox nameLayout = new VBox();
+		playerOne.setMaxSize(400, 50);
+		playerOne.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+		playerOne.setFocusTraversable(true);
 		playerOne.setAlignment(Pos.CENTER);
-		nameLayout.setMaxHeight(300);
+		//creating layout for the new scene
+		StackPane nameLayout = new StackPane();
+		playerOne.setAlignment(Pos.CENTER_RIGHT);
 
 		//setting layout background
-		BackgroundImage bg = new BackgroundImage(new Image("file:images/gameHomeScreen.jpg"),
+		BackgroundImage bg = new BackgroundImage(new Image("file:images/scene2wallpaper.png"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
 
-		nameLayout.setPadding(new Insets(50, 50, 50, 50));
-		nameLayout.setAlignment(Pos.CENTER);
-		nameLayout.setSpacing(50);
+		
+		
 
-		nameLayout.getChildren().addAll( playerOne,next);
-
+		nameLayout.getChildren().addAll(playerOne,enteryournamelogoViewVbox,next);
 
 		Scene writeName = new Scene(nameLayout, 1275, 680);
 		nameLayout.setBackground(new Background(bg));
@@ -124,18 +163,25 @@ public class HomeScreen extends Application {
 
 
 
-		next.setOnAction(e -> {
+		next.setOnMouseClicked(e -> {
 			if (playerOne.getText().isEmpty()) {
-
+			
+				AlertBox.display("Please Enter Your Name","You can't proceed without entering a name");
+				try {
+					scene2(window);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					AlertBox.display(e1.getMessage());
+				}
 			} else {
 				try {
 					scene3(window, playerOne.getText());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					AlertBox.display(e1.getMessage());
 				}
 			}
-
+			
 
 		});
 
@@ -276,6 +322,15 @@ public class HomeScreen extends Application {
 		Label label = new Label("player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
 				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
 
+		
+		BackgroundImage bg = new BackgroundImage(new Image("file:images/calmwallpaper.jpg"),
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+
+		
+		
+		Label label1 = new Label( );
+		label1.setLayoutX(200);
 		//creating a borderpane to be the main layout
 		BorderPane pageLayout = new BorderPane();
 		//creating hbox for label and adding to main layout
@@ -317,6 +372,7 @@ public class HomeScreen extends Application {
 
 		//adding to main layout
 		pageLayout.setCenter(citiesHBox);
+		pageLayout.setBackground(new Background(bg));
 		Scene worldMapView = new Scene(pageLayout , 1275, 680);
 
 		
