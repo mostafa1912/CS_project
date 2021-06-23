@@ -1,22 +1,14 @@
 package GUI;
 
-
-
-
-
 import java.io.IOException;
-
 import engine.*;
 import javafx.application.Application;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -24,73 +16,31 @@ import javafx.stage.Stage;
 
 
 public class HomeScreen extends Application {
-	
-	
-	
-	Game game ; 
-	
+	Game game ;
 	String playerCityName;
-	
-	
-	
-	
-	
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
 
+	public static Background Createbackground1(String imageName ){
+		String path= "file:images/" + imageName;
+		BackgroundImage bg = new BackgroundImage(new Image(path),
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+		return new Background(bg);
+	}
 
-	
-	
+
 	public void start(Stage primaryWindow) throws Exception {
-	
-		
-		
-		
-	
-		
+
 		Stage window = new Stage();
 		primaryWindow = window;
 		window.setTitle("The Conqueror");
 		
 		game = null;
 
-		
-		
-		
-		
-		
-		
-		
-		/*
-		
-        Button startGameButton = new Button ();
-    
-        // Setting Image for button button 
-        Image img = new Image(new File("images/startGameButton.png").toURI().toString());
-	    ImageView view = new ImageView(img);
-	    view.setFitHeight(80);
-	    view.setPreserveRatio(true);
-	    startGameButton.setGraphic(view);
-	    
-	    
-	    
-        
-       // Setting a scene and it's layout
-        VBox homeScreneLayout = new VBox(20);
-        homeScreneLayout.getChildren().addAll(startGameButton);
-		Scene homeScene = new Scene(homeScreneLayout,500,500);
-		
-		
-	// Setting background image for the scene 
-		
-		BackgroundImage myBI= new BackgroundImage(new Image(new File("images/gameHomeScreen.png").toURI().toString()),
-		        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-		          new BackgroundSize(1275,680,false,false,false,true));
-		
-		homeScreneLayout.setBackground(new Background(myBI));
-		*/
+
 		
 		scene1(window);
 		
@@ -100,39 +50,30 @@ public class HomeScreen extends Application {
 	
 	
 	public void scene1(Stage window) {
-		
 
-		
-		 
-        
-		StackPane startlayout = new StackPane();// Start pane
+		StackPane startLayout = new StackPane();// Start pane
 
-		
-		
-// Making Image as wallpaper 
-// will add start pic and button
+		//creating a background image object
 		BackgroundImage bg = new BackgroundImage(new Image("file:images/gameHomeScreen.jpg"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
-		
-		startlayout.setBackground(new Background(bg));
-		
-		
-		
+		//setting Layout background
+		startLayout.setBackground(new Background(bg));
+
+		//creating the start button
 		Button startButton = new Button("PLAY");
+		//setting button size and font
 		startButton.setMaxHeight(50);
 		startButton.setMaxWidth(125);
-		
-		
-		
 		startButton.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
-		startlayout.getChildren().addAll( startButton);
-		// Default scene dimentions 
-		Scene startScene = new Scene(startlayout, 1275, 680);
+		//adding start button to layout
+		startLayout.getChildren().addAll( startButton);
+		// setting default scene dimensions
+		Scene startScene = new Scene(startLayout, 1275, 680);
 		window.setScene(startScene);
 		
-		
-		startButton.setOnMouseClicked(e -> {
+		//leh try catch?
+		startButton.setOnAction(e -> {
 			try {
 				scene2(window);
 			} catch (IOException e1) {
@@ -145,55 +86,37 @@ public class HomeScreen extends Application {
 	
 	
 	public void scene2(Stage window) throws IOException {
-
+		//adding the next button and setting its size
 		Button next = new Button("Next");
 		next.setAlignment(Pos.BOTTOM_CENTER);
 		next.setMaxHeight(50);
 		next.setMaxWidth(140);
 		next.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
-		
-		
-		
-		
-		
-		
-		
+		//adding a text field
+		TextField playerOne = new TextField();
+		playerOne.setPromptText("Player Name     ");
+		playerOne.setMaxSize(200, 3000);
+		//creating layout for the new scene
+		VBox nameLayout = new VBox();
+		playerOne.setAlignment(Pos.CENTER);
+		nameLayout.setMaxHeight(300);
 
-		TextField playerone = new TextField();
-		playerone.setPromptText("Player Name");
-		playerone.setMaxSize(200, 80);
-		
-		
-		
-
-		
-		GridPane namelayout = new GridPane();
-		playerone.setAlignment(Pos.CENTER_RIGHT);
-		
-		Image nameimage = new Image("file:images/gameHomeScreen.jpg");
-		ImageView nameview = new ImageView(nameimage);
-		Group nameg = new Group();
-		nameg.getChildren().addAll(nameview);
+		//setting layout background
 		BackgroundImage bg = new BackgroundImage(new Image("file:images/gameHomeScreen.jpg"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
 
-		namelayout.setPadding(new Insets(50, 50, 50, 50));
-		namelayout.setHgap(20);
-		namelayout.setVgap(20);
-		namelayout.add(playerone, 25, 12);
-		namelayout.add(next, 25, 20);
+		nameLayout.setPadding(new Insets(50, 50, 50, 50));
+		nameLayout.setAlignment(Pos.CENTER);
+		nameLayout.setSpacing(50);
 
-		Scene writename = new Scene(namelayout, 1275, 680);
-		namelayout.setBackground(new Background(bg));
-		window.setScene(writename);
-		//Button tool = new Button("Instructions") ;
-		//tool.setMaxHeight(50);
-		//tool.setMaxWidth(140);
-		//tool.setStyle("-fx-font: 20 arial; -fx-base: #b6e7c9;");
-		
-		
-		//namelayout.getChildren().addAll(cairoButton,romeButton,spartaButton);
+		nameLayout.getChildren().addAll( playerOne,next);
+
+
+		Scene writeName = new Scene(nameLayout, 1275, 680);
+		nameLayout.setBackground(new Background(bg));
+		window.setScene(writeName);
+
 		
 		
 		
@@ -201,14 +124,12 @@ public class HomeScreen extends Application {
 		
 		
 		
-		
-		next.setOnMouseClicked(e -> {
-			if (playerone.getText().isEmpty()) {
-				//Alertnames.display();
+		next.setOnAction(e -> {
+			if (playerOne.getText().isEmpty()) {
 
 			} else {
 				try {
-					scene3(window, playerone.getText());
+					scene3(window, playerOne.getText());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -221,24 +142,14 @@ public class HomeScreen extends Application {
 	}
 	
 	public void scene3(Stage window, String playerName) throws IOException	{
-		
+
+		Background bg = Createbackground1("worldmap.jpg");
+
 
 		
-		
-		//game = new Game (playerName,playerCityName);
-		//System.out.println(game.getAvailableCities().get(0).getName());
-		
-		Image startImage = new Image("file:images/worldmap.jpg");
-		ImageView startview = new ImageView(startImage);
-		// Fitting Image to scene dimentions 
-		startview.setFitHeight(680);
-		startview.setFitWidth(1275);
-		Group startg = new Group();
-		startg.getChildren().addAll(startview);
-		
-		ToggleButton cairoButton = new ToggleButton ();
-		ToggleButton spartaButton = new ToggleButton ();
-		ToggleButton romeButton = new ToggleButton ();
+		Button cairoButton = new Button ();
+		Button spartaButton = new Button ();
+		Button romeButton = new Button ();
 		
 		
 		Image cairoImage = new Image("file:images/cairologo.jpg");
@@ -246,6 +157,7 @@ public class HomeScreen extends Application {
 		cairoImageView.setFitHeight(200);;
 		cairoImageView.setFitWidth(200);
 		cairoButton.setGraphic(cairoImageView);
+
 		Image spartaImage = new Image("file:images/spartalogo.png");
 		ImageView spartaImageView = new ImageView(spartaImage);
 		spartaImageView.setFitHeight(200);;
@@ -258,10 +170,7 @@ public class HomeScreen extends Application {
 		romeImageView.setFitWidth(200);
 		romeButton.setGraphic(romeImageView);
 		romeButton.setGraphic(romeImageView);
-		//cairoButton.setPadding(new Insets(50));
-		//spartaButton.setPadding(new Insets(50));
-		//romeButton.setPadding(new Insets(50));
-		
+
 		playerCityName="";
 		if (cairoButton.isPressed()){ 
 			this.playerCityName = "Cairo";
@@ -297,7 +206,8 @@ public class HomeScreen extends Application {
 		
 		
 		StackPane stackPane = new StackPane();
-		stackPane.getChildren().addAll(startview,chooseYourCityVbox ,buttonsHBox);
+		stackPane.setBackground(bg);
+		stackPane.getChildren().addAll(chooseYourCityVbox ,buttonsHBox);
 		Scene worldmap = new Scene(stackPane, 1275, 680);
 		window.setScene(worldmap);
 		
@@ -305,7 +215,7 @@ public class HomeScreen extends Application {
 		
 		
 
-		cairoButton.setOnMouseClicked(e -> { 
+		cairoButton.setOnAction(e -> {
 			playerCityName = "Cairo";
 			try {
 				game = new Game (playerName,"Cairo");
@@ -321,7 +231,7 @@ public class HomeScreen extends Application {
 			}
 		});
 		
-		spartaButton.setOnMouseClicked(e -> { 
+		spartaButton.setOnAction(e -> {
 			playerCityName = "Sparta" ;
 			try {
 				game = new Game (playerName,"Sparta");
@@ -336,7 +246,7 @@ public class HomeScreen extends Application {
 				e1.printStackTrace();
 			}
 		});
-		romeButton.setOnMouseClicked(e -> { 
+		romeButton.setOnAction(e -> {
 			
 			playerCityName = "Rome";
 					
@@ -362,31 +272,32 @@ public class HomeScreen extends Application {
 	
 	
 	public void worldMapView(Stage window) throws IOException	{
-		System.out.println(game.getPlayer().getName() + " : " +playerCityName );
+		//creating label to show food, gold , and other info
 		Label label = new Label("player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
 				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
-		Label label1 = new Label( );
-		label1.setLayoutX(200);
 
+		//creating a borderpane to be the main layout
 		BorderPane pageLayout = new BorderPane();
+		//creating hbox for label and adding to main layout
 		HBox hBox = new HBox();
 		hBox.getChildren().addAll(label);
 		hBox.setAlignment(Pos.TOP_LEFT);
 		pageLayout.setTop(hBox);
 
-		//city vboxes
+
 		HBox citiesHBox = new HBox(50);
 		
-		ToggleButton cairoButton = new ToggleButton ();
-		ToggleButton spartaButton = new ToggleButton ();
-		ToggleButton romeButton = new ToggleButton ();
+		Button cairoButton = new Button ();
+		Button spartaButton = new Button ();
+		Button romeButton = new Button ();
 		
-		
+		//cities hbox
 		Image cairoImage = new Image("file:images/cairotextlogo.png");
 		ImageView cairoImageView = new ImageView(cairoImage);
 		cairoImageView.setFitHeight(200);;
 		cairoImageView.setFitWidth(200);
 		cairoButton.setGraphic(cairoImageView);
+
 		Image spartaImage = new Image("file:images/spartatextlogo.png");
 		ImageView spartaImageView = new ImageView(spartaImage);
 		spartaImageView.setFitHeight(200);;
@@ -403,7 +314,8 @@ public class HomeScreen extends Application {
 		
 		citiesHBox.getChildren().addAll(cairoButton,spartaButton,romeButton);
 		citiesHBox.setAlignment(Pos.CENTER);
-		
+
+		//adding to main layout
 		pageLayout.setCenter(citiesHBox);
 		Scene worldMapView = new Scene(pageLayout , 1275, 680);
 
