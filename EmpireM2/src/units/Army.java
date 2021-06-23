@@ -12,6 +12,9 @@ public class Army{
 	private String target;
 	private String currentLocation;
 	private final int maxToHold=10;
+	
+	
+	
 
 	public Army(String currentLocation) {
 		this.currentLocation=currentLocation;

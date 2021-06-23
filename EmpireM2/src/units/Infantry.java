@@ -46,4 +46,10 @@ public class Infantry extends Unit {
 		target.getParentArmy().handleAttackedUnit(target);
 	}
 
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "Cavalry";
+	}
+
 }
