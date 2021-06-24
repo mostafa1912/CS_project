@@ -8,6 +8,7 @@ import buildings.*;
 import engine.*;
 import exceptions.BuildingInCoolDownException;
 import exceptions.MaxLevelException;
+import exceptions.MaxRecruitedException;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
@@ -778,24 +779,29 @@ public class HomeScreen extends Application {
 		
 		
 		
-// Displaying all Economical buildings next to each other 
+// Displaying all Military buildings next to each other 
 		
 		
 		
 		HBox militaryBuildingsHBox = new HBox (6);
-		for (int i = 0 ; i < currentCity.getEconomicalBuildings().size(); i++) {
-			Building currentBuilding = currentCity.getEconomicalBuildings().get(i);
+		for (int i = 0 ; i < currentCity.getMilitaryBuildings().size(); i++) {
+			MilitaryBuilding currentBuilding = currentCity.getMilitaryBuildings().get(i);
 			
-			String buildingType = "Farm";
+			String buildingType = "Archery Range";
 			
 			
-			VBox currentBuildingVBox = new VBox(3);
+			VBox currentBuildingVBox = new VBox(6);
 			//Adding building logo
-			Image buildingLogo = new Image("file:images/farmicon.png");
+			Image buildingLogo = new Image("file:images/archeryrangeicon.png");
 			
-			if (currentCity.getEconomicalBuildings().get(i) instanceof Market) {
-				buildingLogo = new Image("file:images/marketicon.png");
-				buildingType = "Market";
+			if (currentCity.getMilitaryBuildings().get(i) instanceof Barracks) {
+				buildingLogo = new Image("file:images/barracksicon.png");
+				buildingType = "Barracks";
+			}
+			
+			if (currentCity.getMilitaryBuildings().get(i) instanceof Stable) {
+				buildingLogo = new Image("file:images/stableicon.png");
+				buildingType = "Stable";
 			}
 			
 			ImageView buildingLogoView = new ImageView(buildingLogo);
@@ -826,13 +832,32 @@ public class HomeScreen extends Application {
 			tt1.setHideDelay(new Duration (10));
 			Tooltip.install(upgradeBuildingButton, tt1);
 			currentBuildingVBox.getChildren().add(upgradeBuildingButton);
-					
 			
-			upgradeBuildingButton.setOnAction( e -> { 
+// Adding Upgrade Button Under Each Building 
+
+			Button recruitButton  = new Button();
+			
+			Image recruitTextLogo = new Image("file:images/recruittextlogo.png");
+			ImageView recruitTextLogoView = new ImageView(recruitTextLogo);
+			recruitTextLogoView.setFitHeight(40);;
+			recruitTextLogoView.setFitWidth(130);
+			recruitButton.setGraphic(recruitTextLogoView);
+			
+			
+			Tooltip tt2 = new Tooltip("Upgrade Cost: " + currentBuilding.getRecruitmentCost());
+			tt2.setShowDelay(new Duration (0));
+			tt2.setHideDelay(new Duration (10));
+			Tooltip.install(recruitButton, tt2);
+			currentBuildingVBox.getChildren().add(recruitButton);
+		
+			
+			recruitButton.setOnAction( e -> { 
 				try {
-					currentBuilding.upgrade();
-				} catch (BuildingInCoolDownException | MaxLevelException e1) {
 					
+					//23mel eh bel unit dy ???
+					currentBuilding.recruit();
+				} catch (BuildingInCoolDownException | MaxRecruitedException e1) {
+					// TODO Auto-generated catch block
 					AlertBox.display("Unable to Upgrade Building" , e1.getMessage());
 				}
 				
@@ -841,7 +866,7 @@ public class HomeScreen extends Application {
 			
 			
 			
-			economicalBuildingsHBox.getChildren().add(currentBuildingVBox);
+			militaryBuildingsHBox.getChildren().add(currentBuildingVBox);
 			
 			
 			
@@ -851,7 +876,7 @@ public class HomeScreen extends Application {
 			
 		}
 		
-		GridPane.setConstraints(economicalBuildingsHBox,0,3);
+		GridPane.setConstraints(militaryBuildingsHBox,0,4);
 		pageLayout.getChildren().add(economicalBuildingsHBox);
 		
 		
