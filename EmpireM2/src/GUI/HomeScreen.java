@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import buildings.*;
 import engine.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -629,8 +630,10 @@ public class HomeScreen extends Application {
 		
 		
 		GridPane pageLayout = new GridPane();
+		pageLayout.setHgap(10); 
+		pageLayout.setVgap(10); 
 		
-		System.out.println("Current City View" + currentCityName);
+		System.out.println("Current City View: " + currentCityName);
 	
 // Getting current City of the view  
 		City currentCity = game.getPlayer().getControlledCities().get(0);
@@ -638,7 +641,7 @@ public class HomeScreen extends Application {
 			if (c.getName().equals(currentCityName))
 				currentCity= c;
 	
-		
+		currentCity.getEconomicalBuildings().add(new Farm());
 //Setting City Icon on Top Left of Page 		
 		Image cityLogo = new Image("file:images/cairologo.jpg");
 		
@@ -663,6 +666,61 @@ public class HomeScreen extends Application {
 		hBox.setAlignment(Pos.TOP_LEFT);
 		GridPane.setConstraints(hBox, 1, 0);
 		pageLayout.getChildren().add(hBox);
+		
+		
+		
+		
+// Buildings Label 
+		
+		Label economicalBuildingsLabel = new Label ("Economical Buildings");
+		economicalBuildingsLabel.setFont(Font.font("Cambria", 26));
+		GridPane.setConstraints(economicalBuildingsLabel, 0, 1);
+		pageLayout.getChildren().add(economicalBuildingsLabel);
+		
+// Displaying all Economical buildings next to each other 
+		
+		int currRow = 2;
+		
+		System.out.println("Economical Buildings size "+  currentCity.getEconomicalBuildings().size());
+		
+		for (int i = 0 ; i < currentCity.getEconomicalBuildings().size(); i++) {
+			Building currentBuiling = currentCity.getEconomicalBuildings().get(i);
+			
+			String buildingType = "Farm";
+			
+			VBox currentBuildingVBox = new VBox(3);
+			//Adding building logo
+			Image buildingLogo = new Image("file:images/farmicon.png");
+			
+			if (currentCity.getEconomicalBuildings().get(i) instanceof Market) {
+				cityLogo = new Image("file:images/marketicon.png");
+				buildingType = "Market";
+			}
+			
+			ImageView buildingLogoView = new ImageView(buildingLogo);
+			buildingLogoView.setFitHeight(150);;
+			buildingLogoView.setFitWidth(150);
+			
+			// Adding hover text to the building
+			Tooltip tt = new Tooltip("Building Type: " + buildingType +"\n Building Level: "+  currentBuiling.getLevel());
+			tt.setShowDelay(new Duration (0));
+			tt.setHideDelay(new Duration (10));
+			Tooltip.install(buildingLogoView, tt);
+			currentBuildingVBox.getChildren().add(buildingLogoView);
+			
+			
+			
+			
+			
+			GridPane.setConstraints(currentBuildingVBox, i%3, currRow);
+			pageLayout.getChildren().add(currentBuildingVBox);
+			
+			
+			
+
+			
+			
+		}
 		
 		
 		
