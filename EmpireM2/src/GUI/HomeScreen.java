@@ -626,6 +626,9 @@ public class HomeScreen extends Application {
 							
 					}});
 				
+				
+				
+				
 	
 		
 		Scene worldMapView = new Scene(pageLayout , 1275, 680);
@@ -990,7 +993,14 @@ public class HomeScreen extends Application {
 		
 		
 		
-		
+
+//  Stationed Armies Label 
+	
+		Label stationedArmiesLabel = new Label ("Player Armies Currently Located In "+ currentCity.getName());
+		stationedArmiesLabel.setFont(Font.font("Cambria", 26));
+		stationedArmiesLabel.setTextFill(Color.web("#0076a3"));
+		GridPane.setConstraints(stationedArmiesLabel, 1, 7);
+		pageLayout.getChildren().add(stationedArmiesLabel);
 		
 		
 		
