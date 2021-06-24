@@ -224,7 +224,7 @@ public class HomeScreen extends Application {
 		romeImageView.setFitWidth(200);
 		romeButton.setGraphic(romeImageView);
 		romeButton.setGraphic(romeImageView);
-
+		
 		playerCityName="";
 		if (cairoButton.isPressed()){
 			this.playerCityName = "Cairo";
@@ -626,18 +626,76 @@ public class HomeScreen extends Application {
 
 	}
 	public void cityView(Stage window , String currentCityName) throws IOException	{
-		System.out.println(game.getPlayer().getName() + " : " +playerCityName );
-		Label label = new Label("player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
+		
+		
+		GridPane pageLayout = new GridPane();
+		
+		System.out.println("Current City View" + currentCityName);
+	
+// Getting current City of the view  
+		City currentCity = game.getPlayer().getControlledCities().get(0);
+		for (City c :game.getPlayer().getControlledCities())
+			if (c.getName().equals(currentCityName))
+				currentCity= c;
+	
+		
+//Setting City Icon on Top Left of Page 		
+		Image cityLogo = new Image("file:images/cairologo.jpg");
+		
+		if (currentCity.getName().equals("Sparta"))
+			cityLogo = new Image("file:images/spartalogo.png");
+		if (currentCity.getName().equals("Rome"))
+			cityLogo = new Image("file:images/romelogo.png");
+		
+		ImageView cityLogoView = new ImageView(cityLogo);
+		cityLogoView.setFitHeight(150);;
+		cityLogoView.setFitWidth(150);
+		GridPane.setConstraints(cityLogoView, 0, 0);
+		pageLayout.getChildren().add(cityLogoView);
+		
+// Adding Player Info Next To City Label 
+		Label label = new Label("Player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
 				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
 		Label label1 = new Label( );
 		label1.setLayoutX(200);
-
-		BorderPane pageLayout = new BorderPane();
 		HBox hBox = new HBox();
 		hBox.getChildren().addAll(label);
 		hBox.setAlignment(Pos.TOP_LEFT);
-		pageLayout.setTop(hBox);
+		GridPane.setConstraints(hBox, 1, 0);
+		pageLayout.getChildren().add(hBox);
+		
+		
+		
+		
+		
 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		Scene cityView = new Scene(pageLayout , 1275, 680);
 
 		window.setScene(cityView);
