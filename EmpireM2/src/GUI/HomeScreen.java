@@ -42,9 +42,9 @@ public class HomeScreen extends Application {
 
 	public static void main(String[] args) {
 		
-		//String uriString = new File("music/warmusic.wav").toURI().toString();
-		 //MediaPlayer player = new MediaPlayer( new Media(uriString));
-		 // player.play();
+		String uriString = new File("music/warmusic.wav").toURI().toString();
+		 MediaPlayer player = new MediaPlayer( new Media(uriString));
+		  player.play();
 		launch(args);
 	}
 
