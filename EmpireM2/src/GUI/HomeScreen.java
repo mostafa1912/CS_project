@@ -25,6 +25,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import units.Army;
@@ -56,7 +57,9 @@ public class HomeScreen extends Application {
 	public void start(Stage primaryWindow) throws Exception {
 
 		Stage window = new Stage();
+		window.setResizable(false);
 		primaryWindow = window;
+
 		window.setTitle("The Conqueror");
 
 		game = null;
@@ -333,36 +336,33 @@ public class HomeScreen extends Application {
 	public void worldMapView(Stage window) throws IOException	{
 		
 		//creating a borderpane to be the main layout
-				GridPane pageLayout = new GridPane();
-				
-				
+				BorderPane pageLayout = new BorderPane();
+		//creating main subcomponents for page laypout
+		VBox right= new VBox();
+		VBox left = new VBox();
 
-//Label containing Player info and game info 
-		
+		pageLayout.setLeft(left);
+		pageLayout.setRight(right);
+
+
 		//creating label to show food, gold , and other info
+
 		Label playerInfoLabel = new Label("Player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
 				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
 
-		
+
 		//creating hbox for label and adding to main layout
 		HBox playerInfoHBox = new HBox();
 		playerInfoHBox.getChildren().addAll(playerInfoLabel);
 		playerInfoHBox.setAlignment(Pos.TOP_LEFT);
-		GridPane.setConstraints(playerInfoLabel,0,0);
-		
-		pageLayout.getChildren().add(playerInfoHBox);
-		
-	/*	BackgroundImage bg = new BackgroundImage(new Image("file:images/calmwallpaper.jpg"),
+		pageLayout.setTop(playerInfoHBox);
+	//setting background
+	BackgroundImage bg = new BackgroundImage(new Image("file:images/ancientworldmap.png"),
 			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+		pageLayout.setBackground(new Background(bg));
 
-		*/
-		
-		
-		
-//HBox containing cities Buttons 
-		
-		// Start of Cities HBox
+		// Start of Cities HBox containing buttons for city choice
 		HBox citiesHBox = new HBox(50);
 
 		Button cairoButton = new Button ();
@@ -376,20 +376,20 @@ public class HomeScreen extends Application {
 		romeButton.setTooltip(cityButtonsToolTip);
 		
 		
-		//cities hbox
-		Image cairoImage = new Image("file:images/cairotextlogo.png");
+		//cities hbox pictures
+		Image cairoImage = new Image("file:images/cairotextlogo.jfif");
 		ImageView cairoImageView = new ImageView(cairoImage);
 		cairoImageView.setFitHeight(200);;
 		cairoImageView.setFitWidth(200);
 		cairoButton.setGraphic(cairoImageView);
 
-		Image spartaImage = new Image("file:images/spartatextlogo.png");
+		Image spartaImage = new Image("file:images/spartabutton.jfif");
 		ImageView spartaImageView = new ImageView(spartaImage);
 		spartaImageView.setFitHeight(200);;
 		spartaImageView.setFitWidth(200);
 		spartaButton.setGraphic(spartaImageView);
 
-		Image romeImage = new Image("file:images/rometextlogo.png");
+		Image romeImage = new Image("file:images/romebutton.jfif");
 		ImageView romeImageView = new ImageView(romeImage);
 		romeImageView.setFitHeight(200);;
 		romeImageView.setFitWidth(200);
@@ -400,21 +400,21 @@ public class HomeScreen extends Application {
 		citiesHBox.getChildren().addAll(cairoButton,spartaButton,romeButton);
 		citiesHBox.setAlignment(Pos.CENTER);
 
-		GridPane.setConstraints(citiesHBox,5,5);
-		pageLayout.getChildren().add(citiesHBox);
+
+		pageLayout.setCenter(citiesHBox);
 		// End of Cities HBox 
 		
 		
 		
 // A representation for the idle armies the player controls in VBox  
+
+		VBox idleArmiesVBox = new VBox();
 		
-		VBox idleArmiesControlledByPlayerAndLabelVBox = new VBox();
-		
-		Label idleArmiesControlledByPlayerTitle = new Label ("Idle Armies Controlled By " + game.getPlayer().getName() );
-		idleArmiesControlledByPlayerTitle.setFont(Font.font("Cambria", 26));
+		Label idleArmiesTitle = new Label ("Idle Armies Controlled By " + game.getPlayer().getName() + ":");
+		idleArmiesTitle.setFont(Font.font("Cambria", 15));
 		
 		
-		HBox idleArmiesControlledByPlayer = new HBox();
+		HBox idleArmies = new HBox();
 		
 		
 		// Loop for creating idle armies and putting them in hbox
@@ -435,14 +435,14 @@ public class HomeScreen extends Application {
 				tt.setHideDelay(new Duration (10));
 				
 				currentArmyLabel.setTooltip(tt);
-				idleArmiesControlledByPlayer.getChildren().add(currentArmyLabel);
+				idleArmies.getChildren().add(currentArmyLabel);
 			}
 		}
 
-		idleArmiesControlledByPlayerAndLabelVBox.getChildren().addAll(idleArmiesControlledByPlayerTitle,idleArmiesControlledByPlayer);
-		// Grid pane numbers not set yet 
-		GridPane.setConstraints(idleArmiesControlledByPlayerAndLabelVBox,0,0);
-		pageLayout.getChildren().addAll(idleArmiesControlledByPlayerAndLabelVBox);
+		idleArmiesVBox.getChildren().addAll(idleArmiesTitle,idleArmies);
+
+		left.getChildren().add(idleArmiesVBox);
+
 		
 		
 		
@@ -451,8 +451,8 @@ public class HomeScreen extends Application {
 		
 		VBox marchingArmiesandLabelVBox = new VBox();
 		
-		Label marchingArmiesandLabelVBoxTitle = new Label ("Marching Armies");
-		marchingArmiesandLabelVBoxTitle.setFont(Font.font("Cambria", 26));
+		Label marchingArmiesandLabelVBoxTitle = new Label ("Marching Armies: ");
+		marchingArmiesandLabelVBoxTitle.setFont(Font.font("Cambria", 15));
 		
 		
 		HBox marchingArmies = new HBox();
@@ -482,8 +482,8 @@ public class HomeScreen extends Application {
 		
 				marchingArmiesandLabelVBox.getChildren().addAll(marchingArmiesandLabelVBoxTitle,marchingArmies);
 				// Grid pane numbers not set yet 
-				GridPane.setConstraints(marchingArmiesandLabelVBox,0,1);
-				pageLayout.getChildren().addAll(marchingArmiesandLabelVBox);
+				left.getChildren().add(marchingArmiesandLabelVBox);
+
 				
 				
 				
@@ -492,10 +492,9 @@ public class HomeScreen extends Application {
 		
 				VBox besiegingArmiesandLabelVBox = new VBox();
 				
-				Label besiegingArmiesandLabelVBoxTitle = new Label ("Besieging Armies");
-				besiegingArmiesandLabelVBoxTitle.setFont(Font.font("Cambria", 26));
-				
-				
+				Label besiegingArmiesandLabelVBoxTitle = new Label ("Besieging Armies: ");
+				besiegingArmiesandLabelVBoxTitle.setFont(Font.font("Cambria", 15));
+
 				HBox besiegingArmies = new HBox();
 				
 				// Loop for adding besieging armies in hbox
@@ -531,12 +530,14 @@ public class HomeScreen extends Application {
 						}
 				
 				besiegingArmiesandLabelVBox.getChildren().addAll(besiegingArmiesandLabelVBoxTitle,besiegingArmies);
-				// Grid pane numbers not set yet 
-				GridPane.setConstraints(besiegingArmiesandLabelVBox,0,2);
-				pageLayout.getChildren().addAll(besiegingArmiesandLabelVBox);
+
+
+				left.getChildren().add(besiegingArmiesandLabelVBox);
+				citiesHBox.setTranslateX(-100);
+
 						
-						
-						
+
+				left.setTranslateY(30.0);
 						
 		
 				
