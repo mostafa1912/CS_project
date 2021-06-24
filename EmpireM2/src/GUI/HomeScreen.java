@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import buildings.*;
 import engine.*;
+import exceptions.BuildingInCoolDownException;
+import exceptions.MaxLevelException;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
@@ -694,9 +696,7 @@ public class HomeScreen extends Application {
 		
 		
 		
-		System.out.println("Economical Buildings size "+  currentCity.getEconomicalBuildings().size());
-		
-		HBox economicalBuildingsHBox = new HBox (3);
+		HBox economicalBuildingsHBox = new HBox (6);
 		for (int i = 0 ; i < currentCity.getEconomicalBuildings().size(); i++) {
 			Building currentBuilding = currentCity.getEconomicalBuildings().get(i);
 			
@@ -742,7 +742,102 @@ public class HomeScreen extends Application {
 			currentBuildingVBox.getChildren().add(upgradeBuildingButton);
 					
 			
+			upgradeBuildingButton.setOnAction( e -> { 
+				try {
+					currentBuilding.upgrade();
+				} catch (BuildingInCoolDownException | MaxLevelException e1) {
+					
+					AlertBox.display("Unable to Upgrade Building" , e1.getMessage());
+				}
+				
+				
+			});
 			
+			
+			
+			economicalBuildingsHBox.getChildren().add(currentBuildingVBox);
+			
+			
+			
+			
+
+			
+			
+		}
+		
+		GridPane.setConstraints(economicalBuildingsHBox,0,3);
+		pageLayout.getChildren().add(economicalBuildingsHBox);
+		
+	
+//  Military Buildings Label 
+	
+		Label MilitaryBuildingsLabel = new Label ("Military Buildings");
+		MilitaryBuildingsLabel.setFont(Font.font("Cambria", 26));
+		GridPane.setConstraints(economicalBuildingsLabel, 0, 4);
+		pageLayout.getChildren().add(MilitaryBuildingsLabel);
+		
+		
+		
+// Displaying all Economical buildings next to each other 
+		
+		
+		
+		HBox militaryBuildingsHBox = new HBox (6);
+		for (int i = 0 ; i < currentCity.getEconomicalBuildings().size(); i++) {
+			Building currentBuilding = currentCity.getEconomicalBuildings().get(i);
+			
+			String buildingType = "Farm";
+			
+			
+			VBox currentBuildingVBox = new VBox(3);
+			//Adding building logo
+			Image buildingLogo = new Image("file:images/farmicon.png");
+			
+			if (currentCity.getEconomicalBuildings().get(i) instanceof Market) {
+				buildingLogo = new Image("file:images/marketicon.png");
+				buildingType = "Market";
+			}
+			
+			ImageView buildingLogoView = new ImageView(buildingLogo);
+			buildingLogoView.setFitHeight(130);;
+			buildingLogoView.setFitWidth(130);
+			
+			// Adding hover text to the building
+			Tooltip tt = new Tooltip("Building Type: " + buildingType +"\n Building Level: "+  currentBuilding.getLevel());
+			tt.setShowDelay(new Duration (0));
+			tt.setHideDelay(new Duration (10));
+			Tooltip.install(buildingLogoView, tt);
+			currentBuildingVBox.getChildren().add(buildingLogoView);
+			
+			
+			// Adding Upgrade Button Under Each Building 
+			
+			Button upgradeBuildingButton  = new Button();
+			
+			Image upgradeTextLogo = new Image("file:images/upgradetextlogo.png");
+			ImageView upgradeTextLogoView = new ImageView(upgradeTextLogo);
+			upgradeTextLogoView.setFitHeight(40);;
+			upgradeTextLogoView.setFitWidth(130);
+			upgradeBuildingButton.setGraphic(upgradeTextLogoView);
+			
+			
+			Tooltip tt1 = new Tooltip("Upgrade Cost: " + currentBuilding.getUpgradeCost());
+			tt1.setShowDelay(new Duration (0));
+			tt1.setHideDelay(new Duration (10));
+			Tooltip.install(upgradeBuildingButton, tt1);
+			currentBuildingVBox.getChildren().add(upgradeBuildingButton);
+					
+			
+			upgradeBuildingButton.setOnAction( e -> { 
+				try {
+					currentBuilding.upgrade();
+				} catch (BuildingInCoolDownException | MaxLevelException e1) {
+					
+					AlertBox.display("Unable to Upgrade Building" , e1.getMessage());
+				}
+				
+				
+			});
 			
 			
 			
@@ -760,18 +855,11 @@ public class HomeScreen extends Application {
 		pageLayout.getChildren().add(economicalBuildingsHBox);
 		
 		
-	//  Economical Buildings Label 
+
 		
-			Label MilitaryBuildingsLabel = new Label ("Military Buildings");
-			MilitaryBuildingsLabel.setFont(Font.font("Cambria", 26));
-			GridPane.setConstraints(economicalBuildingsLabel, 0, 4);
-			pageLayout.getChildren().add(MilitaryBuildingsLabel);
-			
 	
-			
-		
-		
-		
+	
+	
 
 		
 		
