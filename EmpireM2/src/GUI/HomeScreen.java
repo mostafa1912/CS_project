@@ -646,9 +646,18 @@ public class HomeScreen extends Application {
 		currentCity.getEconomicalBuildings().add(new Farm());
 		currentCity.getEconomicalBuildings().add(new Market());
 		
+		currentCity.getMilitaryBuildings().add(new Barracks());
+		currentCity.getMilitaryBuildings().add(new ArcheryRange());
+		currentCity.getMilitaryBuildings().add(new Stable());
+		
+		
+		VBox superLaypout = new VBox ();
+		
+		
+	// Page main layout
 		GridPane pageLayout = new GridPane();
-		pageLayout.setHgap(10); 
-		pageLayout.setVgap(10); 
+		pageLayout.setHgap(1); 
+		pageLayout.setVgap(1); 
 		
 		System.out.println("Current City View: " + currentCityName);
 	
@@ -666,13 +675,21 @@ public class HomeScreen extends Application {
 		ImageView cityLogoView = new ImageView(cityLogo);
 		cityLogoView.setFitHeight(150);;
 		cityLogoView.setFitWidth(150);
-		GridPane.setConstraints(cityLogoView, 0, 1);
+		
+		GridPane.setConstraints(cityLogoView,0,0);
 		pageLayout.getChildren().add(cityLogoView);
+		
+		
+		
+
+		
+		
 		
 // Adding Player Info Next To City Label 
 		Label label = new Label("Player name: " + game.getPlayer().getName()  + "; Player City: " + playerCityName + "; Turn Count: " +
 				game.getCurrentTurnCount() + "; Food: " + game.getPlayer().getFood() + "; Gold: "+ game.getPlayer().getTreasury());
 		label.setMaxHeight(10);
+		
 		label.setMinWidth(1275);
 		label.setTextFill(Color.web("WHITE"));
 		HBox hBox = new HBox();
@@ -680,17 +697,23 @@ public class HomeScreen extends Application {
 		hBox.setAlignment(Pos.TOP_LEFT);
 		hBox.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
 		
-		GridPane.setConstraints(hBox, 0, 0);
-		pageLayout.getChildren().add(hBox);
+		superLaypout.getChildren().add(hBox);
 		
 		
 		
+/* HBox for logo and player info 
+		VBox cityIconAndPlayerInfoHBox = new VBox();
 		
+		cityIconAndPlayerInfoHBox.getChildren().addAll(cityLogoView,hBox);
+		
+		GridPane.setConstraints(cityIconAndPlayerInfoHBox, 0, 0);
+		pageLayout.getChildren().add(cityIconAndPlayerInfoHBox);
+*/
 //  Economical Buildings Label 
 		
 		Label economicalBuildingsLabel = new Label ("Economical Buildings");
 		economicalBuildingsLabel.setFont(Font.font("Cambria", 26));
-		GridPane.setConstraints(economicalBuildingsLabel, 0, 2);
+		GridPane.setConstraints(economicalBuildingsLabel, 0, 3);
 		pageLayout.getChildren().add(economicalBuildingsLabel);
 		
 // Displaying all Economical buildings next to each other 
@@ -766,7 +789,7 @@ public class HomeScreen extends Application {
 			
 		}
 		
-		GridPane.setConstraints(economicalBuildingsHBox,0,3);
+		GridPane.setConstraints(economicalBuildingsHBox,0,4);
 		pageLayout.getChildren().add(economicalBuildingsHBox);
 		
 	
@@ -774,7 +797,7 @@ public class HomeScreen extends Application {
 	
 		Label MilitaryBuildingsLabel = new Label ("Military Buildings");
 		MilitaryBuildingsLabel.setFont(Font.font("Cambria", 26));
-		GridPane.setConstraints(economicalBuildingsLabel, 0, 4);
+		GridPane.setConstraints(MilitaryBuildingsLabel, 1, 3);
 		pageLayout.getChildren().add(MilitaryBuildingsLabel);
 		
 		
@@ -795,7 +818,7 @@ public class HomeScreen extends Application {
 			Image buildingLogo = new Image("file:images/archeryrangeicon.png");
 			
 			if (currentCity.getMilitaryBuildings().get(i) instanceof Barracks) {
-				buildingLogo = new Image("file:images/barracksicon.png");
+				buildingLogo = new Image("file:images/baracksicon.png");
 				buildingType = "Barracks";
 			}
 			
@@ -848,6 +871,19 @@ public class HomeScreen extends Application {
 			tt2.setShowDelay(new Duration (0));
 			tt2.setHideDelay(new Duration (10));
 			Tooltip.install(recruitButton, tt2);
+			
+			upgradeBuildingButton.setOnAction( e -> { 
+				try {
+					currentBuilding.upgrade();
+				} catch (BuildingInCoolDownException | MaxLevelException e1) {
+					
+					AlertBox.display("Unable to Upgrade Building" , e1.getMessage());
+				}
+				
+				
+			});
+			
+			
 			currentBuildingVBox.getChildren().add(recruitButton);
 		
 			
@@ -858,7 +894,7 @@ public class HomeScreen extends Application {
 					currentBuilding.recruit();
 				} catch (BuildingInCoolDownException | MaxRecruitedException e1) {
 					// TODO Auto-generated catch block
-					AlertBox.display("Unable to Upgrade Building" , e1.getMessage());
+					AlertBox.display("Unable to Recruit" , e1.getMessage());
 				}
 				
 				
@@ -876,10 +912,11 @@ public class HomeScreen extends Application {
 			
 		}
 		
-		GridPane.setConstraints(militaryBuildingsHBox,0,4);
-		pageLayout.getChildren().add(economicalBuildingsHBox);
+		GridPane.setConstraints(militaryBuildingsHBox,1,4);
+		pageLayout.getChildren().add(militaryBuildingsHBox);
 		
 		
+		superLaypout.getChildren().add(pageLayout);
 
 		
 	
@@ -918,7 +955,7 @@ public class HomeScreen extends Application {
 		
 		
 		
-		Scene cityView = new Scene(pageLayout , 1275, 680);
+		Scene cityView = new Scene(superLaypout ,1275, 680);
 
 		window.setScene(cityView);
 
