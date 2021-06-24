@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -642,6 +643,7 @@ public class HomeScreen extends Application {
 				currentCity= c;
 	
 		currentCity.getEconomicalBuildings().add(new Farm());
+		currentCity.getEconomicalBuildings().add(new Market());
 //Setting City Icon on Top Left of Page 		
 		Image cityLogo = new Image("file:images/cairologo.jpg");
 		
@@ -653,67 +655,91 @@ public class HomeScreen extends Application {
 		ImageView cityLogoView = new ImageView(cityLogo);
 		cityLogoView.setFitHeight(150);;
 		cityLogoView.setFitWidth(150);
-		GridPane.setConstraints(cityLogoView, 0, 0);
+		GridPane.setConstraints(cityLogoView, 0, 1);
 		pageLayout.getChildren().add(cityLogoView);
 		
 // Adding Player Info Next To City Label 
-		Label label = new Label("Player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
-				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
-		Label label1 = new Label( );
-		label1.setLayoutX(200);
+		Label label = new Label("Player name: " + game.getPlayer().getName()  + "; Player City: " + playerCityName + "; Turn Count: " +
+				game.getCurrentTurnCount() + "; Food: " + game.getPlayer().getFood() + "; Gold: "+ game.getPlayer().getTreasury());
+		label.setMaxHeight(10);
+		label.setMinWidth(1275);
+		label.setTextFill(Color.web("WHITE"));
 		HBox hBox = new HBox();
 		hBox.getChildren().addAll(label);
 		hBox.setAlignment(Pos.TOP_LEFT);
-		GridPane.setConstraints(hBox, 1, 0);
+		hBox.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+		
+		GridPane.setConstraints(hBox, 0, 0);
 		pageLayout.getChildren().add(hBox);
 		
 		
 		
 		
-// Buildings Label 
+//  Economical Buildings Label 
 		
 		Label economicalBuildingsLabel = new Label ("Economical Buildings");
 		economicalBuildingsLabel.setFont(Font.font("Cambria", 26));
-		GridPane.setConstraints(economicalBuildingsLabel, 0, 1);
+		GridPane.setConstraints(economicalBuildingsLabel, 0, 2);
 		pageLayout.getChildren().add(economicalBuildingsLabel);
 		
 // Displaying all Economical buildings next to each other 
 		
-		int currRow = 2;
+		
 		
 		System.out.println("Economical Buildings size "+  currentCity.getEconomicalBuildings().size());
 		
+		HBox economicalBuildingsHBox = new HBox (3);
 		for (int i = 0 ; i < currentCity.getEconomicalBuildings().size(); i++) {
-			Building currentBuiling = currentCity.getEconomicalBuildings().get(i);
+			Building currentBuilding = currentCity.getEconomicalBuildings().get(i);
 			
 			String buildingType = "Farm";
+			
 			
 			VBox currentBuildingVBox = new VBox(3);
 			//Adding building logo
 			Image buildingLogo = new Image("file:images/farmicon.png");
 			
 			if (currentCity.getEconomicalBuildings().get(i) instanceof Market) {
-				cityLogo = new Image("file:images/marketicon.png");
+				buildingLogo = new Image("file:images/marketicon.png");
 				buildingType = "Market";
 			}
 			
 			ImageView buildingLogoView = new ImageView(buildingLogo);
-			buildingLogoView.setFitHeight(150);;
-			buildingLogoView.setFitWidth(150);
+			buildingLogoView.setFitHeight(130);;
+			buildingLogoView.setFitWidth(130);
 			
 			// Adding hover text to the building
-			Tooltip tt = new Tooltip("Building Type: " + buildingType +"\n Building Level: "+  currentBuiling.getLevel());
+			Tooltip tt = new Tooltip("Building Type: " + buildingType +"\n Building Level: "+  currentBuilding.getLevel());
 			tt.setShowDelay(new Duration (0));
 			tt.setHideDelay(new Duration (10));
 			Tooltip.install(buildingLogoView, tt);
 			currentBuildingVBox.getChildren().add(buildingLogoView);
 			
 			
+			// Adding Upgrade Button Under Each Building 
+			
+			Button upgradeBuildingButton  = new Button();
+			
+			Image upgradeTextLogo = new Image("file:images/upgradetextlogo.png");
+			ImageView upgradeTextLogoView = new ImageView(upgradeTextLogo);
+			upgradeTextLogoView.setFitHeight(40);;
+			upgradeTextLogoView.setFitWidth(130);
+			upgradeBuildingButton.setGraphic(upgradeTextLogoView);
+			
+			
+			Tooltip tt1 = new Tooltip("Upgrade Cost: " + currentBuilding.getUpgradeCost());
+			tt1.setShowDelay(new Duration (0));
+			tt1.setHideDelay(new Duration (10));
+			Tooltip.install(upgradeBuildingButton, tt1);
+			currentBuildingVBox.getChildren().add(upgradeBuildingButton);
+					
 			
 			
 			
-			GridPane.setConstraints(currentBuildingVBox, i%3, currRow);
-			pageLayout.getChildren().add(currentBuildingVBox);
+			
+			
+			economicalBuildingsHBox.getChildren().add(currentBuildingVBox);
+			
 			
 			
 			
@@ -722,6 +748,12 @@ public class HomeScreen extends Application {
 			
 		}
 		
+		GridPane.setConstraints(economicalBuildingsHBox,0,3);
+		pageLayout.getChildren().add(economicalBuildingsHBox);
+		
+		
+		
+
 		
 		
 		
