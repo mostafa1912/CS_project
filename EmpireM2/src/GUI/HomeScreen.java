@@ -627,8 +627,21 @@ public class HomeScreen extends Application {
 
 
 	}
+	
+	
+	
+	
+	
 	public void cityView(Stage window , String currentCityName) throws IOException	{
-		
+	// Getting current City of the view  
+		City currentCity = game.getPlayer().getControlledCities().get(0);
+		for (City c :game.getPlayer().getControlledCities())
+			if (c.getName().equals(currentCityName))
+				currentCity= c;
+	// Initializations for testing till we understand the game logic 
+	
+		currentCity.getEconomicalBuildings().add(new Farm());
+		currentCity.getEconomicalBuildings().add(new Market());
 		
 		GridPane pageLayout = new GridPane();
 		pageLayout.setHgap(10); 
@@ -636,14 +649,9 @@ public class HomeScreen extends Application {
 		
 		System.out.println("Current City View: " + currentCityName);
 	
-// Getting current City of the view  
-		City currentCity = game.getPlayer().getControlledCities().get(0);
-		for (City c :game.getPlayer().getControlledCities())
-			if (c.getName().equals(currentCityName))
-				currentCity= c;
+
 	
-		currentCity.getEconomicalBuildings().add(new Farm());
-		currentCity.getEconomicalBuildings().add(new Market());
+		
 //Setting City Icon on Top Left of Page 		
 		Image cityLogo = new Image("file:images/cairologo.jpg");
 		
@@ -750,6 +758,17 @@ public class HomeScreen extends Application {
 		
 		GridPane.setConstraints(economicalBuildingsHBox,0,3);
 		pageLayout.getChildren().add(economicalBuildingsHBox);
+		
+		
+	//  Economical Buildings Label 
+		
+			Label MilitaryBuildingsLabel = new Label ("Military Buildings");
+			MilitaryBuildingsLabel.setFont(Font.font("Cambria", 26));
+			GridPane.setConstraints(economicalBuildingsLabel, 0, 4);
+			pageLayout.getChildren().add(MilitaryBuildingsLabel);
+			
+	
+			
 		
 		
 		
