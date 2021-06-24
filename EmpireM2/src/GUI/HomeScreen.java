@@ -672,12 +672,14 @@ public class HomeScreen extends Application {
 		currentCity.getDefendingArmy().getUnits().add(new Infantry(60, 60, 60, 60, 60));
 		currentCity.getDefendingArmy().getUnits().add(new Cavalry(60, 60, 60, 60, 60));
 		
+		game.getPlayer().getControlledArmies().add(new Army (currentCity.getName()));
+		
 		VBox superLaypout = new VBox ();
 		
 		
 	// Page main layout
 		GridPane pageLayout = new GridPane();
-		pageLayout.setHgap(1); 
+		pageLayout.setHgap(5); 
 		pageLayout.setVgap(1); 
 		
 		System.out.println("Current City View: " + currentCityName);
@@ -715,12 +717,12 @@ public class HomeScreen extends Application {
 		
 		label.setMinWidth(1275);
 		label.setTextFill(Color.web("WHITE"));
-		HBox hBox = new HBox();
-		hBox.getChildren().addAll(label);
-		hBox.setAlignment(Pos.TOP_LEFT);
-		hBox.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+		HBox upperHBoxOfPlayerInfo = new HBox();
+		upperHBoxOfPlayerInfo.getChildren().addAll(label);
+		upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+		upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
 		
-		superLaypout.getChildren().add(hBox);
+		
 		
 		
 		
@@ -934,9 +936,6 @@ public class HomeScreen extends Application {
 		pageLayout.getChildren().add(militaryBuildingsHBox);
 		
 		
-		superLaypout.getChildren().add(pageLayout);
-
-		superLaypout.setBackground(bg);
 	
 	
 	
@@ -1002,6 +1001,62 @@ public class HomeScreen extends Application {
 		GridPane.setConstraints(stationedArmiesLabel, 1, 7);
 		pageLayout.getChildren().add(stationedArmiesLabel);
 		
+// Put all armies together in the city
+		
+		HBox stationedArmiesHBox = new HBox(6);
+		for (Army a : game.getPlayer().getControlledArmies()) {
+			if (a.getCurrentLocation().equals(currentCity.getName())) {
+				
+				Image armyLogo = new Image("file:images/armylogo.png");
+				
+				ImageView armyLogoView = new ImageView(armyLogo);
+				armyLogoView.setFitHeight(130);;
+				armyLogoView.setFitWidth(180);
+				
+				
+				
+				// Adding hover text to the building
+				String ttString = "";
+				for (int i = 0 ; i < a.getUnits().size() ; i++) {
+					Unit u = a.getUnits().get(i);
+					ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount() +"\n";
+					
+				}
+				Tooltip tt = new Tooltip(ttString);
+				tt.setShowDelay(new Duration (0));
+				tt.setHideDelay(new Duration (10));
+				Tooltip.install(armyLogoView, tt);
+				
+				
+				
+				stationedArmiesHBox.getChildren().add(armyLogoView);
+			}
+		}
+		
+		
+		GridPane.setConstraints(stationedArmiesHBox,1,8);
+		pageLayout.getChildren().add(stationedArmiesHBox);
+		
+		
+//Go to World Map View Button 
+		
+		Button goToMapViewButton = new Button ("World Map View");
+		goToMapViewButton.setMaxHeight(40);
+		goToMapViewButton.setMaxWidth(240);
+		goToMapViewButton.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
+		goToMapViewButton.setTranslateX(517.5);
+		goToMapViewButton.setTranslateY(10);
+		
+		
+		
+		
+		goToMapViewButton.setOnAction(e -> { 
+			try {
+				worldMapView(window);
+			} catch (IOException e1) {
+				AlertBox.display(e1.getMessage());
+			}
+		});
 		
 		
 		
@@ -1011,14 +1066,11 @@ public class HomeScreen extends Application {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
+		superLaypout.getChildren().add(upperHBoxOfPlayerInfo);
+
+		superLaypout.getChildren().addAll(pageLayout,goToMapViewButton);
+
+		superLaypout.setBackground(bg);
 		
 		
 		Scene cityView = new Scene(superLaypout ,1275, 680);
