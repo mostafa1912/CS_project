@@ -339,8 +339,22 @@ public class HomeScreen extends Application {
 
 	public void worldMapView(Stage window) throws IOException	{
 		
+// Label with player info 
+		
+		Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+				game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+		label.setMaxHeight(10);
+		
+		label.setMinWidth(1275);
+		label.setTextFill(Color.web("WHITE"));
+		HBox upperHBoxOfPlayerInfo = new HBox();
+		upperHBoxOfPlayerInfo.getChildren().addAll(label);
+		upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+		upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+		
+		
 		//creating a borderpane to be the main layout
-				BorderPane pageLayout = new BorderPane();
+		BorderPane pageLayout = new BorderPane();
 		//creating main subcomponents for page laypout
 		VBox right= new VBox();
 		VBox left = new VBox();
@@ -349,23 +363,12 @@ public class HomeScreen extends Application {
 		pageLayout.setRight(right);
 
 
-		//creating label to show food, gold , and other info
-
-		Label playerInfoLabel = new Label("Player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
-				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
-
-
-		//creating hbox for label and adding to main layout
-		HBox playerInfoHBox = new HBox();
-		playerInfoHBox.getChildren().addAll(playerInfoLabel);
-		playerInfoHBox.setAlignment(Pos.TOP_LEFT);
-		pageLayout.setTop(playerInfoHBox);
+		
 	//setting background
 	BackgroundImage bg = new BackgroundImage(new Image("file:images/ancientworldmap.png"),
 			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
-		pageLayout.setBackground(new Background(bg));
-
+		
 		// Start of Cities HBox containing buttons for city choice
 		HBox citiesHBox = new HBox(50);
 
@@ -626,9 +629,15 @@ public class HomeScreen extends Application {
 							
 					}});
 				
+				
+				
+				
 	
+		VBox superLayout = new VBox () ; 
+		superLayout.setBackground(new Background(bg));
+		superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
 		
-		Scene worldMapView = new Scene(pageLayout , 1275, 680);
+		Scene worldMapView = new Scene(superLayout , 1275, 680);
 
 		
 		window.setScene(worldMapView);
@@ -647,11 +656,12 @@ public class HomeScreen extends Application {
 		
 		
 	// Getting current City of the view  
-		City currentCity = game.getPlayer().getControlledCities().get(0);
+		City currentCity1 = game.getPlayer().getControlledCities().get(0);
 		for (City c :game.getPlayer().getControlledCities())
 			if (c.getName().equals(currentCityName))
-				currentCity= c;
+				currentCity1= c;
 		
+		final City currentCity = currentCity1;
 		// not sure if I should initialize the defending army automatically 
 		currentCity.setDefendingArmy(new Army(currentCity.getName()));
 		
@@ -669,12 +679,14 @@ public class HomeScreen extends Application {
 		currentCity.getDefendingArmy().getUnits().add(new Infantry(60, 60, 60, 60, 60));
 		currentCity.getDefendingArmy().getUnits().add(new Cavalry(60, 60, 60, 60, 60));
 		
+		game.getPlayer().getControlledArmies().add(new Army (currentCity.getName()));
+		
 		VBox superLaypout = new VBox ();
 		
 		
 	// Page main layout
 		GridPane pageLayout = new GridPane();
-		pageLayout.setHgap(1); 
+		pageLayout.setHgap(5); 
 		pageLayout.setVgap(1); 
 		
 		System.out.println("Current City View: " + currentCityName);
@@ -705,19 +717,20 @@ public class HomeScreen extends Application {
 		
 		
 		
-// Adding Player Info Next To City Label 
-		Label label = new Label("Player name: " + game.getPlayer().getName()  + "; Player City: " + playerCityName + "; Turn Count: " +
-				game.getCurrentTurnCount() + "; Food: " + game.getPlayer().getFood() + "; Gold: "+ game.getPlayer().getTreasury());
+// Adding Player Info  To  Label 
+		Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+				game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+		
 		label.setMaxHeight(10);
 		
 		label.setMinWidth(1275);
 		label.setTextFill(Color.web("WHITE"));
-		HBox hBox = new HBox();
-		hBox.getChildren().addAll(label);
-		hBox.setAlignment(Pos.TOP_LEFT);
-		hBox.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+		HBox upperHBoxOfPlayerInfo = new HBox();
+		upperHBoxOfPlayerInfo.getChildren().addAll(label);
+		upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+		upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
 		
-		superLaypout.getChildren().add(hBox);
+		
 		
 		
 		
@@ -905,8 +918,8 @@ public class HomeScreen extends Application {
 			recruitButton.setOnAction( e -> { 
 				try {
 					
-					//23mel eh bel unit dy ???
-					currentBuilding.recruit();
+					
+					currentCity.getDefendingArmy().getUnits().add(currentBuilding.recruit());
 				} catch (BuildingInCoolDownException | MaxRecruitedException e1) {
 					// TODO Auto-generated catch block
 					AlertBox.display("Unable to Recruit" , e1.getMessage());
@@ -931,9 +944,6 @@ public class HomeScreen extends Application {
 		pageLayout.getChildren().add(militaryBuildingsHBox);
 		
 		
-		superLaypout.getChildren().add(pageLayout);
-
-		superLaypout.setBackground(bg);
 	
 	
 	
@@ -962,7 +972,7 @@ public class HomeScreen extends Application {
 			
 			if (u.getType().equals("Infantry")) {
 				unitLogo = new Image("file:images/infantryicon.png");
-				unitType = "Barracks";
+				unitType = "Infantry";
 			}
 			
 			if (u.getType().equals("Cavalry")) {
@@ -990,6 +1000,71 @@ public class HomeScreen extends Application {
 		
 		
 		
+
+//  Stationed Armies Label 
+	
+		Label stationedArmiesLabel = new Label ("Player Armies Currently Located In "+ currentCity.getName());
+		stationedArmiesLabel.setFont(Font.font("Cambria", 26));
+		stationedArmiesLabel.setTextFill(Color.web("#0076a3"));
+		GridPane.setConstraints(stationedArmiesLabel, 1, 7);
+		pageLayout.getChildren().add(stationedArmiesLabel);
+		
+// Put all armies together in the city
+		
+		HBox stationedArmiesHBox = new HBox(6);
+		for (Army a : game.getPlayer().getControlledArmies()) {
+			if (a.getCurrentLocation().equals(currentCity.getName())) {
+				
+				Image armyLogo = new Image("file:images/armylogo.png");
+				
+				ImageView armyLogoView = new ImageView(armyLogo);
+				armyLogoView.setFitHeight(130);;
+				armyLogoView.setFitWidth(180);
+				
+				
+				
+				// Adding hover text to the building
+				String ttString = "";
+				for (int i = 0 ; i < a.getUnits().size() ; i++) {
+					Unit u = a.getUnits().get(i);
+					ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount() +"\n";
+					
+				}
+				Tooltip tt = new Tooltip(ttString);
+				tt.setShowDelay(new Duration (0));
+				tt.setHideDelay(new Duration (10));
+				Tooltip.install(armyLogoView, tt);
+				
+				
+				
+				stationedArmiesHBox.getChildren().add(armyLogoView);
+			}
+		}
+		
+		
+		GridPane.setConstraints(stationedArmiesHBox,1,8);
+		pageLayout.getChildren().add(stationedArmiesHBox);
+		
+		
+//Go to World Map View Button 
+		
+		Button goToMapViewButton = new Button ("World Map View");
+		goToMapViewButton.setMaxHeight(40);
+		goToMapViewButton.setMaxWidth(240);
+		goToMapViewButton.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
+		goToMapViewButton.setTranslateX(517.5);
+		goToMapViewButton.setTranslateY(10);
+		
+		
+		
+		
+		goToMapViewButton.setOnAction(e -> { 
+			try {
+				worldMapView(window);
+			} catch (IOException e1) {
+				AlertBox.display(e1.getMessage());
+			}
+		});
 		
 		
 		
@@ -999,16 +1074,11 @@ public class HomeScreen extends Application {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		superLaypout.getChildren().add(upperHBoxOfPlayerInfo);
+
+		superLaypout.getChildren().addAll(pageLayout,goToMapViewButton);
+
+		superLaypout.setBackground(bg);
 		
 		
 		Scene cityView = new Scene(superLaypout ,1275, 680);
