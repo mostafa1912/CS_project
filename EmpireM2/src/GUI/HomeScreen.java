@@ -339,8 +339,22 @@ public class HomeScreen extends Application {
 
 	public void worldMapView(Stage window) throws IOException	{
 		
+// Label with player info 
+		
+		Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+				game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+		label.setMaxHeight(10);
+		
+		label.setMinWidth(1275);
+		label.setTextFill(Color.web("WHITE"));
+		HBox upperHBoxOfPlayerInfo = new HBox();
+		upperHBoxOfPlayerInfo.getChildren().addAll(label);
+		upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+		upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+		
+		
 		//creating a borderpane to be the main layout
-				BorderPane pageLayout = new BorderPane();
+		BorderPane pageLayout = new BorderPane();
 		//creating main subcomponents for page laypout
 		VBox right= new VBox();
 		VBox left = new VBox();
@@ -349,23 +363,12 @@ public class HomeScreen extends Application {
 		pageLayout.setRight(right);
 
 
-		//creating label to show food, gold , and other info
-
-		Label playerInfoLabel = new Label("Player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
-				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
-
-
-		//creating hbox for label and adding to main layout
-		HBox playerInfoHBox = new HBox();
-		playerInfoHBox.getChildren().addAll(playerInfoLabel);
-		playerInfoHBox.setAlignment(Pos.TOP_LEFT);
-		pageLayout.setTop(playerInfoHBox);
+		
 	//setting background
 	BackgroundImage bg = new BackgroundImage(new Image("file:images/ancientworldmap.png"),
 			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
-		pageLayout.setBackground(new Background(bg));
-
+		
 		// Start of Cities HBox containing buttons for city choice
 		HBox citiesHBox = new HBox(50);
 
@@ -630,8 +633,11 @@ public class HomeScreen extends Application {
 				
 				
 	
+		VBox superLayout = new VBox () ; 
+		superLayout.setBackground(new Background(bg));
+		superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
 		
-		Scene worldMapView = new Scene(pageLayout , 1275, 680);
+		Scene worldMapView = new Scene(superLayout , 1275, 680);
 
 		
 		window.setScene(worldMapView);
@@ -710,9 +716,10 @@ public class HomeScreen extends Application {
 		
 		
 		
-// Adding Player Info Next To City Label 
-		Label label = new Label("Player name: " + game.getPlayer().getName()  + "; Player City: " + playerCityName + "; Turn Count: " +
-				game.getCurrentTurnCount() + "; Food: " + game.getPlayer().getFood() + "; Gold: "+ game.getPlayer().getTreasury());
+// Adding Player Info  To  Label 
+		Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+				game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+		
 		label.setMaxHeight(10);
 		
 		label.setMinWidth(1275);
