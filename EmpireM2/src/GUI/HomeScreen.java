@@ -525,21 +525,96 @@ public class HomeScreen extends Application {
 							}
 						}
 				
-						besiegingArmiesandLabelVBox.getChildren().addAll(besiegingArmiesandLabelVBoxTitle,besiegingArmies);
-						// Grid pane numbers not set yet 
-						GridPane.setConstraints(besiegingArmiesandLabelVBox,0,2);
-						pageLayout.getChildren().addAll(besiegingArmiesandLabelVBox);
+				besiegingArmiesandLabelVBox.getChildren().addAll(besiegingArmiesandLabelVBoxTitle,besiegingArmies);
+				// Grid pane numbers not set yet 
+				GridPane.setConstraints(besiegingArmiesandLabelVBox,0,2);
+				pageLayout.getChildren().addAll(besiegingArmiesandLabelVBox);
 						
 						
 						
 						
-						
+		
 				
 				
 			
 		// Go to city view only if the city is controlled by the player 
-	
+		
+				Boolean bolControlledCitiesContainsCairo = false;
+				Boolean bolControlledCitiesContainsSparta = false;
+				Boolean bolControlledCitiesContainsRome = false;
 				
+				for (City c  : game.getPlayer().getControlledCities()) {
+					if (c.getName().equals("Cairo"))
+						bolControlledCitiesContainsCairo = true;
+					if (c.getName().equals("Rome"))
+						bolControlledCitiesContainsRome = true;
+					if (c.getName().equals("Sparta"))
+						bolControlledCitiesContainsSparta = true;
+				}
+				
+				
+				// I added those final variables as a lambda expression can only deal with final variables 
+				
+				final Boolean  finalbolControlledCitiesContainsCairo = bolControlledCitiesContainsCairo;
+				final Boolean finalbolControlledCitiesContainsSparta = bolControlledCitiesContainsSparta;
+				final Boolean finalbolControlledCitiesContainsRome = bolControlledCitiesContainsRome;
+				
+				cairoButton.setOnAction(e -> {
+					if (finalbolControlledCitiesContainsCairo)
+						try {
+							cityView(window,"Cairo");
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							AlertBox.display(e1.getMessage());;
+						}
+					else { 
+							AlertBox.display("Can't Open City View", "You Can't Open The City View Of A City Not Under Your Control");
+							try {
+								worldMapView( window);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								AlertBox.display(e1.getMessage());;
+							}
+							
+					}});
+				
+				romeButton.setOnAction(e -> {
+					if (finalbolControlledCitiesContainsRome)
+						try {
+							cityView(window,"Rome");
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							AlertBox.display(e1.getMessage());;
+						}
+					else { 
+							AlertBox.display("Can't Open City View", "You Can't Open The City View Of A City Not Under Your Control");
+							try {
+								worldMapView( window);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								AlertBox.display(e1.getMessage());;
+							}
+							
+					}});
+				
+				spartaButton.setOnAction(e -> {
+					if (finalbolControlledCitiesContainsSparta)
+						try {
+							cityView(window,"Sparta");
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							AlertBox.display(e1.getMessage());;
+						}
+					else { 
+							AlertBox.display("Can't Open City View", "You Can't Open The City View Of A City Not Under Your Control");
+							try {
+								worldMapView( window);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								AlertBox.display(e1.getMessage());;
+							}
+							
+					}});
 				
 	
 		
@@ -550,7 +625,7 @@ public class HomeScreen extends Application {
 
 
 	}
-	public void cityView(Stage window) throws IOException	{
+	public void cityView(Stage window , String currentCityName) throws IOException	{
 		System.out.println(game.getPlayer().getName() + " : " +playerCityName );
 		Label label = new Label("player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
 				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
