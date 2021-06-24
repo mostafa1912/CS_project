@@ -656,11 +656,12 @@ public class HomeScreen extends Application {
 		
 		
 	// Getting current City of the view  
-		City currentCity = game.getPlayer().getControlledCities().get(0);
+		City currentCity1 = game.getPlayer().getControlledCities().get(0);
 		for (City c :game.getPlayer().getControlledCities())
 			if (c.getName().equals(currentCityName))
-				currentCity= c;
+				currentCity1= c;
 		
+		final City currentCity = currentCity1;
 		// not sure if I should initialize the defending army automatically 
 		currentCity.setDefendingArmy(new Army(currentCity.getName()));
 		
@@ -917,8 +918,8 @@ public class HomeScreen extends Application {
 			recruitButton.setOnAction( e -> { 
 				try {
 					
-					//23mel eh bel unit dy ???
-					currentBuilding.recruit();
+					
+					currentCity.getDefendingArmy().getUnits().add(currentBuilding.recruit());
 				} catch (BuildingInCoolDownException | MaxRecruitedException e1) {
 					// TODO Auto-generated catch block
 					AlertBox.display("Unable to Recruit" , e1.getMessage());
@@ -971,7 +972,7 @@ public class HomeScreen extends Application {
 			
 			if (u.getType().equals("Infantry")) {
 				unitLogo = new Image("file:images/infantryicon.png");
-				unitType = "Barracks";
+				unitType = "Infantry";
 			}
 			
 			if (u.getType().equals("Cavalry")) {
