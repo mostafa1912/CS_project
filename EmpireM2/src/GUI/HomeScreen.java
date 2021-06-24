@@ -28,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import units.*;
 import units.Army;
 import units.Cavalry;
 import units.Infantry;
@@ -649,6 +650,11 @@ public class HomeScreen extends Application {
 		for (City c :game.getPlayer().getControlledCities())
 			if (c.getName().equals(currentCityName))
 				currentCity= c;
+		
+		// not sure if I should initialize the defending army automatically 
+		currentCity.setDefendingArmy(new Army(currentCity.getName()));
+		
+		
 	// Initializations for testing till we understand the game logic 
 	
 		currentCity.getEconomicalBuildings().add(new Farm());
@@ -658,6 +664,9 @@ public class HomeScreen extends Application {
 		currentCity.getMilitaryBuildings().add(new ArcheryRange());
 		currentCity.getMilitaryBuildings().add(new Stable());
 		
+		currentCity.getDefendingArmy().getUnits().add(new Archer(60, 60, 60, 60, 60));
+		currentCity.getDefendingArmy().getUnits().add(new Infantry(60, 60, 60, 60, 60));
+		currentCity.getDefendingArmy().getUnits().add(new Cavalry(60, 60, 60, 60, 60));
 		
 		VBox superLaypout = new VBox ();
 		
@@ -934,7 +943,7 @@ public class HomeScreen extends Application {
 		Label defendingArmyLabel = new Label ("Defending Army");
 		defendingArmyLabel.setFont(Font.font("Cambria", 26));
 		defendingArmyLabel.setTextFill(Color.web("#0076a3"));
-		GridPane.setConstraints(defendingArmyLabel, 0, 4);
+		GridPane.setConstraints(defendingArmyLabel, 0, 7);
 		pageLayout.getChildren().add(defendingArmyLabel);
 		
 		
@@ -942,7 +951,7 @@ public class HomeScreen extends Application {
 // Put all units of defending army 
 		
 		
-		HBox defendingArmyUnitsHBox = new HBox (6);
+		HBox defendingArmyUnitsHBox = new HBox (15);
 		
 		for (Unit u : currentCity.getDefendingArmy().getUnits()) { 
 			
@@ -950,12 +959,12 @@ public class HomeScreen extends Application {
 			String unitType = "Archer";
 			Image unitLogo = new Image("file:images/archericon.png");
 			
-			if (u instanceof Infantry) {
+			if (u.getType().equals("Infantry")) {
 				unitLogo = new Image("file:images/infantryicon.png");
 				unitType = "Barracks";
 			}
 			
-			if (u instanceof Cavalry) {
+			if (u.getType().equals("Cavalry")) {
 				unitLogo = new Image("file:images/cavalaryicon.png");
 				unitType = "Cavalry";
 			}
@@ -965,7 +974,7 @@ public class HomeScreen extends Application {
 			unitLogoView.setFitWidth(130);
 			
 			// Adding hover text to the building
-			Tooltip tt = new Tooltip(" Unit Type: " + u.getType() +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount());
+			Tooltip tt = new Tooltip(" Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount());
 			tt.setShowDelay(new Duration (0));
 			tt.setHideDelay(new Duration (10));
 			Tooltip.install(unitLogoView, tt);
@@ -973,7 +982,7 @@ public class HomeScreen extends Application {
 			
 		}
 		
-		GridPane.setConstraints(defendingArmyUnitsHBox,0,5);
+		GridPane.setConstraints(defendingArmyUnitsHBox,0,8);
 		pageLayout.getChildren().add(defendingArmyUnitsHBox);
 		
 		

@@ -49,7 +49,7 @@ public class Infantry extends Unit {
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
-		return "Cavalry";
+		return "Infantry";
 	}
 
 }
