@@ -15,6 +15,7 @@ import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink ;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -99,7 +100,7 @@ public class HomeScreen extends Application {
 		startLayout.setBackground(new Background(bg));
 
 		//creating the start button
-		Button startButton = new Button("PLAY");
+		Button  startButton = new Button ("PLAY");
 		//setting button size and font
 		startButton.setMaxHeight(50);
 		startButton.setMaxWidth(125);
@@ -126,7 +127,7 @@ public class HomeScreen extends Application {
 
 	public void scene2(Stage window) throws IOException {
 		//adding the next button and setting its size
-		Button next = new Button("Next");
+		Button  next = new Button ("Next");
 		next.setAlignment(Pos.BOTTOM_CENTER);
 		next.setMaxHeight(50);
 		next.setMaxWidth(140);
@@ -206,9 +207,9 @@ public class HomeScreen extends Application {
 
 
 
-		Button cairoButton = new Button ();
-		Button spartaButton = new Button ();
-		Button romeButton = new Button ();
+		Hyperlink  cairoButton = new Hyperlink  ();
+		Hyperlink  spartaButton = new Hyperlink  ();
+		Hyperlink  romeButton = new Hyperlink  ();
 
 
 		Image cairoImage = new Image("file:images/cairologo.jpg");
@@ -365,9 +366,9 @@ public class HomeScreen extends Application {
 		// Start of Cities HBox
 		HBox citiesHBox = new HBox(50);
 
-		Button cairoButton = new Button ();
-		Button spartaButton = new Button ();
-		Button romeButton = new Button ();
+		Hyperlink  cairoButton = new Hyperlink  ();
+		Hyperlink  spartaButton = new Hyperlink  ();
+		Hyperlink  romeButton = new Hyperlink  ();
 		Tooltip cityButtonsToolTip = new Tooltip("Click To Open City View");
 		cityButtonsToolTip.setShowDelay(new Duration (0));
 		cityButtonsToolTip.setHideDelay(new Duration (10));
@@ -636,6 +637,11 @@ public class HomeScreen extends Application {
 	
 	
 	public void cityView(Stage window , String currentCityName) throws IOException	{
+	
+		Background bg = Createbackground1("cityviewwallpaper.jpg");
+		
+		
+		
 	// Getting current City of the view  
 		City currentCity = game.getPlayer().getControlledCities().get(0);
 		for (City c :game.getPlayer().getControlledCities())
@@ -661,6 +667,7 @@ public class HomeScreen extends Application {
 		
 		System.out.println("Current City View: " + currentCityName);
 	
+		
 
 	
 		
@@ -675,6 +682,7 @@ public class HomeScreen extends Application {
 		ImageView cityLogoView = new ImageView(cityLogo);
 		cityLogoView.setFitHeight(150);;
 		cityLogoView.setFitWidth(150);
+		cityLogoView.setTranslateX(562.5);
 		
 		GridPane.setConstraints(cityLogoView,0,0);
 		pageLayout.getChildren().add(cityLogoView);
@@ -701,18 +709,12 @@ public class HomeScreen extends Application {
 		
 		
 		
-/* HBox for logo and player info 
-		VBox cityIconAndPlayerInfoHBox = new VBox();
-		
-		cityIconAndPlayerInfoHBox.getChildren().addAll(cityLogoView,hBox);
-		
-		GridPane.setConstraints(cityIconAndPlayerInfoHBox, 0, 0);
-		pageLayout.getChildren().add(cityIconAndPlayerInfoHBox);
-*/
+
 //  Economical Buildings Label 
 		
 		Label economicalBuildingsLabel = new Label ("Economical Buildings");
 		economicalBuildingsLabel.setFont(Font.font("Cambria", 26));
+		economicalBuildingsLabel.setTextFill(Color.web("#0076a3"));
 		GridPane.setConstraints(economicalBuildingsLabel, 0, 3);
 		pageLayout.getChildren().add(economicalBuildingsLabel);
 		
@@ -748,9 +750,9 @@ public class HomeScreen extends Application {
 			currentBuildingVBox.getChildren().add(buildingLogoView);
 			
 			
-			// Adding Upgrade Button Under Each Building 
+			// Adding Upgrade Hyperlink  Under Each Building 
 			
-			Button upgradeBuildingButton  = new Button();
+			Hyperlink  upgradeBuildingButton  = new Hyperlink ();
 			
 			Image upgradeTextLogo = new Image("file:images/upgradetextlogo.png");
 			ImageView upgradeTextLogoView = new ImageView(upgradeTextLogo);
@@ -797,6 +799,7 @@ public class HomeScreen extends Application {
 	
 		Label MilitaryBuildingsLabel = new Label ("Military Buildings");
 		MilitaryBuildingsLabel.setFont(Font.font("Cambria", 26));
+		MilitaryBuildingsLabel.setTextFill(Color.web("#0076a3"));
 		GridPane.setConstraints(MilitaryBuildingsLabel, 1, 3);
 		pageLayout.getChildren().add(MilitaryBuildingsLabel);
 		
@@ -839,9 +842,9 @@ public class HomeScreen extends Application {
 			currentBuildingVBox.getChildren().add(buildingLogoView);
 			
 			
-			// Adding Upgrade Button Under Each Building 
+			// Adding Upgrade Hyperlink  Under Each Building 
 			
-			Button upgradeBuildingButton  = new Button();
+			Hyperlink  upgradeBuildingButton  = new Hyperlink ();
 			
 			Image upgradeTextLogo = new Image("file:images/upgradetextlogo.png");
 			ImageView upgradeTextLogoView = new ImageView(upgradeTextLogo);
@@ -856,9 +859,9 @@ public class HomeScreen extends Application {
 			Tooltip.install(upgradeBuildingButton, tt1);
 			currentBuildingVBox.getChildren().add(upgradeBuildingButton);
 			
-// Adding Upgrade Button Under Each Building 
+// Adding Upgrade Hyperlink  Under Each Building 
 
-			Button recruitButton  = new Button();
+			Hyperlink  recruitButton  = new Hyperlink ();
 			
 			Image recruitTextLogo = new Image("file:images/recruittextlogo.png");
 			ImageView recruitTextLogoView = new ImageView(recruitTextLogo);
@@ -918,7 +921,7 @@ public class HomeScreen extends Application {
 		
 		superLaypout.getChildren().add(pageLayout);
 
-		
+		superLaypout.setBackground(bg);
 	
 	
 	
