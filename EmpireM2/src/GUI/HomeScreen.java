@@ -21,6 +21,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import units.Army;
 import units.Status;
 import units.Unit;
@@ -32,9 +33,9 @@ public class HomeScreen extends Application {
 
 	public static void main(String[] args) {
 		
-		String uriString = new File("music/warmusic.wav").toURI().toString();
-		 MediaPlayer player = new MediaPlayer( new Media(uriString));
-		   player.play();
+		//String uriString = new File("music/warmusic.wav").toURI().toString();
+		 //MediaPlayer player = new MediaPlayer( new Media(uriString));
+		 // player.play();
 		launch(args);
 	}
 
@@ -362,7 +363,14 @@ public class HomeScreen extends Application {
 		Button cairoButton = new Button ();
 		Button spartaButton = new Button ();
 		Button romeButton = new Button ();
-
+		Tooltip cityButtonsToolTip = new Tooltip("Click To Open City View");
+		cityButtonsToolTip.setShowDelay(new Duration (0));
+		cityButtonsToolTip.setHideDelay(new Duration (10));
+		cairoButton.setTooltip(cityButtonsToolTip);
+		spartaButton.setTooltip(cityButtonsToolTip);
+		romeButton.setTooltip(cityButtonsToolTip);
+		
+		
 		//cities hbox
 		Image cairoImage = new Image("file:images/cairotextlogo.png");
 		ImageView cairoImageView = new ImageView(cairoImage);
@@ -417,7 +425,11 @@ public class HomeScreen extends Application {
 				}
 				
 				
-				currentArmyLabel.setTooltip(new Tooltip(toolTipString));
+				Tooltip tt = new Tooltip(toolTipString);
+				tt.setShowDelay(new Duration (0));
+				tt.setHideDelay(new Duration (10));
+				
+				currentArmyLabel.setTooltip(tt);
 				idleArmiesControlledByPlayer.getChildren().add(currentArmyLabel);
 			}
 		}
@@ -454,7 +466,11 @@ public class HomeScreen extends Application {
 						}
 						
 						
-						currentArmyLabel.setTooltip(new Tooltip(toolTipString));
+						Tooltip tt = new Tooltip(toolTipString);
+						tt.setShowDelay(new Duration (0));
+						tt.setHideDelay(new Duration (10));
+						
+						currentArmyLabel.setTooltip(tt);
 						marchingArmies.getChildren().add(currentArmyLabel);
 					}
 				}
@@ -500,7 +516,11 @@ public class HomeScreen extends Application {
 								}
 								
 								
-								currentArmyLabel.setTooltip(new Tooltip(toolTipString));
+								Tooltip tt = new Tooltip(toolTipString);
+								tt.setShowDelay(new Duration (0));
+								tt.setHideDelay(new Duration (10));
+								
+								currentArmyLabel.setTooltip(tt);
 								besiegingArmies.getChildren().add(currentArmyLabel);
 							}
 						}
@@ -516,7 +536,9 @@ public class HomeScreen extends Application {
 						
 				
 				
-				
+			
+		// Go to city view only if the city is controlled by the player 
+	
 				
 				
 	
