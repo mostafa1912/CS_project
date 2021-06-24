@@ -29,6 +29,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import units.Army;
+import units.Cavalry;
+import units.Infantry;
 import units.Status;
 import units.Unit;
 
@@ -927,11 +929,52 @@ public class HomeScreen extends Application {
 	
 
 		
-		
+//  Military Buildings Label 
+	
+		Label defendingArmyLabel = new Label ("Defending Army");
+		defendingArmyLabel.setFont(Font.font("Cambria", 26));
+		defendingArmyLabel.setTextFill(Color.web("#0076a3"));
+		GridPane.setConstraints(defendingArmyLabel, 0, 4);
+		pageLayout.getChildren().add(defendingArmyLabel);
 		
 		
 
+// Put all units of defending army 
 		
+		
+		HBox defendingArmyUnitsHBox = new HBox (6);
+		
+		for (Unit u : currentCity.getDefendingArmy().getUnits()) { 
+			
+			
+			String unitType = "Archer";
+			Image unitLogo = new Image("file:images/archericon.png");
+			
+			if (u instanceof Infantry) {
+				unitLogo = new Image("file:images/infantryicon.png");
+				unitType = "Barracks";
+			}
+			
+			if (u instanceof Cavalry) {
+				unitLogo = new Image("file:images/cavalaryicon.png");
+				unitType = "Cavalry";
+			}
+			
+			ImageView unitLogoView = new ImageView(unitLogo);
+			unitLogoView.setFitHeight(130);;
+			unitLogoView.setFitWidth(130);
+			
+			// Adding hover text to the building
+			Tooltip tt = new Tooltip(" Unit Type: " + u.getType() +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount());
+			tt.setShowDelay(new Duration (0));
+			tt.setHideDelay(new Duration (10));
+			Tooltip.install(unitLogoView, tt);
+			defendingArmyUnitsHBox.getChildren().add(unitLogoView);
+			
+		}
+		
+		GridPane.setConstraints(defendingArmyUnitsHBox,0,5);
+		pageLayout.getChildren().add(defendingArmyUnitsHBox);
 		
 		
 		
