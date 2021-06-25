@@ -9,6 +9,7 @@ import engine.*;
 import exceptions.BuildingInCoolDownException;
 import exceptions.MaxLevelException;
 import exceptions.MaxRecruitedException;
+import exceptions.NotEnoughGoldException;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
@@ -667,20 +668,20 @@ public class HomeScreen extends Application {
 		
 		
 	// Initializations for testing till we understand the game logic 
-	
+		
+	/*
 		currentCity.getEconomicalBuildings().add(new Farm());
 		currentCity.getEconomicalBuildings().add(new Market());
 		
 		currentCity.getMilitaryBuildings().add(new Barracks());
-		currentCity.getMilitaryBuildings().add(new ArcheryRange());
+		ArcheryRange a1 = new ArcheryRange();
+		a1.setCoolDown(false);
+		currentCity.getMilitaryBuildings().add(a1);
+		
 		currentCity.getMilitaryBuildings().add(new Stable());
 		
-		currentCity.getDefendingArmy().getUnits().add(new Archer(60, 60, 60, 60, 60));
-		currentCity.getDefendingArmy().getUnits().add(new Infantry(60, 60, 60, 60, 60));
-		currentCity.getDefendingArmy().getUnits().add(new Cavalry(60, 60, 60, 60, 60));
-		
 		game.getPlayer().getControlledArmies().add(new Army (currentCity.getName()));
-		
+*/
 		VBox superLaypout = new VBox ();
 		
 		
@@ -736,13 +737,39 @@ public class HomeScreen extends Application {
 		
 
 //  Economical Buildings Label 
-		
+		HBox economicalBuildingsLabelHBox = new HBox ();
 		Label economicalBuildingsLabel = new Label ("Economical Buildings");
 		economicalBuildingsLabel.setFont(Font.font("Cambria", 26));
 		economicalBuildingsLabel.setTextFill(Color.web("#0076a3"));
-		GridPane.setConstraints(economicalBuildingsLabel, 0, 3);
-		pageLayout.getChildren().add(economicalBuildingsLabel);
+		economicalBuildingsLabelHBox.getChildren().add(economicalBuildingsLabel);
+	
 		
+// Putting Build Label Next to Economical Buildings Label 
+		
+		Hyperlink  buildBuildingButton  = new Hyperlink ();
+		Image buildTextLogo = new Image("file:images/buildtextlogo.png");
+		ImageView buildTextLogoView = new ImageView(buildTextLogo);
+		buildTextLogoView.setFitHeight(20);;
+		buildTextLogoView.setFitWidth(65);
+		buildBuildingButton.setGraphic(buildTextLogoView);
+		
+		buildBuildingButton.setOnAction(e ->{
+			BuildBuilding.displayBuildEconomicalBuilding(game.getPlayer(), currentCity.getName());
+			try {
+				cityView(window, currentCityName);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				AlertBox.display(e1.getMessage());
+			}
+		});
+		
+		economicalBuildingsLabelHBox.getChildren().add(buildBuildingButton);
+		
+		
+		
+		
+		pageLayout.getChildren().add(economicalBuildingsLabelHBox);
+		GridPane.setConstraints(economicalBuildingsLabelHBox, 0, 3);
 // Displaying all Economical buildings next to each other 
 		
 		
@@ -916,13 +943,25 @@ public class HomeScreen extends Application {
 		
 			
 			recruitButton.setOnAction( e -> { 
+				String unitType = "Archer";
+				if (currentBuilding instanceof Barracks) { 
+					unitType = "Infantry";
+				}
+				if (currentBuilding instanceof Stable) { 
+					unitType = "Cavalary";
+				}
+				
 				try {
-					
-					
-					currentCity.getDefendingArmy().getUnits().add(currentBuilding.recruit());
-				} catch (BuildingInCoolDownException | MaxRecruitedException e1) {
+					game.getPlayer().recruitUnit(unitType, currentCity.getName());
+				} catch (BuildingInCoolDownException | MaxRecruitedException | NotEnoughGoldException e1) {
+					AlertBox.display("Unit Can't Be Recruited", e1.getMessage());
+				}
+				
+				try {
+					cityView(window, currentCityName);
+				} catch (IOException e1) {
 					// TODO Auto-generated catch block
-					AlertBox.display("Unable to Recruit" , e1.getMessage());
+					AlertBox.display(e1.getMessage());
 				}
 				
 				
