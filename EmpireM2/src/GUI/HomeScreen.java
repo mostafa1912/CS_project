@@ -1106,16 +1106,30 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 				unitType = "Cavalry";
 			}
 			
+			Hyperlink  unitLogoButton  = new Hyperlink ();
 			ImageView unitLogoView = new ImageView(unitLogo);
 			unitLogoView.setFitHeight(130);;
 			unitLogoView.setFitWidth(130);
 			
+			unitLogoButton.setGraphic(unitLogoView);
+			
 			// Adding hover text to the building
-			Tooltip tt = new Tooltip(" Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount());
+			Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"\nClick To Relocate Unit");
 			tt.setShowDelay(new Duration (0));
 			tt.setHideDelay(new Duration (10));
-			Tooltip.install(unitLogoView, tt);
-			defendingArmyUnitsHBox.getChildren().add(unitLogoView);
+			Tooltip.install(unitLogoButton, tt);
+			defendingArmyUnitsHBox.getChildren().add(unitLogoButton);
+			
+			unitLogoButton.setOnAction(e -> { 
+				RelocateUnit.displayRelocateUnitScreen(game.getPlayer().getControlledArmies(), u, game);
+				try {
+					cityView(window,currentCityName);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					AlertBox.display(e1.getMessage());
+				}
+			});
+			
 			
 		}
 		
