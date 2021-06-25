@@ -650,8 +650,8 @@ public class HomeScreen extends Application {
 	
 	
 	
-	public void cityView(Stage window , String currentCityName) throws IOException	{
-	
+public void cityView(Stage window , String currentCityName) throws IOException	{
+		game.endTurn();
 		Background bg = Createbackground1("cityviewwallpaper.jpg");
 		
 		
@@ -663,8 +663,7 @@ public class HomeScreen extends Application {
 				currentCity1= c;
 		
 		final City currentCity = currentCity1;
-		// not sure if I should initialize the defending army automatically 
-		currentCity.setDefendingArmy(new Army(currentCity.getName()));
+		
 		
 		
 	// Initializations for testing till we understand the game logic 
@@ -690,7 +689,7 @@ public class HomeScreen extends Application {
 		pageLayout.setHgap(5); 
 		pageLayout.setVgap(1); 
 		
-		System.out.println("Current City View: " + currentCityName);
+		
 	
 		
 
@@ -746,14 +745,14 @@ public class HomeScreen extends Application {
 		
 // Putting Build Label Next to Economical Buildings Label 
 		
-		Hyperlink  buildBuildingButton  = new Hyperlink ();
+		Hyperlink  buildEcoBuildingButton  = new Hyperlink ();
 		Image buildTextLogo = new Image("file:images/buildtextlogo.png");
 		ImageView buildTextLogoView = new ImageView(buildTextLogo);
 		buildTextLogoView.setFitHeight(20);;
 		buildTextLogoView.setFitWidth(65);
-		buildBuildingButton.setGraphic(buildTextLogoView);
+		buildEcoBuildingButton.setGraphic(buildTextLogoView);
 		
-		buildBuildingButton.setOnAction(e ->{
+		buildEcoBuildingButton.setOnAction(e ->{
 			BuildBuilding.displayBuildEconomicalBuilding(game.getPlayer(), currentCity.getName());
 			try {
 				cityView(window, currentCityName);
@@ -763,7 +762,7 @@ public class HomeScreen extends Application {
 			}
 		});
 		
-		economicalBuildingsLabelHBox.getChildren().add(buildBuildingButton);
+		economicalBuildingsLabelHBox.getChildren().add(buildEcoBuildingButton);
 		
 		
 		
@@ -789,6 +788,9 @@ public class HomeScreen extends Application {
 				buildingLogo = new Image("file:images/marketicon.png");
 				buildingType = "Market";
 			}
+			
+			
+			final String buildingTypeFinal = buildingType;
 			
 			ImageView buildingLogoView = new ImageView(buildingLogo);
 			buildingLogoView.setFitHeight(130);;
@@ -821,12 +823,26 @@ public class HomeScreen extends Application {
 					
 			
 			upgradeBuildingButton.setOnAction( e -> { 
+				
 				try {
 					currentBuilding.upgrade();
 				} catch (BuildingInCoolDownException | MaxLevelException e1) {
 					
 					AlertBox.display("Unable to Upgrade Building" , e1.getMessage());
 				}
+				
+				Tooltip ttx = new Tooltip("Building Type: " + buildingTypeFinal +"\n Building Level: "+  currentBuilding.getLevel());
+				ttx.setShowDelay(new Duration (0));
+				ttx.setHideDelay(new Duration (10));
+				Tooltip.install(buildingLogoView, ttx);
+				
+				
+				
+				Tooltip tty = new Tooltip("Upgrade Cost: " + currentBuilding.getUpgradeCost());
+				tty.setShowDelay(new Duration (0));
+				tty.setHideDelay(new Duration (10));
+				Tooltip.install(upgradeBuildingButton, tty);
+
 				
 				
 			});
@@ -848,12 +864,42 @@ public class HomeScreen extends Application {
 		
 	
 //  Military Buildings Label 
-	
+		HBox MilitaryBuildingsLabelHBox = new HBox();
 		Label MilitaryBuildingsLabel = new Label ("Military Buildings");
 		MilitaryBuildingsLabel.setFont(Font.font("Cambria", 26));
 		MilitaryBuildingsLabel.setTextFill(Color.web("#0076a3"));
-		GridPane.setConstraints(MilitaryBuildingsLabel, 1, 3);
-		pageLayout.getChildren().add(MilitaryBuildingsLabel);
+		MilitaryBuildingsLabelHBox.getChildren().add(MilitaryBuildingsLabel);
+		
+		
+// Putting Build Label Next to Military Buildings Label 
+		
+		Hyperlink  buildMilBuildingButton  = new Hyperlink ();
+		
+		Image buildMilTextLogo = new Image("file:images/buildtextlogo.png");
+		ImageView buildMilTextLogoView = new ImageView(buildMilTextLogo);
+		buildMilTextLogoView.setFitHeight(20);;
+		buildMilTextLogoView.setFitWidth(65);
+		buildMilBuildingButton.setGraphic(buildMilTextLogoView);
+		
+		buildMilBuildingButton.setOnAction(e ->{
+			BuildBuilding.displayBuildMilitary(game.getPlayer(), currentCity.getName());
+			try {
+				cityView(window, currentCityName);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				AlertBox.display(e1.getMessage());
+			}
+		});
+		
+		MilitaryBuildingsLabelHBox.getChildren().add(buildMilBuildingButton);
+		
+				
+		
+		
+		
+		
+		GridPane.setConstraints(MilitaryBuildingsLabelHBox, 1, 3);
+		pageLayout.getChildren().add(MilitaryBuildingsLabelHBox);
 		
 		
 		
@@ -881,6 +927,9 @@ public class HomeScreen extends Application {
 				buildingLogo = new Image("file:images/stableicon.png");
 				buildingType = "Stable";
 			}
+			
+			
+			final String buildingtypeFinal = buildingType;
 			
 			ImageView buildingLogoView = new ImageView(buildingLogo);
 			buildingLogoView.setFitHeight(130);;
@@ -922,7 +971,7 @@ public class HomeScreen extends Application {
 			recruitButton.setGraphic(recruitTextLogoView);
 			
 			
-			Tooltip tt2 = new Tooltip("Upgrade Cost: " + currentBuilding.getRecruitmentCost());
+			Tooltip tt2 = new Tooltip("Recruitment Cost: " + currentBuilding.getRecruitmentCost());
 			tt2.setShowDelay(new Duration (0));
 			tt2.setHideDelay(new Duration (10));
 			Tooltip.install(recruitButton, tt2);
@@ -936,6 +985,18 @@ public class HomeScreen extends Application {
 				}
 				
 				
+				Tooltip ttx = new Tooltip("Building Type: " + buildingtypeFinal +"\n Building Level: "+  currentBuilding.getLevel());
+				ttx.setShowDelay(new Duration (0));
+				ttx.setHideDelay(new Duration (10));
+				Tooltip.install(buildingLogoView, ttx);
+				
+				
+				Tooltip tty = new Tooltip("Upgrade Cost: " + currentBuilding.getUpgradeCost());
+				tty.setShowDelay(new Duration (0));
+				tty.setHideDelay(new Duration (10));
+				Tooltip.install(upgradeBuildingButton, tty);
+				
+				
 			});
 			
 			
@@ -945,10 +1006,10 @@ public class HomeScreen extends Application {
 			recruitButton.setOnAction( e -> { 
 				String unitType = "Archer";
 				if (currentBuilding instanceof Barracks) { 
-					unitType = "Infantry";
+					unitType = "infantry";
 				}
 				if (currentBuilding instanceof Stable) { 
-					unitType = "Cavalary";
+					unitType = "cavalry";
 				}
 				
 				try {
@@ -964,6 +1025,11 @@ public class HomeScreen extends Application {
 					AlertBox.display(e1.getMessage());
 				}
 				
+				
+				Tooltip ttz = new Tooltip("Recruitment Cost: " + currentBuilding.getRecruitmentCost());
+				ttz.setShowDelay(new Duration (0));
+				ttz.setHideDelay(new Duration (10));
+				Tooltip.install(recruitButton, ttz);
 				
 			});
 			
@@ -1041,12 +1107,59 @@ public class HomeScreen extends Application {
 		
 
 //  Stationed Armies Label 
-	
+		HBox stationedArmiesLabelHBox = new HBox(6);
+		
 		Label stationedArmiesLabel = new Label ("Player Armies Currently Located In "+ currentCity.getName());
 		stationedArmiesLabel.setFont(Font.font("Cambria", 26));
 		stationedArmiesLabel.setTextFill(Color.web("#0076a3"));
-		GridPane.setConstraints(stationedArmiesLabel, 1, 7);
-		pageLayout.getChildren().add(stationedArmiesLabel);
+		stationedArmiesLabelHBox.getChildren().add(stationedArmiesLabel);
+		
+		
+		
+
+// Putting Build Label Next to Military Buildings Label 
+		
+		Hyperlink  initiateArmyButton  = new Hyperlink ();
+		
+		Image initiateArmyTextLogo = new Image("file:images/initiatearmytextlogo.png");
+		ImageView initiateArmyTextLogoView = new ImageView(initiateArmyTextLogo);
+		initiateArmyTextLogoView.setFitHeight(20);;
+		initiateArmyTextLogoView.setFitWidth(65);
+		initiateArmyButton.setGraphic(initiateArmyTextLogoView);
+		
+		initiateArmyButton.setOnAction(e ->{
+			//BuildBuilding.displayBuildMilitary(game.getPlayer(), currentCity.getName());
+			RecruitUnit.displayChooseUnitToInitializeArmy(currentCity, game.getPlayer());
+			try {
+				cityView(window, currentCityName);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				AlertBox.display(e1.getMessage());
+			}
+		});
+		
+		stationedArmiesLabelHBox.getChildren().add(initiateArmyButton);
+		
+				
+				
+				
+				
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		GridPane.setConstraints(stationedArmiesLabelHBox, 1, 7);
+		pageLayout.getChildren().add(stationedArmiesLabelHBox);
 		
 // Put all armies together in the city
 		
@@ -1066,7 +1179,7 @@ public class HomeScreen extends Application {
 				String ttString = "";
 				for (int i = 0 ; i < a.getUnits().size() ; i++) {
 					Unit u = a.getUnits().get(i);
-					ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount() +"\n";
+					ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
 					
 				}
 				Tooltip tt = new Tooltip(ttString);

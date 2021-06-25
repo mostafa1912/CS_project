@@ -47,7 +47,7 @@ public class Player {
 							throw new NotEnoughGoldException("Not enough gold");
 						treasury -= b.getRecruitmentCost();
 						u.setParentArmy(c.getDefendingArmy());
-						c.getDefendingArmy().getUnits().add(u);
+						c.getDefendingArmy().getUnits().add(u);					
 					}
 				}
 			}
