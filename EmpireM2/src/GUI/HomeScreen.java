@@ -428,34 +428,43 @@ public class HomeScreen extends Application {
 
 		HBox idleArmiesHBox = new HBox(6);
 		for (Army a : game.getPlayer().getControlledArmies()) {
-		
-			if (a.getCurrentStatus().equals(Status.IDLE)) {	
-				Image armyLogo = new Image("file:images/armylogo.png");
+			
 				
-				ImageView armyLogoView = new ImageView(armyLogo);
-				armyLogoView.setFitHeight(130);;
-				armyLogoView.setFitWidth(180);
+		/********/
+			Hyperlink  armyButton  = new Hyperlink ();
+			Image armyLogo = new Image("file:images/armylogo.png");
+			ImageView armyLogoView = new ImageView(armyLogo);
+			armyLogoView.setFitHeight(130);;
+			armyLogoView.setFitWidth(180);
+			armyButton.setGraphic(armyLogoView);
+			
+			
+			// Adding hover text to the building
+			String ttString = "---Click To View Units---\n--- Units: \n";
+			for (int i = 0 ; i < a.getUnits().size() ; i++) {
+				Unit u = a.getUnits().get(i);
+				ttString+= "" + (i+1) + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
 				
-				
-				
-				// Adding hover text to the building
-				String ttString = "---Units: \n";
-				for (int i = 0 ; i < a.getUnits().size() ; i++) {
-					Unit u = a.getUnits().get(i);
-					ttString+= "" + (i+1) + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
-					
-				}
-				Tooltip tt = new Tooltip(ttString);
-				tt.setShowDelay(new Duration (0));
-				tt.setHideDelay(new Duration (10));
-				Tooltip.install(armyLogoView, tt);
-				
-				
-				
-				idleArmiesHBox.getChildren().add(armyLogoView);
 			}
+			Tooltip tt = new Tooltip(ttString);
+			tt.setShowDelay(new Duration (0));
+			tt.setHideDelay(new Duration (10));
+			Tooltip.install(armyButton, tt);
+			
+			armyButton.setOnAction(e->{ 
+				ViewUnits.displayUnitsOfArmy(a, game.getPlayer(), game, a.getCurrentLocation());
+				try {
+					worldMapView(window);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					AlertBox.display(e1.getMessage());
+				}
+			});
+			
+			
+			idleArmiesHBox.getChildren().add(armyButton);
+			
 		}
-		
 		
 		GridPane.setConstraints(idleArmiesHBox,0,1);
 		pageLayout.getChildren().add(idleArmiesHBox);
@@ -476,11 +485,7 @@ public class HomeScreen extends Application {
 		
 		HBox marchingArmiesHBox = new HBox();
 		
-		// Loop for adding marching armies in hbox
-		//Label currentArmyLabel = new Label ("Number of Units: " + a.getUnits().size() + "; Army Location: On Road to " + a.getTarget() +";  Distance to Target: " + a.getDistancetoTarget());
-
-//		toolTipString += ""+u.getType()+ "; Level: "+ u.getLevel() + "; Current Solider Count: "+ u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount();	
-
+	
 				for (Army a : game.getPlayer().getControlledArmies()) {
 					if (a.getCurrentStatus().equals(Status.MARCHING)) {
 						Image armyLogo = new Image("file:images/armylogo.png");
@@ -523,54 +528,46 @@ public class HomeScreen extends Application {
 		GridPane.setConstraints(besiegingArmiesLabel, 0, 4);
 
 		HBox besiegingArmiesHBox = new HBox();
-		/*
-		String labelString = "Number of Units: " + a.getUnits().size() + "\n Besieging City " + a.getTarget() +"\n Turns Under Siege " ;
-		
-		
-		for (City c : game.getAvailableCities()) { 
-			if (c.getName().equals(a.getTarget()))
-				labelString += ""+ c.getTurnsUnderSiege();
-		}
-			*/	
-				// Loop for adding besieging armies in hbox
-				
-				//For besieging armies, the player should be able to know which city is this army besieging and for how many turns the city was under siege. 
+	
+// Loop for adding besieging armies in hbox
 
-						for (Army a : game.getPlayer().getControlledArmies()) {
-							if (a.getCurrentStatus().equals(Status.BESIEGING)) {
-								Image armyLogo = new Image("file:images/armylogo.png");
-								
-								ImageView armyLogoView = new ImageView(armyLogo);
-								armyLogoView.setFitHeight(130);;
-								armyLogoView.setFitWidth(180);
-								
-								
-								
-								// Adding hover text to the building
-								String ttString = "Number of Units: " + a.getUnits().size() + "\n Besieging City " + a.getTarget() +"\n Turns Under Siege " ;
-								
-								
-								for (City c : game.getAvailableCities()) { 
-									if (c.getName().equals(a.getTarget()))
-										ttString += ""+ c.getTurnsUnderSiege();
-									
-								ttString+= "---Units : \n";
-								for (int i = 0 ; i < a.getUnits().size() ; i++) {
-									Unit u = a.getUnits().get(i);
-									ttString+= "" + (i+1) + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
-									
-								}
-								Tooltip tt = new Tooltip(ttString);
-								tt.setShowDelay(new Duration (0));
-								tt.setHideDelay(new Duration (10));
-								Tooltip.install(armyLogoView, tt);
-								
-								
-								
-								besiegingArmiesHBox.getChildren().add(armyLogoView);
-							}
+//For besieging armies, the player should be able to know which city is this army besieging and for how many turns the city was under siege. 
+
+				for (Army a : game.getPlayer().getControlledArmies()) {
+					if (a.getCurrentStatus().equals(Status.BESIEGING)) {
+						Image armyLogo = new Image("file:images/armylogo.png");
+						
+						ImageView armyLogoView = new ImageView(armyLogo);
+						armyLogoView.setFitHeight(130);;
+						armyLogoView.setFitWidth(180);
+						
+						
+						
+						// Adding hover text to the building
+						String ttString = "Number of Units: " + a.getUnits().size() + "\n Besieging City " + a.getTarget() +"\n Turns Under Siege " ;
+						
+						
+						for (City c : game.getAvailableCities()) { 
+							if (c.getName().equals(a.getTarget()))
+								ttString += ""+ c.getTurnsUnderSiege();
+							
+						ttString+= "---Units : \n";
+						for (int i = 0 ; i < a.getUnits().size() ; i++) {
+							Unit u = a.getUnits().get(i);
+							ttString+= "" + (i+1) + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
+							
 						}
+						Tooltip tt = new Tooltip(ttString);
+						tt.setShowDelay(new Duration (0));
+						tt.setHideDelay(new Duration (10));
+						Tooltip.install(armyLogoView, tt);
+						
+						
+						
+						besiegingArmiesHBox.getChildren().add(armyLogoView);
+					}
 				}
+		}
 					
 				
 				
@@ -711,8 +708,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		pageLayout.setVgap(1); 
 		
 		
-	
-		
+
 
 	
 		
@@ -1096,7 +1092,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 			String unitType = "Archer";
 			Image unitLogo = new Image("file:images/archericon.png");
 			
-			if (u.getType().equals("Infantry")) {
+			if (u.getType().equals("Infantry")){
 				unitLogo = new Image("file:images/infantryicon.png");
 				unitType = "Infantry";
 			}
@@ -1114,14 +1110,14 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 			unitLogoButton.setGraphic(unitLogoView);
 			
 			// Adding hover text to the building
-			Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"\nClick To Relocate Unit");
+			Tooltip tt = new Tooltip("---Click To Relocate Unit--- \nUnit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
 			tt.setShowDelay(new Duration (0));
 			tt.setHideDelay(new Duration (10));
 			Tooltip.install(unitLogoButton, tt);
 			defendingArmyUnitsHBox.getChildren().add(unitLogoButton);
 			
 			unitLogoButton.setOnAction(e -> { 
-				RelocateUnit.displayRelocateUnitScreen(game.getPlayer().getControlledArmies(), u, game);
+				RelocateUnit.displayRelocateUnitScreen(game.getPlayer().getControlledArmies(), u, game,currentCity);
 				try {
 					cityView(window,currentCityName);
 				} catch (IOException e1) {
@@ -1163,8 +1159,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		initiateArmyButton.setGraphic(initiateArmyTextLogoView);
 		
 		initiateArmyButton.setOnAction(e ->{
-			//BuildBuilding.displayBuildMilitary(game.getPlayer(), currentCity.getName());
-			RecruitUnit.displayChooseUnitToInitializeArmy(currentCity, game.getPlayer());
+			ViewUnits.displayChooseUnitToInitializeArmy(currentCity, game.getPlayer());
 			try {
 				cityView(window, currentCityName);
 			} catch (IOException e1) {
@@ -1202,16 +1197,18 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		for (Army a : game.getPlayer().getControlledArmies()) {
 			if (a.getCurrentLocation().equals(currentCity.getName())) {
 				
-				Image armyLogo = new Image("file:images/armylogo.png");
 				
+			/********/
+				Hyperlink  armyButton  = new Hyperlink ();
+				Image armyLogo = new Image("file:images/armylogo.png");
 				ImageView armyLogoView = new ImageView(armyLogo);
 				armyLogoView.setFitHeight(130);;
 				armyLogoView.setFitWidth(180);
-				
+				armyButton.setGraphic(armyLogoView);
 				
 				
 				// Adding hover text to the building
-				String ttString = "--- Units: \n";
+				String ttString = "---Click To View Units---\n--- Units: \n";
 				for (int i = 0 ; i < a.getUnits().size() ; i++) {
 					Unit u = a.getUnits().get(i);
 					ttString+= "" + (i+1) + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
@@ -1220,11 +1217,20 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 				Tooltip tt = new Tooltip(ttString);
 				tt.setShowDelay(new Duration (0));
 				tt.setHideDelay(new Duration (10));
-				Tooltip.install(armyLogoView, tt);
+				Tooltip.install(armyButton, tt);
+				
+				armyButton.setOnAction(e->{ 
+					ViewUnits.displayUnitsOfArmy(a, game.getPlayer(), game, currentCity);
+					try {
+						cityView(window,currentCityName);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						AlertBox.display(e1.getMessage());
+					}
+				});
 				
 				
-				
-				stationedArmiesHBox.getChildren().add(armyLogoView);
+				stationedArmiesHBox.getChildren().add(armyButton);
 			}
 		}
 		
