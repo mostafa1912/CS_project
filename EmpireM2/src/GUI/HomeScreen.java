@@ -439,7 +439,7 @@ public class HomeScreen extends Application {
 				
 				
 				// Adding hover text to the building
-				String ttString = "";
+				String ttString = "---Units: \n";
 				for (int i = 0 ; i < a.getUnits().size() ; i++) {
 					Unit u = a.getUnits().get(i);
 					ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
@@ -493,7 +493,7 @@ public class HomeScreen extends Application {
 						
 						// Adding hover text to the building
 						String ttString = "Number of Units: " + a.getUnits().size() + "; Army Location: On Road to " + a.getTarget() +";  Distance to Target: " + a.getDistancetoTarget() + "\n";
-						ttString+= "---Units : ";
+						ttString+= "---Units : \n";
 						for (int i = 0 ; i < a.getUnits().size() ; i++) {
 							Unit u = a.getUnits().get(i);
 							ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
@@ -554,7 +554,7 @@ public class HomeScreen extends Application {
 									if (c.getName().equals(a.getTarget()))
 										ttString += ""+ c.getTurnsUnderSiege();
 									
-								ttString+= "---Units : ";
+								ttString+= "---Units : \n";
 								for (int i = 0 ; i < a.getUnits().size() ; i++) {
 									Unit u = a.getUnits().get(i);
 									ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
@@ -1197,7 +1197,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 				
 				
 				// Adding hover text to the building
-				String ttString = "";
+				String ttString = "--- Units: \n";
 				for (int i = 0 ; i < a.getUnits().size() ; i++) {
 					Unit u = a.getUnits().get(i);
 					ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
