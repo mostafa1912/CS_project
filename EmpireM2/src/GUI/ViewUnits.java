@@ -206,7 +206,28 @@ public class ViewUnits {
 			
 		}
 		
-		layout.getChildren().addAll(label,defendingArmyUnitsHBox);
+		/**/
+		
+		Hyperlink  setTargetButton  = new Hyperlink ();
+		
+		Image setTargetTextLogo = new Image("file:images/setarmytargettextlogo.png");
+		ImageView setTargetTextLogoView = new ImageView(setTargetTextLogo);
+		setTargetTextLogoView.setFitHeight(60);;
+		setTargetTextLogoView.setFitWidth(200);
+		setTargetButton.setGraphic(setTargetTextLogoView);
+		
+		
+		Tooltip tt2 = new Tooltip("Set Target Of Army");
+		tt2.setShowDelay(new Duration (0));
+		tt2.setHideDelay(new Duration (10));
+		Tooltip.install(setTargetButton, tt2);
+		
+		
+		
+		
+		
+		
+		layout.getChildren().addAll(label,defendingArmyUnitsHBox,setTargetButton);
 		layout.setAlignment(Pos.CENTER);
 		
 		layout.setBackground(new Background(bg));
@@ -302,7 +323,33 @@ public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityNam
 			
 		}
 		
-		layout.getChildren().addAll(label,defendingArmyUnitsHBox);
+		
+		
+		/**/
+		
+		Hyperlink  setTargetButton  = new Hyperlink ();
+		
+		Image setTargetTextLogo = new Image("file:images/setarmytargettextlogo.png");
+		ImageView setTargetTextLogoView = new ImageView(setTargetTextLogo);
+		setTargetTextLogoView.setFitHeight(60);;
+		setTargetTextLogoView.setFitWidth(200);
+		setTargetButton.setGraphic(setTargetTextLogoView);
+		
+		
+		Tooltip tt2 = new Tooltip("Set Target Of Army");
+		tt2.setShowDelay(new Duration (0));
+		tt2.setHideDelay(new Duration (10));
+		Tooltip.install(setTargetButton, tt2);
+		
+		
+		setTargetButton.setOnAction(e->{ 
+			ViewCities.displayUnCotrolledCities(army,g);
+			window.close();
+		});
+		
+		
+		
+		layout.getChildren().addAll(label,defendingArmyUnitsHBox,setTargetButton);
 		layout.setAlignment(Pos.CENTER);
 		
 		layout.setBackground(new Background(bg));

@@ -338,7 +338,7 @@ public class HomeScreen extends Application {
 	}
 
 
-	public void worldMapView(Stage window) throws IOException	{
+public void worldMapView(Stage window) throws IOException	{
 		
 // Label with player info 
 		
@@ -429,7 +429,7 @@ public class HomeScreen extends Application {
 		HBox idleArmiesHBox = new HBox(6);
 		for (Army a : game.getPlayer().getControlledArmies()) {
 			
-				
+		if (a.getCurrentStatus().equals(Status.IDLE))	{
 		/********/
 			Hyperlink  armyButton  = new Hyperlink ();
 			Image armyLogo = new Image("file:images/armylogo.png");
@@ -440,7 +440,7 @@ public class HomeScreen extends Application {
 			
 			
 			// Adding hover text to the building
-			String ttString = "---Click To View Units---\n--- Units: \n";
+			String ttString = "---Click To View Units Or Set Target---\n--- Units: \n";
 			for (int i = 0 ; i < a.getUnits().size() ; i++) {
 				Unit u = a.getUnits().get(i);
 				ttString+= "" + (i+1) + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
@@ -464,7 +464,7 @@ public class HomeScreen extends Application {
 			
 			idleArmiesHBox.getChildren().add(armyButton);
 			
-		}
+		}}
 		
 		GridPane.setConstraints(idleArmiesHBox,0,1);
 		pageLayout.getChildren().add(idleArmiesHBox);
@@ -477,7 +477,7 @@ public class HomeScreen extends Application {
 		
 		
 		
-		Label marchingArmiesandLabelVBoxTitle = new Label ("Marching Armies: ");
+		Label marchingArmiesandLabelVBoxTitle = new Label ("Marching Armies Controlled By "+ game.getPlayer().getName()+":" );
 		marchingArmiesandLabelVBoxTitle.setFont(Font.font("Cambria", 26));
 		GridPane.setConstraints(marchingArmiesandLabelVBoxTitle, 0, 2);
 		
@@ -523,7 +523,7 @@ public class HomeScreen extends Application {
 
 ////Hbox containg besieging armies 
 		
-		Label besiegingArmiesLabel = new Label ("Besieging Armies: ");
+		Label besiegingArmiesLabel = new Label ("Besieging Armies Contrplled By " +game.getPlayer().getName()+":");
 		besiegingArmiesLabel.setFont(Font.font("Cambria", 26));
 		GridPane.setConstraints(besiegingArmiesLabel, 0, 4);
 
@@ -1154,8 +1154,8 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		
 		Image initiateArmyTextLogo = new Image("file:images/initiatearmytextlogo.png");
 		ImageView initiateArmyTextLogoView = new ImageView(initiateArmyTextLogo);
-		initiateArmyTextLogoView.setFitHeight(20);;
-		initiateArmyTextLogoView.setFitWidth(65);
+		initiateArmyTextLogoView.setFitHeight(40);;
+		initiateArmyTextLogoView.setFitWidth(100);
 		initiateArmyButton.setGraphic(initiateArmyTextLogoView);
 		
 		initiateArmyButton.setOnAction(e ->{
