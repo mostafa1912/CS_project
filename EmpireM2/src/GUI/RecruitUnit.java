@@ -88,7 +88,7 @@ public class RecruitUnit {
 			unitButton.setGraphic(unitLogoView);
 			
 			// Adding hover text to the building
-			Tooltip tt = new Tooltip(" Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount());
+			Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount());
 			tt.setShowDelay(new Duration (0));
 			tt.setHideDelay(new Duration (10));
 			Tooltip.install(unitButton, tt);
