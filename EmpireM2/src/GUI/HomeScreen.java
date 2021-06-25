@@ -442,7 +442,7 @@ public class HomeScreen extends Application {
 				String ttString = "---Units: \n";
 				for (int i = 0 ; i < a.getUnits().size() ; i++) {
 					Unit u = a.getUnits().get(i);
-					ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
+					ttString+= "" + (i+1) + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
 					
 				}
 				Tooltip tt = new Tooltip(ttString);
@@ -496,7 +496,7 @@ public class HomeScreen extends Application {
 						ttString+= "---Units : \n";
 						for (int i = 0 ; i < a.getUnits().size() ; i++) {
 							Unit u = a.getUnits().get(i);
-							ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
+							ttString+= "" + (i+1) + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
 							
 						}
 						Tooltip tt = new Tooltip(ttString);
@@ -557,7 +557,7 @@ public class HomeScreen extends Application {
 								ttString+= "---Units : \n";
 								for (int i = 0 ; i < a.getUnits().size() ; i++) {
 									Unit u = a.getUnits().get(i);
-									ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
+									ttString+= "" + (i+1) + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
 									
 								}
 								Tooltip tt = new Tooltip(ttString);
@@ -1214,7 +1214,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 				String ttString = "--- Units: \n";
 				for (int i = 0 ; i < a.getUnits().size() ; i++) {
 					Unit u = a.getUnits().get(i);
-					ttString+= "" + i+1 + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
+					ttString+= "" + (i+1) + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
 					
 				}
 				Tooltip tt = new Tooltip(ttString);
