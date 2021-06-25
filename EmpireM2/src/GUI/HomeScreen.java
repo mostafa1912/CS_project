@@ -44,9 +44,9 @@ public class HomeScreen extends Application {
 
 	public static void main(String[] args) {
 		
-		String uriString = new File("music/warmusic.wav").toURI().toString();
-		 MediaPlayer player = new MediaPlayer( new Media(uriString));
-		  player.play();
+		//String uriString = new File("music/warmusic.wav").toURI().toString();
+		 //MediaPlayer player = new MediaPlayer( new Media(uriString));
+		  //player.play();
 		launch(args);
 	}
 
@@ -405,12 +405,12 @@ public void worldMapView(Stage window) throws IOException	{
 
 
 		citiesHBox.getChildren().addAll(cairoButton,spartaButton,romeButton);
-		citiesHBox.setAlignment(Pos.CENTER);
+		
 
 		citiesHBox.setTranslateX(287.5);
 		// Buttom of the view 
-		GridPane.setConstraints(citiesHBox,0,100);
-		pageLayout.getChildren().add(citiesHBox);
+		//GridPane.setConstraints(citiesHBox,0,100);
+		//pageLayout.getChildren().add(citiesHBox);
 		
 		// End of Cities HBox 
 		
@@ -668,7 +668,8 @@ public void worldMapView(Stage window) throws IOException	{
 	
 		VBox superLayout = new VBox () ; 
 		superLayout.setBackground(new Background(bg));
-		superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
+		pageLayout.setMinHeight(300);
+		superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout,citiesHBox);
 		
 		Scene worldMapView = new Scene(superLayout , 1275, 680);
 
@@ -684,7 +685,7 @@ public void worldMapView(Stage window) throws IOException	{
 	
 public void cityView(Stage window , String currentCityName) throws IOException	{
 		
-		game.endTurn();
+		
 		Background bg = Createbackground1("cityviewwallpaper.jpg");
 		
 		
@@ -713,17 +714,17 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 	
 		
 //Setting City Icon on Top Left of Page 		
-		Image cityLogo = new Image("file:images/cairologo.jpg");
+		Image cityLogo = new Image("file:images/cairotextlogo1.jpg");
 		
 		if (currentCity.getName().equals("Sparta"))
-			cityLogo = new Image("file:images/spartalogo.png");
+			cityLogo = new Image("file:images/spartatextlogo1.png");
 		if (currentCity.getName().equals("Rome"))
-			cityLogo = new Image("file:images/romelogo.png");
+			cityLogo = new Image("file:images/rometextlogo1.png");
 		
 		ImageView cityLogoView = new ImageView(cityLogo);
-		cityLogoView.setFitHeight(150);;
-		cityLogoView.setFitWidth(150);
-		cityLogoView.setTranslateX(562.5);
+		cityLogoView.setFitHeight(100);;
+		cityLogoView.setFitWidth(300);
+		cityLogoView.setTranslateX(487.5);
 		
 		GridPane.setConstraints(cityLogoView,0,0);
 		pageLayout.getChildren().add(cityLogoView);
@@ -1265,7 +1266,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		
 		
 		
-		
+		pageLayout.setMinHeight(600);
 		
 		superLaypout.getChildren().add(upperHBoxOfPlayerInfo);
 
@@ -1280,7 +1281,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 
 
 	}
-	public void battleView(Stage window) throws IOException	{
+public void battleView(Stage window) throws IOException	{
 		System.out.println(game.getPlayer().getName() + " : " +playerCityName );
 		Label label = new Label("player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
 				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
