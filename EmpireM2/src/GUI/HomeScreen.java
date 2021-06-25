@@ -651,7 +651,7 @@ public class HomeScreen extends Application {
 	
 	
 public void cityView(Stage window , String currentCityName) throws IOException	{
-		game.endTurn();
+		
 		Background bg = Createbackground1("cityviewwallpaper.jpg");
 		
 		
@@ -665,22 +665,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		final City currentCity = currentCity1;
 		
 		
-		
-	// Initializations for testing till we understand the game logic 
-		
-	/*
-		currentCity.getEconomicalBuildings().add(new Farm());
-		currentCity.getEconomicalBuildings().add(new Market());
-		
-		currentCity.getMilitaryBuildings().add(new Barracks());
-		ArcheryRange a1 = new ArcheryRange();
-		a1.setCoolDown(false);
-		currentCity.getMilitaryBuildings().add(a1);
-		
-		currentCity.getMilitaryBuildings().add(new Stable());
-		
-		game.getPlayer().getControlledArmies().add(new Army (currentCity.getName()));
-*/
+
 		VBox superLaypout = new VBox ();
 		
 		
