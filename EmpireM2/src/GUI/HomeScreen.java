@@ -384,19 +384,19 @@ public void worldMapView(Stage window) throws IOException	{
 		
 		
 		//cities hbox pictures
-		Image cairoImage = new Image("file:images/cairotextlogo.jfif");
+		Image cairoImage = new Image("file:images/cairologo.jpg");
 		ImageView cairoImageView = new ImageView(cairoImage);
 		cairoImageView.setFitHeight(200);;
 		cairoImageView.setFitWidth(200);
 		cairoButton.setGraphic(cairoImageView);
 
-		Image spartaImage = new Image("file:images/spartabutton.jfif");
+		Image spartaImage = new Image("file:images/spartalogo.png");
 		ImageView spartaImageView = new ImageView(spartaImage);
 		spartaImageView.setFitHeight(200);;
 		spartaImageView.setFitWidth(200);
 		spartaButton.setGraphic(spartaImageView);
 
-		Image romeImage = new Image("file:images/romebutton.jfif");
+		Image romeImage = new Image("file:images/romelogo.png");
 		ImageView romeImageView = new ImageView(romeImage);
 		romeImageView.setFitHeight(200);;
 		romeImageView.setFitWidth(200);
@@ -422,6 +422,7 @@ public void worldMapView(Stage window) throws IOException	{
 		
 		Label IdleArmiesandLabel = new Label ("Idle Armies Controlled By " + game.getPlayer().getName()+ " :" );
 		IdleArmiesandLabel.setFont(Font.font("Cambria", 26));
+		IdleArmiesandLabel.setTextFill(Color.web("Orange"));
 		
 		GridPane.setConstraints(IdleArmiesandLabel,0,0);
 		pageLayout.getChildren().add(IdleArmiesandLabel);
@@ -479,6 +480,7 @@ public void worldMapView(Stage window) throws IOException	{
 		
 		Label marchingArmiesandLabelVBoxTitle = new Label ("Marching Armies Controlled By "+ game.getPlayer().getName()+":" );
 		marchingArmiesandLabelVBoxTitle.setFont(Font.font("Cambria", 26));
+		marchingArmiesandLabelVBoxTitle.setTextFill(Color.web("Orange"));
 		GridPane.setConstraints(marchingArmiesandLabelVBoxTitle, 0, 2);
 		
 		
@@ -525,6 +527,8 @@ public void worldMapView(Stage window) throws IOException	{
 		
 		Label besiegingArmiesLabel = new Label ("Besieging Armies Contrplled By " +game.getPlayer().getName()+":");
 		besiegingArmiesLabel.setFont(Font.font("Cambria", 26));
+		besiegingArmiesLabel.setTextFill(Color.web("Orange"));
+		
 		GridPane.setConstraints(besiegingArmiesLabel, 0, 4);
 
 		HBox besiegingArmiesHBox = new HBox();
@@ -684,7 +688,7 @@ public void worldMapView(Stage window) throws IOException	{
 	
 	
 public void cityView(Stage window , String currentCityName) throws IOException	{
-		
+		game.endTurn();
 		
 		Background bg = Createbackground1("cityviewwallpaper.jpg");
 		
