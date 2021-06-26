@@ -345,7 +345,7 @@ public  void scene3(Stage window, String playerName) throws IOException	{
 	}
 
 
-public void worldMapView(Stage window) throws IOException	{
+public static void worldMapView(Stage window) throws IOException	{
 BorderPane bp = new BorderPane();
 
 // Label with player info 
@@ -598,15 +598,21 @@ BorderPane bp = new BorderPane();
 						besiegingArmiesHBox.getChildren().add(armyButton);
 						
 						for (City c : game.getAvailableCities()) { 
-							if (c.getName().equals(a.getCurrentLocation()) && c.getTurnsUnderSiege() >= 3 ) { 
-								System.out.println("Window shoulf be displayed");
+							if (c.getName().equals(a.getCurrentLocation()) && c.getTurnsUnderSiege() == 3 ) { 
+								//System.out.println("Window shoulf be displayed");
+
 								MustBattle.displayYouMustBattleWindow(game, c, a);
 								
 							}
 						}
 						armyButton.setOnAction(e->{ 
 							ViewUnits.displayUnitsOfArmy(a, game.getPlayer(), game, a.getCurrentLocation());
-							
+							try {
+								worldMapView(window);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								AlertBox.display(e1.getMessage());
+							}
 						});
 					}
 		}
@@ -758,7 +764,7 @@ BorderPane bp = new BorderPane();
 	}
 
 	
-public void cityView(Stage window , String currentCityName) throws IOException	{
+public static void cityView(Stage window , String currentCityName) throws IOException	{
 
 		clearEmptyArmies();
 		Background bg = Createbackground1("cityviewwallpaper.jpg");
@@ -868,7 +874,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		
 		HBox economicalBuildingsHBox = new HBox (6);
 		for (int i = 0 ; i < currentCity.getEconomicalBuildings().size(); i++) {
-			Building currentBuilding = currentCity.getEconomicalBuildings().get(i);
+			EconomicBuilding currentBuilding = currentCity.getEconomicalBuildings().get(i);
 			
 			String buildingType = "Farm";
 			
@@ -913,7 +919,34 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 			tt1.setHideDelay(new Duration (10));
 			Tooltip.install(upgradeBuildingButton, tt1);
 			currentBuildingVBox.getChildren().add(upgradeBuildingButton);
+			
+			
+			// Adding Upgrade Hyperlink  Under Each Building 
+
+			Hyperlink  harvestButton  = new Hyperlink ();
+			
+			Image harvestTextLogo = new Image("file:images/harvesttextlogo.png");
+			ImageView harvestTextLogoView = new ImageView(harvestTextLogo);
+			harvestTextLogoView.setFitHeight(40);;
+			harvestTextLogoView.setFitWidth(130);
+			harvestButton.setGraphic(harvestTextLogoView);
+			
+			
+			Tooltip tt2 = new Tooltip("Harvest adds " + currentBuilding.harvest());
+			tt2.setShowDelay(new Duration (0));
+			tt2.setHideDelay(new Duration (10));
+			Tooltip.install(harvestButton, tt2);
+			currentBuildingVBox.getChildren().add(harvestButton);
 					
+			harvestButton.setOnAction(e->{ 
+				game.getPlayer().setTreasury(game.getPlayer().getTreasury() +currentBuilding.harvest() );
+				try {
+					cityView(window, currentCityName);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					AlertBox.display(e1.getMessage());
+				}
+			});
 			
 			upgradeBuildingButton.setOnAction( e -> { 
 				
@@ -1453,7 +1486,7 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		autoResolveView.setFitWidth(400);
 		autoResolveButton.setGraphic(autoResolveView);
 
-		HBox autoResolveButtonHbox = new HBox();
+		VBox autoResolveButtonHbox = new VBox();
 		
 		autoResolveButtonHbox.getChildren().addAll(autoResolveButton);
 		
@@ -1614,6 +1647,26 @@ for (Unit u : attackingArmy.getUnits()) {
 				
 	autoResolveButtonHbox.setTranslateX(1000);
 	autoResolveButtonHbox.setTranslateY(-50);
+	
+	
+	if (attackingArmy.getUnits().size() == 0 || defendingArmy.getUnits().size() == 0) { 
+		Button goToMapViewButton = new Button ("World Map View");
+		goToMapViewButton.setMaxHeight(40);
+		goToMapViewButton.setMaxWidth(240);
+		goToMapViewButton.setStyle("-fx-font: 25 arial; -fx-base: #191100;");
+
+		
+		
+		
+		
+		goToMapViewButton.setOnAction(e -> { 
+			window.close();
+			/***************************************/
+			//clearEmptyArmies();
+		});
+		
+		autoResolveButtonHbox.getChildren().add(goToMapViewButton);
+	}
 	centre.getChildren().addAll(defending,attacking,autoResolveButtonHbox);
 	GridPane.setConstraints(centre,0,0 );
 	centre.setMinWidth(1000);
@@ -1643,15 +1696,17 @@ for (Unit u : attackingArmy.getUnits()) {
 
 	
 public static void clearEmptyArmies() { 
+	if (!game.getPlayer().getControlledArmies().isEmpty())
 		for (Army c : game.getPlayer().getControlledArmies()) {
 			if (c.getUnits().size()==0)
 				game.getPlayer().getControlledArmies().remove(c);
 		}
+	
 	}
 
 	
 
-public void youWon(Stage window) { 
+public static void youWon(Stage window) { 
 		
 		BackgroundImage bg = new BackgroundImage(new Image("file:images/youwon.png"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
@@ -1679,7 +1734,7 @@ HBox pageLayout = new HBox();
 
 	}
 	
-public void youLost(Stage window) { 
+public static void youLost(Stage window) { 
 		
 		BackgroundImage bg = new BackgroundImage(new Image("file:images/youlost.png"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
