@@ -220,15 +220,32 @@ public class Game {
 		while (attacker.getUnits().size() != 0 && defender.getUnits().size() != 0) {
 			Unit unit1 = attacker.getUnits().get((int) (Math.random() * attacker.getUnits().size()));
 			Unit unit2 = defender.getUnits().get((int) (Math.random() * defender.getUnits().size()));
-			if (turn == 1)
+			
+			
+			if (turn == 1) {
 				unit1.attack(unit2);
-			else
+				this.setBattleLog(this.getBattleLog()+ "\n-Player's Unit " +unit1.getType()+ " Attacked Opponent Unit " + unit2.getType() + " \nAnd made it's count = " + unit2.getCurrentSoldierCount() +"\n");
+			}
+			else {
+				
 				unit2.attack(unit1);
+				this.setBattleLog(this.getBattleLog()+ "\n-Opponent's Unit " +unit2.getType()+ " Attacked Player's Unit " + unit1.getType() + " \nAnd made it's count = " + unit1.getCurrentSoldierCount() +"\n");
+
+				
+			}
 			turn = turn == 1 ? 0 : 1;
 
 		}
-		if (attacker.getUnits().size() != 0)
+		
+		
+		if (attacker.getUnits().size() != 0) {
+			this.setBattleLog(this.getBattleLog()+ "Player Occupied " + defender.getCurrentLocation());
 			occupy(attacker, defender.getCurrentLocation());
+		}
+		else {
+			this.setBattleLog(this.getBattleLog()+ "Player's Army Got destroyed");
+		
+			}
 
 	}
 

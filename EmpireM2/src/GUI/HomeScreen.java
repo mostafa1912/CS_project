@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import buildings.*;
 import engine.*;
 import exceptions.BuildingInCoolDownException;
+import exceptions.FriendlyFireException;
 import exceptions.MaxLevelException;
 import exceptions.MaxRecruitedException;
 import exceptions.NotEnoughGoldException;
@@ -1385,10 +1386,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 
 
 public static void battleView(Stage window, Army attackingArmy, Army defendingArmy) throws IOException	{
-	clearEmptyArmies();
-	
-	
-	
+
 	
 	
 	
@@ -1408,12 +1406,72 @@ public static void battleView(Stage window, Army attackingArmy, Army defendingAr
 	//creating main subcomponents for page layout
 	
 	
+	
+
 //setting background
 BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackground.jpeg"),
 		BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 			BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
 
 		BorderPane bp = new BorderPane();
+		
+
+		
+		Label logLabel = new Label (game.getBattleLog());
+		
+		logLabel.setTextFill(Color.web("WHITE"));
+		logLabel.setMinWidth(500);
+		HBox hBoxOfLog = new HBox();
+		
+		hBoxOfLog.setMaxHeight(800);
+		hBoxOfLog.setMinHeight(100);
+		hBoxOfLog.setMinWidth(700);
+		hBoxOfLog.setMaxWidth(500);
+		hBoxOfLog.getChildren().addAll(logLabel);
+		hBoxOfLog.setAlignment(Pos.TOP_LEFT);
+		hBoxOfLog.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+		
+		
+		bp.setRight(hBoxOfLog);
+		
+		
+		
+		
+		Hyperlink  autoResolveButton  = new Hyperlink ();
+		autoResolveButton.setAlignment(Pos.BOTTOM_CENTER);
+		Image autoResolveLogo =  new Image("file:images/autoresolvetextlogo.png");
+		ImageView autoResolveView = new ImageView(autoResolveLogo);
+		autoResolveView.setFitHeight(100);;
+		autoResolveView.setFitWidth(200);
+		
+		
+		autoResolveButton.setTranslateY(500);
+		
+		
+		autoResolveButton.setGraphic(autoResolveView);
+
+		
+		hBoxOfLog.getChildren().add(autoResolveButton);
+		autoResolveButton.setOnAction(e-> { 
+			try {
+				game.autoResolve(attackingArmy, defendingArmy);
+			} catch (FriendlyFireException e1) {
+				// TODO Auto-generated catch block
+				AlertBox.display(e1.getMessage());
+			}
+			
+			try {
+				battleView(window,attackingArmy,defendingArmy);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				AlertBox.display(e1.getMessage());
+			}
+			
+			
+		});
+		
+		
+		
 		VBox superLayout = new VBox();
 		bp.setBackground(new Background(bg));
 		superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
@@ -1538,25 +1596,10 @@ for (Unit u : attackingArmy.getUnits()) {
 	centre.getChildren().addAll(defending,attacking);
 	bp.setCenter(centre);
 
-	/***********/
 	
 	
 	
-	Label logLabel = new Label (game.getBattleLog());
 	
-	logLabel.setTextFill(Color.web("WHITE"));
-	logLabel.setMinWidth(500);
-	HBox hBoxOfLog = new HBox();
-	
-	hBoxOfLog.setMaxHeight(800);
-	hBoxOfLog.setMinHeight(100);
-	hBoxOfLog.setMinWidth(700);
-	hBoxOfLog.setMaxWidth(500);
-	hBoxOfLog.getChildren().addAll(logLabel);
-	hBoxOfLog.setAlignment(Pos.TOP_LEFT);
-	hBoxOfLog.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
-	
-	bp.setRight(hBoxOfLog);
 	
 	
 	
@@ -1567,7 +1610,7 @@ for (Unit u : attackingArmy.getUnits()) {
 	
 	window.setTitle("Battle View");
 	
-	window.setTitle("Battle View");
+	
 	window.setScene(battleView);
 
 
@@ -1575,7 +1618,7 @@ for (Unit u : attackingArmy.getUnits()) {
 	
 
 	
-	public static void clearEmptyArmies() { 
+public static void clearEmptyArmies() { 
 		for (Army c : game.getPlayer().getControlledArmies()) {
 			if (c.getUnits().size()==0)
 				game.getPlayer().getControlledArmies().remove(c);

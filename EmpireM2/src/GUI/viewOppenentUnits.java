@@ -96,7 +96,7 @@ public class viewOppenentUnits  {
 			unitLogoButton2.setOnAction(e->{ 
 				try {
 					selectedUnit.attack(d);
-					g.setBattleLog(g.getBattleLog()+ "\n-Players Unit" +selectedUnit.getType()+ "Attacked Oppenent's Unit" + d.getType() + " \nAnd made it's count = " + d.getCurrentSoldierCount() +"\n");
+					g.setBattleLog(g.getBattleLog()+ "\n-Players Unit " +selectedUnit.getType()+ " Attacked Oppenent's Unit " + d.getType() + " \nAnd made it's count = " + d.getCurrentSoldierCount() +"\n");
 				} catch (FriendlyFireException e1) {
 					// TODO Auto-generated catch block
 					AlertBox.display("Friendly Fire", e1.getMessage());
@@ -111,7 +111,12 @@ public class viewOppenentUnits  {
 			
 		}
 		
-		pageLayout.getChildren().add(tilepane);
+		
+		
+	
+		
+		pageLayout.getChildren().addAll(tilepane);
+		
 		
 		Scene scene = new Scene(pageLayout);
 		
