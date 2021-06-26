@@ -369,7 +369,7 @@ BorderPane bp = new BorderPane();
 
 		
 	//setting background
-	BackgroundImage bg = new BackgroundImage(new Image("file:images/ancientworldmap.png"),
+	BackgroundImage bg = new BackgroundImage(new Image("file:images/worldmap2.jpg"),
 			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
 		bp.setBackground(new Background(bg));
