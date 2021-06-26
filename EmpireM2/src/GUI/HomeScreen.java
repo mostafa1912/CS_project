@@ -345,7 +345,7 @@ public  void scene3(Stage window, String playerName) throws IOException	{
 	}
 
 
-public static void worldMapView(Stage window) throws IOException	{
+public void worldMapView(Stage window) throws IOException	{
 BorderPane bp = new BorderPane();
 
 // Label with player info 
@@ -599,19 +599,14 @@ BorderPane bp = new BorderPane();
 						
 						for (City c : game.getAvailableCities()) { 
 							if (c.getName().equals(a.getCurrentLocation()) && c.getTurnsUnderSiege() >= 3 ) { 
-								//System.out.println("Window shoulf be displayed");
+								System.out.println("Window shoulf be displayed");
 								MustBattle.displayYouMustBattleWindow(game, c, a);
-								worldMapView(window);
+								
 							}
 						}
 						armyButton.setOnAction(e->{ 
 							ViewUnits.displayUnitsOfArmy(a, game.getPlayer(), game, a.getCurrentLocation());
-							try {
-								worldMapView(window);
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								AlertBox.display(e1.getMessage());
-							}
+							
 						});
 					}
 		}
@@ -763,7 +758,7 @@ BorderPane bp = new BorderPane();
 	}
 
 	
-public static void cityView(Stage window , String currentCityName) throws IOException	{
+public void cityView(Stage window , String currentCityName) throws IOException	{
 
 		clearEmptyArmies();
 		Background bg = Createbackground1("cityviewwallpaper.jpg");
@@ -1458,7 +1453,7 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		autoResolveView.setFitWidth(400);
 		autoResolveButton.setGraphic(autoResolveView);
 
-		VBox autoResolveButtonHbox = new VBox();
+		HBox autoResolveButtonHbox = new HBox();
 		
 		autoResolveButtonHbox.getChildren().addAll(autoResolveButton);
 		
@@ -1619,26 +1614,6 @@ for (Unit u : attackingArmy.getUnits()) {
 				
 	autoResolveButtonHbox.setTranslateX(1000);
 	autoResolveButtonHbox.setTranslateY(-50);
-	
-	
-	if (attackingArmy.getUnits().size() == 0 || defendingArmy.getUnits().size() == 0) { 
-		Button goToMapViewButton = new Button ("World Map View");
-		goToMapViewButton.setMaxHeight(40);
-		goToMapViewButton.setMaxWidth(240);
-		goToMapViewButton.setStyle("-fx-font: 25 arial; -fx-base: #191100;");
-
-		
-		
-		
-		
-		goToMapViewButton.setOnAction(e -> { 
-			window.close();
-			/***************************************/
-			//clearEmptyArmies();
-		});
-		
-		autoResolveButtonHbox.getChildren().add(goToMapViewButton);
-	}
 	centre.getChildren().addAll(defending,attacking,autoResolveButtonHbox);
 	GridPane.setConstraints(centre,0,0 );
 	centre.setMinWidth(1000);
@@ -1676,7 +1651,7 @@ public static void clearEmptyArmies() {
 
 	
 
-public static void youWon(Stage window) { 
+public void youWon(Stage window) { 
 		
 		BackgroundImage bg = new BackgroundImage(new Image("file:images/youwon.png"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
@@ -1704,7 +1679,7 @@ HBox pageLayout = new HBox();
 
 	}
 	
-public static void youLost(Stage window) { 
+public void youLost(Stage window) { 
 		
 		BackgroundImage bg = new BackgroundImage(new Image("file:images/youlost.png"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
