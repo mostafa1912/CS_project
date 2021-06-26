@@ -721,7 +721,11 @@ public void worldMapView(Stage window) throws IOException	{
 	
 	
 public void cityView(Stage window , String currentCityName) throws IOException	{
+<<<<<<< Updated upstream
 		game.endTurn();
+=======
+
+>>>>>>> Stashed changes
 		
 		Background bg = Createbackground1("cityviewwallpaper.jpg");
 		

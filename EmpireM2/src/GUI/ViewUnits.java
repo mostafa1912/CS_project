@@ -204,6 +204,7 @@ public class ViewUnits {
 				RelocateUnit.displayRelocateUnitScreen(p.getControlledArmies(),u,g,c);
 				window.close();
 			});
+
 			
 			
 			
@@ -224,19 +225,30 @@ public class ViewUnits {
 		tt2.setShowDelay(new Duration (0));
 		tt2.setHideDelay(new Duration (10));
 		Tooltip.install(setTargetButton, tt2);
+
+		//creating attack button
+		Button attackButton = new Button("ATTACK");
+
+		attackButton.setAlignment(Pos.CENTER);
+		attackButton.setOnAction(e -> {
+			try {
+				HomeScreen.battleView(window, army , c.getDefendingArmy());
+			} catch (IOException ioException) {
+				ioException.printStackTrace();
+			}
+		});
 		
 		
 		
 		
-		
-		
-		layout.getChildren().addAll(label,defendingArmyUnitsHBox,setTargetButton);
+		layout.getChildren().addAll(label,defendingArmyUnitsHBox,setTargetButton , attackButton);
 		layout.setAlignment(Pos.CENTER);
 		
 		layout.setBackground(new Background(bg));
 		Scene scene = new Scene(layout);
 		
 		window.setScene(scene);
+		window.setResizable(false);
 		
 		window.showAndWait();
 		
@@ -352,12 +364,15 @@ public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityNam
 		
 		//creating attack button
 		Button attackButton = new Button("ATTACK");
+
+		attackButton.setAlignment(Pos.CENTER);
 		attackButton.setOnAction(e -> {
 			City city = null;
 			for (City c : g.getAvailableCities()){
 				if(cityName == c.getName())
 					city = c;
 			}
+
 
 			try {
 				HomeScreen.battleView(window, army , city.getDefendingArmy() );
@@ -366,11 +381,11 @@ public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityNam
 			}
 		});
 
-		
-		layout.getChildren().addAll(label,defendingArmyUnitsHBox,setTargetButton);
+	layout.setBackground(new Background(bg));
+		layout.getChildren().addAll(label,defendingArmyUnitsHBox,setTargetButton,attackButton);
 		layout.setAlignment(Pos.CENTER);
 		
-		layout.setBackground(new Background(bg));
+
 		Scene scene = new Scene(layout);
 		
 		window.setScene(scene);
