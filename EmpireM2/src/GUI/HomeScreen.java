@@ -209,7 +209,7 @@ public class HomeScreen extends Application {
 
 	}
 
-	public  void scene3(Stage window, String playerName) throws IOException	{
+public  void scene3(Stage window, String playerName) throws IOException	{
 
 		Background bg = Createbackground1("worldmap.jpg");
 
@@ -339,7 +339,7 @@ public class HomeScreen extends Application {
 	}
 
 
-	public void worldMapView(Stage window) throws IOException	{
+public void worldMapView(Stage window) throws IOException	{
 BorderPane bp = new BorderPane();
 
 // Label with player info 
@@ -691,16 +691,28 @@ BorderPane bp = new BorderPane();
 							
 					}});
 				
+	Button end = new Button("End Turn ");
+	bp.setBottom(end);
+
+	Scene worldMapView = new Scene(bp, 1275, 680);
+
+
+	
+	window.setScene(worldMapView);
 
 		//creating the end turn button
-		Button end = new Button("End Turn ");
+		
 	end.setMaxHeight(40);
 	end.setMaxWidth(240);
 	end.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
 		end.setOnAction(e -> {
+			
+			
+			game.endTurn();
+			
 			for (Army a : game.getPlayer().getControlledArmies()  )
 			{
-				game.endTurn();
+				
 				if(a.getDistancetoTarget()==0 && !a.getCurrentStatus().equals(Status.BESIEGING)){
 					SiegingChoice.giveSiegeChoice(game , a);
 				
@@ -713,26 +725,26 @@ BorderPane bp = new BorderPane();
 			} catch (IOException ioException) {
 				ioException.printStackTrace();
 			}
+			
+			if (game.getCurrentTurnCount()>= 51) { 
+				
+				youLost(window);
+				System.out.println("You Lost");
+			}
+			else if (game.getPlayer().getControlledCities().size() == 3 ) { 
+				youWon(window);
+			}
 		});
 		end.setAlignment(Pos.CENTER);
 		end.setTranslateX(520);
 
-		bp.setBottom(end);
-
-		Scene worldMapView = new Scene(bp, 1275, 680);
-
-
 		
-		window.setScene(worldMapView);
 
 
 	}
 
-
 	
-	
-	
-	public void cityView(Stage window , String currentCityName) throws IOException	{
+public void cityView(Stage window , String currentCityName) throws IOException	{
 
 		clearEmptyArmies();
 		Background bg = Createbackground1("cityviewwallpaper.jpg");
@@ -892,7 +904,12 @@ BorderPane bp = new BorderPane();
 			upgradeBuildingButton.setOnAction( e -> { 
 				
 				try {
-					currentBuilding.upgrade();
+					try {
+						game.getPlayer().upgradeBuilding(currentBuilding);
+					} catch (NotEnoughGoldException e1) {
+						// TODO Auto-generated catch block
+						AlertBox.display("Not Enough Gold", e1.getMessage());
+					};
 				} catch (BuildingInCoolDownException | MaxLevelException e1) {
 					
 					AlertBox.display("Unable to Upgrade Building" , e1.getMessage());
@@ -1045,9 +1062,12 @@ BorderPane bp = new BorderPane();
 			
 			upgradeBuildingButton.setOnAction( e -> { 
 				try {
-					currentBuilding.upgrade();
+					game.getPlayer().upgradeBuilding(currentBuilding);
 				} catch (BuildingInCoolDownException | MaxLevelException e1) {
 					
+					AlertBox.display("Unable to Upgrade Building" , e1.getMessage());
+				} catch (NotEnoughGoldException e1) {
+					// TODO Auto-generated catch block
 					AlertBox.display("Unable to Upgrade Building" , e1.getMessage());
 				}
 				
@@ -1311,9 +1331,10 @@ BorderPane bp = new BorderPane();
 	//creating the end turn button
 	Button end = new Button("End Turn ");
 	end.setOnAction(e -> {game.endTurn();
+		
 		for (Army a : game.getPlayer().getControlledArmies()  )
 		{
-			if(a.getDistancetoTarget()==0 && !a.getCurrentStatus().equals(Status.BESIEGING)){
+			if(a.getDistancetoTarget()==0 && !a.getCurrentStatus().equals(Status.MARCHING)){
 				SiegingChoice.giveSiegeChoice(game , a);
 
 
@@ -1323,6 +1344,13 @@ BorderPane bp = new BorderPane();
 			cityView(window,currentCityName);
 		} catch (IOException ioException) {
 			ioException.printStackTrace();
+		}
+		
+		if (game.getCurrentTurnCount()>= 51) { 
+			youLost(window);
+		}
+		else if (game.getPlayer().getControlledCities().size() == 3 ) { 
+			youWon(window);
 		}
 	});
 	end.setMaxHeight(40);
@@ -1355,7 +1383,8 @@ BorderPane bp = new BorderPane();
 	}
 
 
-	public static void battleView(Stage window, Army attackingArmy, Army defendingArmy) throws IOException	{
+
+public static void battleView(Stage window, Army attackingArmy, Army defendingArmy) throws IOException	{
 	clearEmptyArmies();
 	Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
 			game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
@@ -1519,4 +1548,67 @@ for (Unit u : attackingArmy.getUnits()) {
 		}
 	}
 
+	
+
+public void youWon(Stage window) { 
+		
+		BackgroundImage bg = new BackgroundImage(new Image("file:images/youwon.png"),
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+
+		
+		
+HBox pageLayout = new HBox();
+		
+		
+		Image enteryournamelogo = new Image("file:images/youwontextlogo.png");
+		ImageView enteryournamelogoView = new ImageView(enteryournamelogo);
+		HBox enteryournamelogoViewVbox = new HBox();
+		enteryournamelogoViewVbox.getChildren().add(enteryournamelogoView);
+		enteryournamelogoViewVbox.setAlignment(Pos.TOP_CENTER);
+		
+		pageLayout.getChildren().add(enteryournamelogoViewVbox);
+
+		StackPane stackPane = new StackPane();
+		stackPane.setBackground(new Background(bg));
+		stackPane.getChildren().addAll(enteryournamelogoViewVbox );
+		Scene worldmap = new Scene(stackPane, 1275, 680);
+		window.setScene(worldmap);
+		window.show();
+
+	}
+	
+public void youLost(Stage window) { 
+		
+		BackgroundImage bg = new BackgroundImage(new Image("file:images/youlost.png"),
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+
+		
+		
+		HBox pageLayout = new HBox();
+		
+		
+		Image enteryournamelogo = new Image("file:images/youlosttextlogo.png");
+		ImageView enteryournamelogoView = new ImageView(enteryournamelogo);
+		HBox enteryournamelogoViewVbox = new HBox();
+		enteryournamelogoViewVbox.getChildren().add(enteryournamelogoView);
+		enteryournamelogoViewVbox.setAlignment(Pos.TOP_CENTER);
+		
+		pageLayout.getChildren().add(enteryournamelogoViewVbox);
+
+		StackPane stackPane = new StackPane();
+		stackPane.setBackground(new Background(bg));
+		stackPane.getChildren().addAll(enteryournamelogoViewVbox );
+		Scene worldmap = new Scene(stackPane, 1275, 680);
+		window.setScene(worldmap);
+		window.show();
+	}
+
+
+
+
 }
+
+
+

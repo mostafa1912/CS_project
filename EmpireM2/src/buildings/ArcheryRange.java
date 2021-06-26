@@ -33,6 +33,7 @@ public class ArcheryRange extends MilitaryBuilding {
 	@Override
 	public void upgrade() throws BuildingInCoolDownException, MaxLevelException {
 		super.upgrade();
+		
 		if(getLevel()==1)
 		{
 			setLevel(2);
