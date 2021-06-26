@@ -148,8 +148,8 @@ public class ViewUnits {
 		
 		window.setTitle("Units Of Choosen Army");
 		
-		window.setHeight(500);
-		window.setWidth(700);
+		window.setHeight(680);
+		window.setWidth(1275);
 		
 		
 		
