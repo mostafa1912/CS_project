@@ -1461,9 +1461,9 @@ for (Unit u : attackingArmy.getUnits()) {
 			tt.setHideDelay(new Duration (10));
 			Tooltip.install(unitLogoButton, tt);
 			
-			if (attacking1.getChildren().size()<10)
+			if (attacking1.getChildren().size()<8)
 				attacking1.getChildren().addAll(unitLogoButton);
-			else if (attacking2.getChildren().size() < 10)
+			else if (attacking2.getChildren().size() < 8)
 				attacking2.getChildren().addAll(unitLogoButton);
 			else 
 				attacking3.getChildren().addAll(unitLogoButton);
@@ -1508,9 +1508,9 @@ for (Unit u : attackingArmy.getUnits()) {
 				tt2.setHideDelay(new Duration (10));
 				Tooltip.install(unitLogoButton2, tt2);
 		
-				if (defending1.getChildren().size()<10)
+				if (defending1.getChildren().size()<8)
 					defending1.getChildren().addAll(unitLogoButton2);
-				else if (defending2.getChildren().size() < 10)
+				else if (defending2.getChildren().size() < 8)
 					defending2.getChildren().addAll(unitLogoButton2);
 				else
 					defending3.getChildren().addAll(unitLogoButton2);
