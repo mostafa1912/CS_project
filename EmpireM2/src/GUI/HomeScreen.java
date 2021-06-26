@@ -1435,7 +1435,13 @@ for (Unit u : attackingArmy.getUnits()) {
 				attacking3.getChildren().addAll(unitLogoButton);
 }
 
-attacking.getChildren().addAll(attacking1,attacking2,attacking3);
+
+	Label attackingArmyLabel = new Label ("Attacking Army: ");
+	attackingArmyLabel.setFont(Font.font("Cambria", 26));
+	attackingArmyLabel.setTextFill(Color.web("Orange"));
+	
+
+	attacking.getChildren().addAll(attackingArmyLabel,attacking1,attacking2,attacking3);
 // Looping on defending army units and adding their photos
 			for (Unit d : defendingArmy.getUnits()) { 
 				String unitType2 = "";
@@ -1476,7 +1482,11 @@ attacking.getChildren().addAll(attacking1,attacking2,attacking3);
 					defending3.getChildren().addAll(unitLogoButton2);
 	}
 
-	defending.getChildren().addAll(defending1,defending2,defending3);
+			
+	Label defendingArmyLabel = new Label ("Defending Army: ");
+	defendingArmyLabel.setFont(Font.font("Cambria", 26));
+	defendingArmyLabel.setTextFill(Color.web("Orange"));
+	defending.getChildren().addAll(defendingArmyLabel,defending1,defending2,defending3);
 				
 	
 	centre.getChildren().addAll(defending,attacking);
