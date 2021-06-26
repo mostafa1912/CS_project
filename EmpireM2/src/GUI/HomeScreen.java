@@ -597,6 +597,13 @@ BorderPane bp = new BorderPane();
 
 						besiegingArmiesHBox.getChildren().add(armyButton);
 						
+						for (City c : game.getAvailableCities()) { 
+							if (c.getName().equals(a.getCurrentLocation()) && c.getTurnsUnderSiege() >= 3 ) { 
+								System.out.println("Window shoulf be displayed");
+								MustBattle.displayYouMustBattleWindow(game, c, a);
+								
+							}
+						}
 						armyButton.setOnAction(e->{ 
 							ViewUnits.displayUnitsOfArmy(a, game.getPlayer(), game, a.getCurrentLocation());
 							
@@ -1485,7 +1492,7 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		
 		
 		VBox superLayout = new VBox();
-		superLayout.setBackground(new Background(bg));
+		//superLayout.setBackground(new Background(bg));
 		
 		
 		
@@ -1610,6 +1617,7 @@ for (Unit u : attackingArmy.getUnits()) {
 	centre.getChildren().addAll(defending,attacking,autoResolveButtonHbox);
 	GridPane.setConstraints(centre,0,0 );
 	centre.setMinWidth(1000);
+	centre.setBackground(new Background(bg));
 	pageLayout.getChildren().add(centre);
 
 	

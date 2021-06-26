@@ -239,11 +239,11 @@ public class Game {
 		
 		
 		if (attacker.getUnits().size() != 0) {
-			this.setBattleLog(this.getBattleLog()+ "Player Occupied " + defender.getCurrentLocation());
+			this.setBattleLog(this.getBattleLog()+ "\n------Player Occupied " + defender.getCurrentLocation()+"------");
 			occupy(attacker, defender.getCurrentLocation());
 		}
 		else {
-			this.setBattleLog(this.getBattleLog()+ "Player's Army Got destroyed");
+			this.setBattleLog(this.getBattleLog()+ "\n------Player's Army Got destroyed------");
 		
 			}
 

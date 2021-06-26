@@ -56,7 +56,7 @@ public class ViewCities {
 		HBox allUnControlledCitiesHBox = new HBox(6);
 		for (City c : g.getAvailableCities() ) { 
 			
-		if (!g.getPlayer().getControlledCities().contains(c)){
+		if (!g.getPlayer().getControlledCities().contains(c) && ! army.getCurrentLocation().equals(c.getName())){
 			Hyperlink  cityButton  = new Hyperlink ();
 			Image cityLogo = new Image("file:images/cairologo.jpg");
 			

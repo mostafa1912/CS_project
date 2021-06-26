@@ -116,6 +116,8 @@ public class SiegingChoice  {
         
         setTargetButton.setOnAction(e-> { 
         	
+        	ViewCities.displayUnCotrolledCities(army,game);
+			window.close();
         });
 
 

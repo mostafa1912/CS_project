@@ -257,7 +257,7 @@ public class ViewUnits {
 			attackButton.setOnAction(e -> {
 				City city = null;
 				for (City c1 : g.getAvailableCities()){
-					if(c.getName() == c.getName())
+					if(c.getName() == c1.getName())
 						city = c1;
 				}
 	
