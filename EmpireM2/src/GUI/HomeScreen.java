@@ -518,6 +518,11 @@ BorderPane bp = new BorderPane();
 						Tooltip.install(armyButton, tt);
 						
 						
+						armyButton.setOnAction(e->{ 
+							ViewUnits.displayUnitsOfArmy(a, game.getPlayer(), game, a.getCurrentLocation());
+							
+						});
+						
 						
 						
 						marchingArmiesHBox.getChildren().add(armyButton);
@@ -560,14 +565,18 @@ BorderPane bp = new BorderPane();
 						
 						
 
-						String ttString = "Number of Units: " + a.getUnits().size() + "\n Besieging City " + a.getTarget() +"\n Turns Under Siege " ;
+						String ttString = "Number of Units: " + a.getUnits().size() + "\nBesieging City " + a.getCurrentLocation() +"\n Turns Under Siege " ;
 						
 						
 						for (City c : game.getAvailableCities()) { 
-							if (c.getName().equals(a.getTarget()))
+							if (c.getName().equals(a.getCurrentLocation()))
 								ttString += ""+ c.getTurnsUnderSiege();
-							
-						ttString+= "---Units : \n";
+						
+						
+
+					}
+						
+						ttString+= "\n---Units : \n";
 						for (int i = 0 ; i < a.getUnits().size() ; i++) {
 							Unit u = a.getUnits().get(i);
 							ttString+= "" + (i+1) + "." +" Unit Type: " + u.getType() +"; Unit Level: "+  u.getLevel() + "; Current Solider Count: " + u.getCurrentSoldierCount() + "; Max Solider Count: " + u.getMaxSoldierCount() +"\n";
@@ -578,10 +587,6 @@ BorderPane bp = new BorderPane();
 						tt.setHideDelay(new Duration (10));
 						Tooltip.install(armyButton, tt);
 						
-						
-						
-
-					}
 
 						besiegingArmiesHBox.getChildren().add(armyButton);
 						

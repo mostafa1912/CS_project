@@ -3,6 +3,7 @@ package GUI;
 import engine.City;
 import engine.Game;
 import engine.Player;
+import exceptions.TargetNotReachedException;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,6 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import units.Army;
+import units.Status;
 import units.Unit;
 
 import java.io.IOException;
@@ -134,7 +136,7 @@ public class ViewUnits {
 	public static void displayUnitsOfArmy(Army army , Player p,Game g,City c) {
 		
 
-		
+
 		BackgroundImage bg = new BackgroundImage(new Image("file:images/alertbox.png"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
@@ -148,8 +150,8 @@ public class ViewUnits {
 		
 		window.setTitle("Units Of Choosen Army");
 		
-		window.setHeight(680);
-		window.setWidth(1275);
+		window.setHeight(500);
+		window.setWidth(700);
 		
 		
 		
@@ -201,33 +203,96 @@ public class ViewUnits {
 			defendingArmyUnitsHBox.getChildren().add(unitButton);
 			
 			unitButton.setOnAction(e -> { 
-				RelocateUnit.displayRelocateUnitScreen(p.getControlledArmies(),u,g,c);
+				RelocateUnit.displayRelocateUnitScreen(p.getControlledArmies(),u,g,c.getName());
 				window.close();
 			});
-
 			
 			
 			
 		}
 		
+		
+		
 		/**/
 		
+		Hyperlink  setTargetButton  = new Hyperlink ();
+		
+		Image setTargetTextLogo = new Image("file:images/setarmytargettextlogo.png");
+		ImageView setTargetTextLogoView = new ImageView(setTargetTextLogo);
+		setTargetTextLogoView.setFitHeight(60);;
+		setTargetTextLogoView.setFitWidth(200);
+		setTargetButton.setGraphic(setTargetTextLogoView);
+		
+		
+		Tooltip tt2 = new Tooltip("Set Target Of Army");
+		tt2.setShowDelay(new Duration (0));
+		tt2.setHideDelay(new Duration (10));
+		Tooltip.install(setTargetButton, tt2);
+		
+		
+		setTargetButton.setOnAction(e->{ 
+			ViewCities.displayUnCotrolledCities(army,g);
+			window.close();
+		});
+		
+		//creating attack button
+		
 
+		HBox buttonsHBox = new HBox();
 
-
+		if (!army.getTarget().isBlank()) {
+			Hyperlink  attackButton  = new Hyperlink ();
+			
+			Image attackTextLogo = new Image("file:images/attacktextlogo.png");
+			ImageView attackTextLogoLogoView = new ImageView(attackTextLogo);
+			attackTextLogoLogoView.setFitHeight(60);;
+			attackTextLogoLogoView.setFitWidth(200);
+			attackButton.setGraphic(attackTextLogoLogoView);
+			
+			
+			Tooltip tt3 = new Tooltip("Attack");
+			tt3.setShowDelay(new Duration (0));
+			tt3.setHideDelay(new Duration (10));
+			Tooltip.install(attackButton, tt3);
+			attackButton.setOnAction(e -> {
+				City city = null;
+				for (City c1 : g.getAvailableCities()){
+					if(c.getName() == c.getName())
+						city = c1;
+				}
+	
+				
+				try {
+					window.setX(0);
+					window.setY(0);
+					window.setWidth(1500);
+					window.setHeight(800);
+					
+					window.setTitle("Battle View");
+					
+					HomeScreen.battleView(window, army , city.getDefendingArmy() );
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
+			});
+			
+			buttonsHBox.getChildren().addAll(setTargetButton,attackButton);
+		} 
+		else { 
+			buttonsHBox.getChildren().addAll(setTargetButton);
+		}
 		
 		
-		
-		
-		layout.getChildren().addAll(label,defendingArmyUnitsHBox );
+		buttonsHBox.setAlignment(Pos.CENTER);
+		layout.setBackground(new Background(bg));
+		layout.getChildren().addAll(label,defendingArmyUnitsHBox,buttonsHBox);
 		layout.setAlignment(Pos.CENTER);
 		
-		layout.setBackground(new Background(bg));
+
 		Scene scene = new Scene(layout);
 		
 		window.setScene(scene);
-
-		
+		window.setResizable(false);
 		window.showAndWait();
 		
 		
@@ -346,7 +411,7 @@ public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityNam
 
 		HBox buttonsHBox = new HBox();
 
-		if (army.getDistancetoTarget() == 0 ) {
+		if (!army.getCurrentStatus().equals(Status.IDLE)) {
 			Hyperlink  attackButton  = new Hyperlink ();
 			
 			Image attackTextLogo = new Image("file:images/attacktextlogo.png");
@@ -361,24 +426,36 @@ public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityNam
 			tt3.setHideDelay(new Duration (10));
 			Tooltip.install(attackButton, tt3);
 			attackButton.setOnAction(e -> {
-				City city = null;
-				for (City c : g.getAvailableCities()){
-					if(cityName == c.getName())
-						city = c;
-				}
-	
 				
-				try {
-					window.setX(0);
-					window.setY(0);
-					window.setWidth(1500);
-					window.setHeight(800);
+				if (army.getCurrentStatus().equals(Status.MARCHING)) { 
+					try {
+						throw new TargetNotReachedException();
+					}
+					catch (TargetNotReachedException e1){ 
+						AlertBox.display("TargetNotReached" , "Target Not Reached Yet");
+						window.close();
+					}
+				}
+				else {
+					City city = null;
+					for (City c : g.getAvailableCities()){
+						if(cityName == c.getName())
+							city = c;
+					}
+		
 					
-					window.setTitle("Battle View");
-					
-					HomeScreen.battleView(window, army , city.getDefendingArmy() );
-				} catch (IOException ioException) {
-					ioException.printStackTrace();
+					try {
+						window.setX(0);
+						window.setY(0);
+						window.setWidth(1500);
+						window.setHeight(800);
+						
+						window.setTitle("Battle View");
+						
+						HomeScreen.battleView(window, army , city.getDefendingArmy() );
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
 				}
 			});
 			
