@@ -112,7 +112,11 @@ public class SiegingChoice  {
 
 
                    window.close();
-            System.out.print("ana get hena" + army.getCurrentStatus().toString());} );
+            ;} );
+        
+        setTargetButton.setOnAction(e-> { 
+        	
+        });
 
 
 

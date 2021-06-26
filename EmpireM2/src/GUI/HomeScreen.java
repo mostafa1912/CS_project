@@ -1433,26 +1433,30 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		hBoxOfLog.setMinHeight(800);
 		hBoxOfLog.setMinWidth(500);
 		hBoxOfLog.setMaxWidth(500);
-		hBoxOfLog.getChildren().addAll(logLabel);
+		hBoxOfLog.getChildren().add(logLabel);
 		hBoxOfLog.setAlignment(Pos.TOP_LEFT);
 		hBoxOfLog.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
 		
 		
 		Hyperlink  autoResolveButton  = new Hyperlink ();
-		autoResolveButton.setAlignment(Pos.BOTTOM_CENTER);
+		
 		Image autoResolveLogo =  new Image("file:images/autoresolvetextlogo.png");
 		ImageView autoResolveView = new ImageView(autoResolveLogo);
 		autoResolveView.setFitHeight(100);;
-		autoResolveView.setFitWidth(200);
-		
-		
-		
-		
-		
+		autoResolveView.setFitWidth(400);
 		autoResolveButton.setGraphic(autoResolveView);
 
+		HBox autoResolveButtonHbox = new HBox();
 		
-		hBoxOfLog.getChildren().add(autoResolveButton);
+		autoResolveButtonHbox.getChildren().addAll(autoResolveButton);
+		
+		
+		
+		
+		
+		
+		
+		
 		GridPane.setConstraints(hBoxOfLog,1,0 );
 		pageLayout.getChildren().add(hBoxOfLog);
 		
@@ -1601,8 +1605,9 @@ for (Unit u : attackingArmy.getUnits()) {
 	defendingArmyLabel.setTextFill(Color.web("Orange"));
 	defending.getChildren().addAll(defendingArmyLabel,defendingTilePane);
 				
-	
-	centre.getChildren().addAll(defending,attacking);
+	autoResolveButtonHbox.setTranslateX(1000);
+	autoResolveButtonHbox.setTranslateY(-50);
+	centre.getChildren().addAll(defending,attacking,autoResolveButtonHbox);
 	GridPane.setConstraints(centre,0,0 );
 	centre.setMinWidth(1000);
 	pageLayout.getChildren().add(centre);
