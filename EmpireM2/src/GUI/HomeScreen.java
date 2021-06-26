@@ -1353,51 +1353,793 @@ public static void battleView(Stage window, Army attackingArmy, Army defendingAr
 	
 //setting background
 BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackground.jpeg"),
-		BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+		Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+		game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+	label.setMaxHeight(10);
+	label.setMinWidth(1275);
+	label.setTextFill(Color.web("WHITE"));
+	HBox upperHBoxOfPlayerInfo = new HBox();
+	upperHBoxOfPlayerInfo.getChildren().addAll(label);
+	upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+
+
+	//creating a borderpane to be the main layout
+	GridPane pageLayout = new GridPane();
+	//creating main subcomponents for page layout
+
+
+//setting background
+	BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackground.jpeg"),
+			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 			BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
 
-	
-		VBox superLayout = new VBox();
-		superLayout.setBackground(new Background(bg));
-		superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
-		Scene battleView = new Scene(superLayout , 1275, 680);
-		
-		HBox attacking = new HBox();
+	BorderPane bp = new BorderPane();
+	VBox superLayout = new VBox();
+	bp.setBackground(new Background(bg));
+	superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
+	Scene battleView = new Scene(bp , 1275, 680);
 
-for (Unit u : attackingArmy.getUnits()) { 
-			
-			
-			String unitType = "Archer";
-			Image unitLogo = new Image("file:images/ArchersCard.png");
-			
-			if (u.getType().equals("Infantry")){
-				unitLogo = new Image("file:images/BarbarianCard.png");
-				unitType = "Infantry";
-			}
-			
-			if (u.getType().equals("Cavalry")) {
-				unitLogo = new Image("file:images/HogRiderCard.png");
-				unitType = "Cavalry";
-			}
-			
-			Hyperlink  unitLogoButton  = new Hyperlink ();
-			ImageView unitLogoView = new ImageView(unitLogo);
-			unitLogoView.setFitHeight(130);;
-			unitLogoView.setFitWidth(130);
-			
-			unitLogoButton.setGraphic(unitLogoView);
-			
-			// Adding hover text to the building
-			Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
-			tt.setShowDelay(new Duration (0));
-			tt.setHideDelay(new Duration (10));
-			Tooltip.install(unitLogoButton, tt);
-			attacking.getChildren().add(unitLogoButton);
-		
-		window.setScene(battleView);
+	//	HBox attacking = new HBox();
+	//	attacking.setMaxSize(999999999, 999999999);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill(Color.BLACK,
+			CornerRadii.EMPTY,
+			Insets.EMPTY)));
+	bp.setTop(upperHBoxOfPlayerInfo);
+	VBox centre = new VBox();
+	HBox attacking = new HBox();
+	HBox defending = new HBox();
+// Looping on attacking army units and adding their photos
+	for (Unit u : attackingArmy.getUnits()) {
+		String unitType = "";
+		Image unitLogo = null;
+		if (u.getType().equals("Archer")) {
+			unitType = "Archer";
+			unitLogo = new Image("file:images/ArchersCard.png");
+		}
 
+		if (u.getType().equals("Infantry")){
+			unitLogo = new Image("file:images/BarbarianCard.png");
+			unitType = "Infantry";
+		}
 
+		if (u.getType().equals("Cavalry")) {
+			unitLogo = new Image("file:images/HogRiderCard.png");
+			unitType = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton  = new Hyperlink ();
+		ImageView unitLogoView = new ImageView(unitLogo);
+		unitLogoView.setFitHeight(130);;
+		unitLogoView.setFitWidth(130);
+
+		unitLogoButton.setGraphic(unitLogoView);
+
+		// Adding hover text to the building
+		Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
+		tt.setShowDelay(new Duration (0));
+		tt.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton, tt);
+
+		attacking.getChildren().addAll(unitLogoButton);
 	}
+// Looping on defending army units and adding their photos
+	for (Unit d : defendingArmy.getUnits()) {
+		String unitType2 = "";
+		Image unitLogo2 = null;
+		if (d.getType().equals("Archer")) {
+			unitType2 = "Archer";
+			unitLogo2 = new Image("file:images/ArchersCard.png");
+		}
+
+		if (d.getType().equals("Infantry")){
+			unitLogo2 = new Image("file:images/BarbarianCard.png");
+			unitType2 = "Infantry";
+		}
+
+		if (d.getType().equals("Cavalry")) {
+			unitLogo2 = new Image("file:images/HogRiderCard.png");
+			unitType2 = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton2  = new Hyperlink ();
+		ImageView unitLogoView2 = new ImageView(unitLogo2);
+		unitLogoView2.setFitHeight(130);;
+		unitLogoView2.setFitWidth(130);
+
+		unitLogoButton2.setGraphic(unitLogoView2);
+
+		// Adding hover text to the building
+		Tooltip tt2 = new Tooltip("Unit Type: " + unitType2 +"\n Unit Level: "+  d.getLevel() + "\n Current Solider Count: " + d.getCurrentSoldierCount() + "\n Max Solider Count: " + d.getMaxSoldierCount()+"");
+		tt2.setShowDelay(new Duration (0));
+		tt2.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton2, tt2);
+
+		defending.getChildren().addAll(unitLogoButton2,unitLogoView2);
+	}
+
+	attacking.setTranslateY(350);
+	defending.setTranslateY(-50);
+
+	centre.getChildren().addAll(attacking,defending);
+	bp.setCenter(centre);
+
+	window.setScene(battleView);
+	Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+			game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+	label.setMaxHeight(10);
+	label.setMinWidth(1275);
+	label.setTextFill(Color.web("WHITE"));
+	HBox upperHBoxOfPlayerInfo = new HBox();
+	upperHBoxOfPlayerInfo.getChildren().addAll(label);
+	upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+
+
+	//creating a borderpane to be the main layout
+	GridPane pageLayout = new GridPane();
+	//creating main subcomponents for page layout
+
+
+//setting background
+	BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackground.jpeg"),
+			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+			BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+
+	BorderPane bp = new BorderPane();
+	VBox superLayout = new VBox();
+	bp.setBackground(new Background(bg));
+	superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
+	Scene battleView = new Scene(bp , 1275, 680);
+
+	//	HBox attacking = new HBox();
+	//	attacking.setMaxSize(999999999, 999999999);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill(Color.BLACK,
+			CornerRadii.EMPTY,
+			Insets.EMPTY)));
+	bp.setTop(upperHBoxOfPlayerInfo);
+	VBox centre = new VBox();
+	HBox attacking = new HBox();
+	HBox defending = new HBox();
+// Looping on attacking army units and adding their photos
+	for (Unit u : attackingArmy.getUnits()) {
+		String unitType = "";
+		Image unitLogo = null;
+		if (u.getType().equals("Archer")) {
+			unitType = "Archer";
+			unitLogo = new Image("file:images/ArchersCard.png");
+		}
+
+		if (u.getType().equals("Infantry")){
+			unitLogo = new Image("file:images/BarbarianCard.png");
+			unitType = "Infantry";
+		}
+
+		if (u.getType().equals("Cavalry")) {
+			unitLogo = new Image("file:images/HogRiderCard.png");
+			unitType = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton  = new Hyperlink ();
+		ImageView unitLogoView = new ImageView(unitLogo);
+		unitLogoView.setFitHeight(130);;
+		unitLogoView.setFitWidth(130);
+
+		unitLogoButton.setGraphic(unitLogoView);
+
+		// Adding hover text to the building
+		Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
+		tt.setShowDelay(new Duration (0));
+		tt.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton, tt);
+
+		attacking.getChildren().addAll(unitLogoButton);
+	}
+// Looping on defending army units and adding their photos
+	for (Unit d : defendingArmy.getUnits()) {
+		String unitType2 = "";
+		Image unitLogo2 = null;
+		if (d.getType().equals("Archer")) {
+			unitType2 = "Archer";
+			unitLogo2 = new Image("file:images/ArchersCard.png");
+		}
+
+		if (d.getType().equals("Infantry")){
+			unitLogo2 = new Image("file:images/BarbarianCard.png");
+			unitType2 = "Infantry";
+		}
+
+		if (d.getType().equals("Cavalry")) {
+			unitLogo2 = new Image("file:images/HogRiderCard.png");
+			unitType2 = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton2  = new Hyperlink ();
+		ImageView unitLogoView2 = new ImageView(unitLogo2);
+		unitLogoView2.setFitHeight(130);;
+		unitLogoView2.setFitWidth(130);
+
+		unitLogoButton2.setGraphic(unitLogoView2);
+
+		// Adding hover text to the building
+		Tooltip tt2 = new Tooltip("Unit Type: " + unitType2 +"\n Unit Level: "+  d.getLevel() + "\n Current Solider Count: " + d.getCurrentSoldierCount() + "\n Max Solider Count: " + d.getMaxSoldierCount()+"");
+		tt2.setShowDelay(new Duration (0));
+		tt2.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton2, tt2);
+
+		defending.getChildren().addAll(unitLogoButton2,unitLogoView2);
+	}
+
+	attacking.setTranslateY(350);
+	defending.setTranslateY(-50);
+
+	centre.getChildren().addAll(attacking,defending);
+	bp.setCenter(centre);
+
+	window.setScene(battleView);
+	Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+			game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+	label.setMaxHeight(10);
+	label.setMinWidth(1275);
+	label.setTextFill(Color.web("WHITE"));
+	HBox upperHBoxOfPlayerInfo = new HBox();
+	upperHBoxOfPlayerInfo.getChildren().addAll(label);
+	upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+
+
+	//creating a borderpane to be the main layout
+	GridPane pageLayout = new GridPane();
+	//creating main subcomponents for page layout
+
+
+//setting background
+	BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackground.jpeg"),
+			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+			BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+
+	BorderPane bp = new BorderPane();
+	VBox superLayout = new VBox();
+	bp.setBackground(new Background(bg));
+	superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
+	Scene battleView = new Scene(bp , 1275, 680);
+
+	//	HBox attacking = new HBox();
+	//	attacking.setMaxSize(999999999, 999999999);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill(Color.BLACK,
+			CornerRadii.EMPTY,
+			Insets.EMPTY)));
+	bp.setTop(upperHBoxOfPlayerInfo);
+	VBox centre = new VBox();
+	HBox attacking = new HBox();
+	HBox defending = new HBox();
+// Looping on attacking army units and adding their photos
+	for (Unit u : attackingArmy.getUnits()) {
+		String unitType = "";
+		Image unitLogo = null;
+		if (u.getType().equals("Archer")) {
+			unitType = "Archer";
+			unitLogo = new Image("file:images/ArchersCard.png");
+		}
+
+		if (u.getType().equals("Infantry")){
+			unitLogo = new Image("file:images/BarbarianCard.png");
+			unitType = "Infantry";
+		}
+
+		if (u.getType().equals("Cavalry")) {
+			unitLogo = new Image("file:images/HogRiderCard.png");
+			unitType = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton  = new Hyperlink ();
+		ImageView unitLogoView = new ImageView(unitLogo);
+		unitLogoView.setFitHeight(130);;
+		unitLogoView.setFitWidth(130);
+
+		unitLogoButton.setGraphic(unitLogoView);
+
+		// Adding hover text to the building
+		Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
+		tt.setShowDelay(new Duration (0));
+		tt.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton, tt);
+
+		attacking.getChildren().addAll(unitLogoButton);
+	}
+// Looping on defending army units and adding their photos
+	for (Unit d : defendingArmy.getUnits()) {
+		String unitType2 = "";
+		Image unitLogo2 = null;
+		if (d.getType().equals("Archer")) {
+			unitType2 = "Archer";
+			unitLogo2 = new Image("file:images/ArchersCard.png");
+		}
+
+		if (d.getType().equals("Infantry")){
+			unitLogo2 = new Image("file:images/BarbarianCard.png");
+			unitType2 = "Infantry";
+		}
+
+		if (d.getType().equals("Cavalry")) {
+			unitLogo2 = new Image("file:images/HogRiderCard.png");
+			unitType2 = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton2  = new Hyperlink ();
+		ImageView unitLogoView2 = new ImageView(unitLogo2);
+		unitLogoView2.setFitHeight(130);;
+		unitLogoView2.setFitWidth(130);
+
+		unitLogoButton2.setGraphic(unitLogoView2);
+
+		// Adding hover text to the building
+		Tooltip tt2 = new Tooltip("Unit Type: " + unitType2 +"\n Unit Level: "+  d.getLevel() + "\n Current Solider Count: " + d.getCurrentSoldierCount() + "\n Max Solider Count: " + d.getMaxSoldierCount()+"");
+		tt2.setShowDelay(new Duration (0));
+		tt2.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton2, tt2);
+
+		defending.getChildren().addAll(unitLogoButton2,unitLogoView2);
+	}
+
+	attacking.setTranslateY(350);
+	defending.setTranslateY(-50);
+
+	centre.getChildren().addAll(attacking,defending);
+	bp.setCenter(centre);
+
+	window.setScene(battleView);
+	Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+			game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+	label.setMaxHeight(10);
+	label.setMinWidth(1275);
+	label.setTextFill(Color.web("WHITE"));
+	HBox upperHBoxOfPlayerInfo = new HBox();
+	upperHBoxOfPlayerInfo.getChildren().addAll(label);
+	upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+
+
+	//creating a borderpane to be the main layout
+	GridPane pageLayout = new GridPane();
+	//creating main subcomponents for page layout
+
+
+//setting background
+	BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackground.jpeg"),
+			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+			BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+
+	BorderPane bp = new BorderPane();
+	VBox superLayout = new VBox();
+	bp.setBackground(new Background(bg));
+	superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
+	Scene battleView = new Scene(bp , 1275, 680);
+
+	//	HBox attacking = new HBox();
+	//	attacking.setMaxSize(999999999, 999999999);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill(Color.BLACK,
+			CornerRadii.EMPTY,
+			Insets.EMPTY)));
+	bp.setTop(upperHBoxOfPlayerInfo);
+	VBox centre = new VBox();
+	HBox attacking = new HBox();
+	HBox defending = new HBox();
+// Looping on attacking army units and adding their photos
+	for (Unit u : attackingArmy.getUnits()) {
+		String unitType = "";
+		Image unitLogo = null;
+		if (u.getType().equals("Archer")) {
+			unitType = "Archer";
+			unitLogo = new Image("file:images/ArchersCard.png");
+		}
+
+		if (u.getType().equals("Infantry")){
+			unitLogo = new Image("file:images/BarbarianCard.png");
+			unitType = "Infantry";
+		}
+
+		if (u.getType().equals("Cavalry")) {
+			unitLogo = new Image("file:images/HogRiderCard.png");
+			unitType = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton  = new Hyperlink ();
+		ImageView unitLogoView = new ImageView(unitLogo);
+		unitLogoView.setFitHeight(130);;
+		unitLogoView.setFitWidth(130);
+
+		unitLogoButton.setGraphic(unitLogoView);
+
+		// Adding hover text to the building
+		Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
+		tt.setShowDelay(new Duration (0));
+		tt.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton, tt);
+
+		attacking.getChildren().addAll(unitLogoButton);
+	}
+// Looping on defending army units and adding their photos
+	for (Unit d : defendingArmy.getUnits()) {
+		String unitType2 = "";
+		Image unitLogo2 = null;
+		if (d.getType().equals("Archer")) {
+			unitType2 = "Archer";
+			unitLogo2 = new Image("file:images/ArchersCard.png");
+		}
+
+		if (d.getType().equals("Infantry")){
+			unitLogo2 = new Image("file:images/BarbarianCard.png");
+			unitType2 = "Infantry";
+		}
+
+		if (d.getType().equals("Cavalry")) {
+			unitLogo2 = new Image("file:images/HogRiderCard.png");
+			unitType2 = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton2  = new Hyperlink ();
+		ImageView unitLogoView2 = new ImageView(unitLogo2);
+		unitLogoView2.setFitHeight(130);;
+		unitLogoView2.setFitWidth(130);
+
+		unitLogoButton2.setGraphic(unitLogoView2);
+
+		// Adding hover text to the building
+		Tooltip tt2 = new Tooltip("Unit Type: " + unitType2 +"\n Unit Level: "+  d.getLevel() + "\n Current Solider Count: " + d.getCurrentSoldierCount() + "\n Max Solider Count: " + d.getMaxSoldierCount()+"");
+		tt2.setShowDelay(new Duration (0));
+		tt2.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton2, tt2);
+
+		defending.getChildren().addAll(unitLogoButton2,unitLogoView2);
+	}
+
+	attacking.setTranslateY(350);
+	defending.setTranslateY(-50);
+
+	centre.getChildren().addAll(attacking,defending);
+	bp.setCenter(centre);
+
+	window.setScene(battleView);
+	Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+			game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+	label.setMaxHeight(10);
+	label.setMinWidth(1275);
+	label.setTextFill(Color.web("WHITE"));
+	HBox upperHBoxOfPlayerInfo = new HBox();
+	upperHBoxOfPlayerInfo.getChildren().addAll(label);
+	upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+
+
+	//creating a borderpane to be the main layout
+	GridPane pageLayout = new GridPane();
+	//creating main subcomponents for page layout
+
+
+//setting background
+	BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackground.jpeg"),
+			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+			BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+
+	BorderPane bp = new BorderPane();
+	VBox superLayout = new VBox();
+	bp.setBackground(new Background(bg));
+	superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
+	Scene battleView = new Scene(bp , 1275, 680);
+
+	//	HBox attacking = new HBox();
+	//	attacking.setMaxSize(999999999, 999999999);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill(Color.BLACK,
+			CornerRadii.EMPTY,
+			Insets.EMPTY)));
+	bp.setTop(upperHBoxOfPlayerInfo);
+	VBox centre = new VBox();
+	HBox attacking = new HBox();
+	HBox defending = new HBox();
+// Looping on attacking army units and adding their photos
+	for (Unit u : attackingArmy.getUnits()) {
+		String unitType = "";
+		Image unitLogo = null;
+		if (u.getType().equals("Archer")) {
+			unitType = "Archer";
+			unitLogo = new Image("file:images/ArchersCard.png");
+		}
+
+		if (u.getType().equals("Infantry")){
+			unitLogo = new Image("file:images/BarbarianCard.png");
+			unitType = "Infantry";
+		}
+
+		if (u.getType().equals("Cavalry")) {
+			unitLogo = new Image("file:images/HogRiderCard.png");
+			unitType = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton  = new Hyperlink ();
+		ImageView unitLogoView = new ImageView(unitLogo);
+		unitLogoView.setFitHeight(130);;
+		unitLogoView.setFitWidth(130);
+
+		unitLogoButton.setGraphic(unitLogoView);
+
+		// Adding hover text to the building
+		Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
+		tt.setShowDelay(new Duration (0));
+		tt.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton, tt);
+
+		attacking.getChildren().addAll(unitLogoButton);
+	}
+// Looping on defending army units and adding their photos
+	for (Unit d : defendingArmy.getUnits()) {
+		String unitType2 = "";
+		Image unitLogo2 = null;
+		if (d.getType().equals("Archer")) {
+			unitType2 = "Archer";
+			unitLogo2 = new Image("file:images/ArchersCard.png");
+		}
+
+		if (d.getType().equals("Infantry")){
+			unitLogo2 = new Image("file:images/BarbarianCard.png");
+			unitType2 = "Infantry";
+		}
+
+		if (d.getType().equals("Cavalry")) {
+			unitLogo2 = new Image("file:images/HogRiderCard.png");
+			unitType2 = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton2  = new Hyperlink ();
+		ImageView unitLogoView2 = new ImageView(unitLogo2);
+		unitLogoView2.setFitHeight(130);;
+		unitLogoView2.setFitWidth(130);
+
+		unitLogoButton2.setGraphic(unitLogoView2);
+
+		// Adding hover text to the building
+		Tooltip tt2 = new Tooltip("Unit Type: " + unitType2 +"\n Unit Level: "+  d.getLevel() + "\n Current Solider Count: " + d.getCurrentSoldierCount() + "\n Max Solider Count: " + d.getMaxSoldierCount()+"");
+		tt2.setShowDelay(new Duration (0));
+		tt2.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton2, tt2);
+
+		defending.getChildren().addAll(unitLogoButton2,unitLogoView2);
+	}
+
+	attacking.setTranslateY(350);
+	defending.setTranslateY(-50);
+
+	centre.getChildren().addAll(attacking,defending);
+	bp.setCenter(centre);
+
+	window.setScene(battleView);
+	Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+			game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+	label.setMaxHeight(10);
+	label.setMinWidth(1275);
+	label.setTextFill(Color.web("WHITE"));
+	HBox upperHBoxOfPlayerInfo = new HBox();
+	upperHBoxOfPlayerInfo.getChildren().addAll(label);
+	upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+
+
+	//creating a borderpane to be the main layout
+	GridPane pageLayout = new GridPane();
+	//creating main subcomponents for page layout
+
+
+//setting background
+	BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackground.jpeg"),
+			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+			BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+
+	BorderPane bp = new BorderPane();
+	VBox superLayout = new VBox();
+	bp.setBackground(new Background(bg));
+	superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
+	Scene battleView = new Scene(bp , 1275, 680);
+
+	//	HBox attacking = new HBox();
+	//	attacking.setMaxSize(999999999, 999999999);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill(Color.BLACK,
+			CornerRadii.EMPTY,
+			Insets.EMPTY)));
+	bp.setTop(upperHBoxOfPlayerInfo);
+	VBox centre = new VBox();
+	HBox attacking = new HBox();
+	HBox defending = new HBox();
+// Looping on attacking army units and adding their photos
+	for (Unit u : attackingArmy.getUnits()) {
+		String unitType = "";
+		Image unitLogo = null;
+		if (u.getType().equals("Archer")) {
+			unitType = "Archer";
+			unitLogo = new Image("file:images/ArchersCard.png");
+		}
+
+		if (u.getType().equals("Infantry")){
+			unitLogo = new Image("file:images/BarbarianCard.png");
+			unitType = "Infantry";
+		}
+
+		if (u.getType().equals("Cavalry")) {
+			unitLogo = new Image("file:images/HogRiderCard.png");
+			unitType = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton  = new Hyperlink ();
+		ImageView unitLogoView = new ImageView(unitLogo);
+		unitLogoView.setFitHeight(130);;
+		unitLogoView.setFitWidth(130);
+
+		unitLogoButton.setGraphic(unitLogoView);
+
+		// Adding hover text to the building
+		Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
+		tt.setShowDelay(new Duration (0));
+		tt.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton, tt);
+
+		attacking.getChildren().addAll(unitLogoButton);
+	}
+// Looping on defending army units and adding their photos
+	for (Unit d : defendingArmy.getUnits()) {
+		String unitType2 = "";
+		Image unitLogo2 = null;
+		if (d.getType().equals("Archer")) {
+			unitType2 = "Archer";
+			unitLogo2 = new Image("file:images/ArchersCard.png");
+		}
+
+		if (d.getType().equals("Infantry")){
+			unitLogo2 = new Image("file:images/BarbarianCard.png");
+			unitType2 = "Infantry";
+		}
+
+		if (d.getType().equals("Cavalry")) {
+			unitLogo2 = new Image("file:images/HogRiderCard.png");
+			unitType2 = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton2  = new Hyperlink ();
+		ImageView unitLogoView2 = new ImageView(unitLogo2);
+		unitLogoView2.setFitHeight(130);;
+		unitLogoView2.setFitWidth(130);
+
+		unitLogoButton2.setGraphic(unitLogoView2);
+
+		// Adding hover text to the building
+		Tooltip tt2 = new Tooltip("Unit Type: " + unitType2 +"\n Unit Level: "+  d.getLevel() + "\n Current Solider Count: " + d.getCurrentSoldierCount() + "\n Max Solider Count: " + d.getMaxSoldierCount()+"");
+		tt2.setShowDelay(new Duration (0));
+		tt2.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton2, tt2);
+
+		defending.getChildren().addAll(unitLogoButton2,unitLogoView2);
+	}
+
+	attacking.setTranslateY(350);
+	defending.setTranslateY(-50);
+
+	centre.getChildren().addAll(attacking,defending);
+	bp.setCenter(centre);
+
+	window.setScene(battleView);
+	Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+			game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+	label.setMaxHeight(10);
+	label.setMinWidth(1275);
+	label.setTextFill(Color.web("WHITE"));
+	HBox upperHBoxOfPlayerInfo = new HBox();
+	upperHBoxOfPlayerInfo.getChildren().addAll(label);
+	upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+
+
+	//creating a borderpane to be the main layout
+	GridPane pageLayout = new GridPane();
+	//creating main subcomponents for page layout
+
+
+//setting background
+	BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackground.jpeg"),
+			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+			BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
+
+	BorderPane bp = new BorderPane();
+	VBox superLayout = new VBox();
+	bp.setBackground(new Background(bg));
+	superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
+	Scene battleView = new Scene(bp , 1275, 680);
+
+	//	HBox attacking = new HBox();
+	//	attacking.setMaxSize(999999999, 999999999);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill(Color.BLACK,
+			CornerRadii.EMPTY,
+			Insets.EMPTY)));
+	bp.setTop(upperHBoxOfPlayerInfo);
+	VBox centre = new VBox();
+	HBox attacking = new HBox();
+	HBox defending = new HBox();
+// Looping on attacking army units and adding their photos
+	for (Unit u : attackingArmy.getUnits()) {
+		String unitType = "";
+		Image unitLogo = null;
+		if (u.getType().equals("Archer")) {
+			unitType = "Archer";
+			unitLogo = new Image("file:images/ArchersCard.png");
+		}
+
+		if (u.getType().equals("Infantry")){
+			unitLogo = new Image("file:images/BarbarianCard.png");
+			unitType = "Infantry";
+		}
+
+		if (u.getType().equals("Cavalry")) {
+			unitLogo = new Image("file:images/HogRiderCard.png");
+			unitType = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton  = new Hyperlink ();
+		ImageView unitLogoView = new ImageView(unitLogo);
+		unitLogoView.setFitHeight(130);;
+		unitLogoView.setFitWidth(130);
+
+		unitLogoButton.setGraphic(unitLogoView);
+
+		// Adding hover text to the building
+		Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
+		tt.setShowDelay(new Duration (0));
+		tt.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton, tt);
+
+		attacking.getChildren().addAll(unitLogoButton);
+	}
+// Looping on defending army units and adding their photos
+	for (Unit d : defendingArmy.getUnits()) {
+		String unitType2 = "";
+		Image unitLogo2 = null;
+		if (d.getType().equals("Archer")) {
+			unitType2 = "Archer";
+			unitLogo2 = new Image("file:images/ArchersCard.png");
+		}
+
+		if (d.getType().equals("Infantry")){
+			unitLogo2 = new Image("file:images/BarbarianCard.png");
+			unitType2 = "Infantry";
+		}
+
+		if (d.getType().equals("Cavalry")) {
+			unitLogo2 = new Image("file:images/HogRiderCard.png");
+			unitType2 = "Cavalry";
+		}
+
+		Hyperlink  unitLogoButton2  = new Hyperlink ();
+		ImageView unitLogoView2 = new ImageView(unitLogo2);
+		unitLogoView2.setFitHeight(130);;
+		unitLogoView2.setFitWidth(130);
+
+		unitLogoButton2.setGraphic(unitLogoView2);
+
+		// Adding hover text to the building
+		Tooltip tt2 = new Tooltip("Unit Type: " + unitType2 +"\n Unit Level: "+  d.getLevel() + "\n Current Solider Count: " + d.getCurrentSoldierCount() + "\n Max Solider Count: " + d.getMaxSoldierCount()+"");
+		tt2.setShowDelay(new Duration (0));
+		tt2.setHideDelay(new Duration (10));
+		Tooltip.install(unitLogoButton2, tt2);
+
+		defending.getChildren().addAll(unitLogoButton2,unitLogoView2);
+	}
+
+	attacking.setTranslateY(350);
+	defending.setTranslateY(-50);
+
+	centre.getChildren().addAll(attacking,defending);
+	bp.setCenter(centre);
+
+	window.setScene(battleView);
+
+
+}
 	
 	
 	
