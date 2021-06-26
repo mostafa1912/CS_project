@@ -208,7 +208,7 @@ public class HomeScreen extends Application {
 
 	}
 
-	public void scene3(Stage window, String playerName) throws IOException	{
+	public  void scene3(Stage window, String playerName) throws IOException	{
 
 		Background bg = Createbackground1("worldmap.jpg");
 
@@ -415,8 +415,7 @@ public void worldMapView(Stage window) throws IOException	{
 		// End of Cities HBox 
 		
 		
-		
-// A representation for the idle armies the player controls in VBox  
+	//representation for idle armies
 		
 		
 		
@@ -429,7 +428,7 @@ public void worldMapView(Stage window) throws IOException	{
 		HBox idleArmiesHBox = new HBox(6);
 		for (Army a : game.getPlayer().getControlledArmies()) {
 			
-		if (a.getCurrentStatus().equals(Status.IDLE))	{
+		if (a.getCurrentStatus().equals(Status.IDLE ) && !a.getCurrentStatus().equals(Status.BESIEGING))	{
 		/********/
 			Hyperlink  armyButton  = new Hyperlink ();
 			Image armyLogo = new Image("file:images/armylogo.png");
@@ -477,7 +476,7 @@ public void worldMapView(Stage window) throws IOException	{
 		
 		
 		
-		Label marchingArmiesandLabelVBoxTitle = new Label ("Marching Armies Controlled By "+ game.getPlayer().getName()+":" );
+		Label marchingArmiesandLabelVBoxTitle = new Label ("Marching Armies : ");
 		marchingArmiesandLabelVBoxTitle.setFont(Font.font("Cambria", 26));
 		GridPane.setConstraints(marchingArmiesandLabelVBoxTitle, 0, 2);
 		
@@ -496,7 +495,7 @@ public void worldMapView(Stage window) throws IOException	{
 						
 						
 						
-						// Adding hover text to the building
+
 						String ttString = "Number of Units: " + a.getUnits().size() + "; Army Location: On Road to " + a.getTarget() +";  Distance to Target: " + a.getDistancetoTarget() + "\n";
 						ttString+= "---Units : \n";
 						for (int i = 0 ; i < a.getUnits().size() ; i++) {
@@ -523,7 +522,7 @@ public void worldMapView(Stage window) throws IOException	{
 
 ////Hbox containg besieging armies 
 		
-		Label besiegingArmiesLabel = new Label ("Besieging Armies Contrplled By " +game.getPlayer().getName()+":");
+		Label besiegingArmiesLabel = new Label ("Besieging Armies : ");
 		besiegingArmiesLabel.setFont(Font.font("Cambria", 26));
 		GridPane.setConstraints(besiegingArmiesLabel, 0, 4);
 
@@ -540,10 +539,11 @@ public void worldMapView(Stage window) throws IOException	{
 						ImageView armyLogoView = new ImageView(armyLogo);
 						armyLogoView.setFitHeight(130);;
 						armyLogoView.setFitWidth(180);
+
 						
 						
 						
-						// Adding hover text to the building
+
 						String ttString = "Number of Units: " + a.getUnits().size() + "\n Besieging City " + a.getTarget() +"\n Turns Under Siege " ;
 						
 						
@@ -564,9 +564,10 @@ public void worldMapView(Stage window) throws IOException	{
 						
 						
 						
-						besiegingArmiesHBox.getChildren().add(armyLogoView);
+
 					}
-				}
+
+						besiegingArmiesHBox.getChildren().add(armyLogoView);}
 		}
 					
 				
@@ -662,24 +663,55 @@ public void worldMapView(Stage window) throws IOException	{
 							
 					}});
 				
-				
-				
+
+		//creating the end turn button
+		Button end = new Button("End Turn ");
+		end.setOnAction(e -> {game.endTurn();
+			for (Army a : game.getPlayer().getControlledArmies()  )
+			{
+				if(a.getDistancetoTarget()==0 && !a.getCurrentStatus().equals(Status.BESIEGING)){
+					SiegingChoice.giveSiegeChoice(game , a);
+
+
+				}
+			}
+			try {
+				worldMapView(window);
+			} catch (IOException ioException) {
+				ioException.printStackTrace();
+			}
+		});
+		end.setAlignment(Pos.CENTER);
+		end.setTranslateX(635.5);
+		end.setTranslateY(50);
+
+		//creating
+
+
+
+
+
+
 				
 	
 		VBox superLayout = new VBox () ; 
 		superLayout.setBackground(new Background(bg));
 		pageLayout.setMinHeight(300);
 		superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout,citiesHBox);
+		superLayout.getChildren().add(end);
+
+
 		
 		Scene worldMapView = new Scene(superLayout , 1275, 680);
+
 
 		
 		window.setScene(worldMapView);
 
 
 	}
-	
-	
+
+
 	
 	
 	
@@ -700,7 +732,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		
 		
 
-		VBox superLaypout = new VBox ();
+		VBox superLayout = new VBox ();
 		
 		
 	// Page main layout
@@ -1268,14 +1300,14 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		
 		pageLayout.setMinHeight(600);
 		
-		superLaypout.getChildren().add(upperHBoxOfPlayerInfo);
+		superLayout.getChildren().add(upperHBoxOfPlayerInfo);
 
-		superLaypout.getChildren().addAll(pageLayout,goToMapViewButton);
+		superLayout.getChildren().addAll(pageLayout,goToMapViewButton);
 
-		superLaypout.setBackground(bg);
+		superLayout.setBackground(bg);
 		
 		
-		Scene cityView = new Scene(superLaypout ,1275, 680);
+		Scene cityView = new Scene(superLayout ,1275, 680);
 
 		window.setScene(cityView);
 
