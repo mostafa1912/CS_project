@@ -212,43 +212,21 @@ public class ViewUnits {
 		
 		/**/
 		
-		Hyperlink  setTargetButton  = new Hyperlink ();
-		
-		Image setTargetTextLogo = new Image("file:images/setarmytargettextlogo.png");
-		ImageView setTargetTextLogoView = new ImageView(setTargetTextLogo);
-		setTargetTextLogoView.setFitHeight(60);;
-		setTargetTextLogoView.setFitWidth(200);
-		setTargetButton.setGraphic(setTargetTextLogoView);
-		
-		
-		Tooltip tt2 = new Tooltip("Set Target Of Army");
-		tt2.setShowDelay(new Duration (0));
-		tt2.setHideDelay(new Duration (10));
-		Tooltip.install(setTargetButton, tt2);
 
-		//creating attack button
-		Button attackButton = new Button("ATTACK");
 
-		attackButton.setAlignment(Pos.CENTER);
-		attackButton.setOnAction(e -> {
-			try {
-				HomeScreen.battleView(window, army , c.getDefendingArmy());
-			} catch (IOException ioException) {
-				ioException.printStackTrace();
-			}
-		});
+
 		
 		
 		
 		
-		layout.getChildren().addAll(label,defendingArmyUnitsHBox,setTargetButton , attackButton);
+		layout.getChildren().addAll(label,defendingArmyUnitsHBox );
 		layout.setAlignment(Pos.CENTER);
 		
 		layout.setBackground(new Background(bg));
 		Scene scene = new Scene(layout);
 		
 		window.setScene(scene);
-		window.setResizable(false);
+
 		
 		window.showAndWait();
 		
@@ -259,7 +237,8 @@ public class ViewUnits {
 		
 	}
 	
-	
+	//runs when clicking army from worldmap view
+	//has set target and attack
 public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityName) {
 		
 
@@ -365,7 +344,8 @@ public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityNam
 		//creating attack button
 		Button attackButton = new Button("ATTACK");
 
-		attackButton.setAlignment(Pos.CENTER);
+
+
 		attackButton.setOnAction(e -> {
 			City city = null;
 			for (City c : g.getAvailableCities()){
@@ -380,16 +360,18 @@ public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityNam
 				ioException.printStackTrace();
 			}
 		});
-
-	layout.setBackground(new Background(bg));
-		layout.getChildren().addAll(label,defendingArmyUnitsHBox,setTargetButton,attackButton);
+		HBox buttonsHBox = new HBox();
+		buttonsHBox.getChildren().addAll(setTargetButton,attackButton);
+		buttonsHBox.setAlignment(Pos.CENTER);
+		layout.setBackground(new Background(bg));
+		layout.getChildren().addAll(label,defendingArmyUnitsHBox,buttonsHBox);
 		layout.setAlignment(Pos.CENTER);
 		
 
 		Scene scene = new Scene(layout);
 		
 		window.setScene(scene);
-		
+		window.setResizable(false);
 		window.showAndWait();
 		
 		
