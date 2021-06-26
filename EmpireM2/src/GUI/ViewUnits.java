@@ -26,6 +26,8 @@ import javafx.util.Duration;
 import units.Army;
 import units.Unit;
 
+import java.io.IOException;
+
 public class ViewUnits {
 
 	public static void displayChooseUnitToInitializeArmy(City currentCity , Player p) {
@@ -357,7 +359,11 @@ public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityNam
 					city = c;
 			}
 
-			HomeScreen.battleView(window, army , city.getDefendingArmy() );
+			try {
+				HomeScreen.battleView(window, army , city.getDefendingArmy() );
+			} catch (IOException ioException) {
+				ioException.printStackTrace();
+			}
 		});
 
 		

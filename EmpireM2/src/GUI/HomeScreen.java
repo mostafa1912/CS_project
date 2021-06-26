@@ -39,8 +39,9 @@ import units.Unit;
 
 
 public class HomeScreen extends Application {
-	Game game ;
-	String playerCityName;
+	static Game game ;
+	static String playerCityName;
+
 
 	public static void main(String[] args) {
 		
@@ -1317,7 +1318,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 
 
 	}
-public void battleView(Stage window, Army attackingArmy, Army defendingArmy) throws IOException	{
+public static void battleView(Stage window, Army attackingArmy, Army defendingArmy) throws IOException	{
 	Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
 			game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
 	label.setMaxHeight(10);
