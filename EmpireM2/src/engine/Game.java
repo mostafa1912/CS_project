@@ -23,6 +23,17 @@ public class Game {
 	private ArrayList<Distance> distances;
 	private final int maxTurnCount = 30;
 	private int currentTurnCount;
+	
+	private String battleLog = "--- Battle Log: \n";
+	 
+
+	public String getBattleLog() {
+		return battleLog;
+	}
+
+	public void setBattleLog(String battleLog) {
+		this.battleLog = battleLog;
+	}
 
 	public Game(String playerName, String playerCity) throws IOException {
 
