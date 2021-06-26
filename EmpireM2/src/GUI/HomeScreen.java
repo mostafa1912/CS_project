@@ -1430,18 +1430,12 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		HBox hBoxOfLog = new HBox();
 		
 		hBoxOfLog.setMaxHeight(800);
-		hBoxOfLog.setMinHeight(100);
-		hBoxOfLog.setMinWidth(700);
+		hBoxOfLog.setMinHeight(800);
+		hBoxOfLog.setMinWidth(500);
 		hBoxOfLog.setMaxWidth(500);
 		hBoxOfLog.getChildren().addAll(logLabel);
 		hBoxOfLog.setAlignment(Pos.TOP_LEFT);
 		hBoxOfLog.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
-		
-		
-		GridPane.setConstraints(hBoxOfLog,1,0 );
-		pageLayout.getChildren().add(hBoxOfLog);
-		
-		
 		
 		
 		Hyperlink  autoResolveButton  = new Hyperlink ();
@@ -1452,13 +1446,20 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		autoResolveView.setFitWidth(200);
 		
 		
-		autoResolveButton.setTranslateY(500);
+		
 		
 		
 		autoResolveButton.setGraphic(autoResolveView);
 
 		
 		hBoxOfLog.getChildren().add(autoResolveButton);
+		GridPane.setConstraints(hBoxOfLog,1,0 );
+		pageLayout.getChildren().add(hBoxOfLog);
+		
+		
+		
+		
+	
 		autoResolveButton.setOnAction(e-> { 
 			try {
 				game.autoResolve(attackingArmy, defendingArmy);
@@ -1495,6 +1496,7 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		HBox attacking2 = new HBox();
 		HBox attacking3 = new HBox();
 		VBox attacking = new VBox();
+		
 		
 		VBox defending = new VBox();
 		TilePane defendingTilePane = new TilePane();
@@ -1602,6 +1604,7 @@ for (Unit u : attackingArmy.getUnits()) {
 	
 	centre.getChildren().addAll(defending,attacking);
 	GridPane.setConstraints(centre,0,0 );
+	centre.setMinWidth(1000);
 	pageLayout.getChildren().add(centre);
 
 	
@@ -1613,13 +1616,12 @@ for (Unit u : attackingArmy.getUnits()) {
 	
 	window.setX(0);
 	window.setY(0);
-	window.setWidth(1500);
-	window.setHeight(800);
+	
 	
 	window.setTitle("Battle View");
 	
 	
-	Scene battleView = new Scene(superLayout , 1275, 680);
+	Scene battleView = new Scene(superLayout , 1500, 800);
 	window.setScene(battleView);
 
 
