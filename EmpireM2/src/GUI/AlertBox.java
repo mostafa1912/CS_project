@@ -53,6 +53,7 @@ public class AlertBox {
 		label.setWrapText(true);
 		
 		Button closeButton= new Button("Close the window");
+		closeButton.setStyle("-fx-font: 25 arial; -fx-base: #191100;");
 		closeButton.setOnAction(e -> window.close());
 		
 		VBox layout = new VBox(100); 
@@ -96,6 +97,7 @@ public class AlertBox {
 		label.setWrapText(true);
 		
 		Button closeButton= new Button("Close the window");
+		closeButton.setStyle("-fx-font: 25 arial; -fx-base: #191100;");
 		closeButton.setOnAction(e -> window.close());
 		
 		VBox layout = new VBox(100); 

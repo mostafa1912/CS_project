@@ -405,7 +405,7 @@ public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityNam
 			ViewCities.displayUnCotrolledCities(army,g);
 			window.close();
 		});
-		
+
 		//creating attack button
 		
 

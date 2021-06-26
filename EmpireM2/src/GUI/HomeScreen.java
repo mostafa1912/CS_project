@@ -11,6 +11,8 @@ import exceptions.MaxLevelException;
 import exceptions.MaxRecruitedException;
 import exceptions.NotEnoughGoldException;
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
@@ -38,7 +40,7 @@ import units.Status;
 import units.Unit;
 
 
-public class HomeScreen extends Application {
+public class HomeScreen extends Application  {
 	static Game game ;
 	static String playerCityName;
 
@@ -112,7 +114,10 @@ public class HomeScreen extends Application {
 		//setting button size and font
 		startButton.setMaxHeight(50);
 		startButton.setMaxWidth(125);
-		startButton.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
+
+		startButton.setStyle("-fx-font: 25 arial; -fx-base: #FFB806;");
+
+
 		//adding start button to layout
 		startLayout.getChildren().addAll(gamenamelogoViewVBox ,deepquoteViewVBox,startButton);
 		// setting default scene dimensions
@@ -139,7 +144,7 @@ public class HomeScreen extends Application {
 		next.setAlignment(Pos.BOTTOM_CENTER);
 		next.setMaxHeight(50);
 		next.setMaxWidth(140);
-		next.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
+		next.setStyle("-fx-font: 25 arial; -fx-base: #FFB806;");
 		next.setTranslateY(-40);
 		
 		next.setTranslateY(150);
@@ -369,14 +374,14 @@ BorderPane bp = new BorderPane();
 
 		
 	//setting background
-	BackgroundImage bg = new BackgroundImage(new Image("file:images/worldmap2.jpg"),
+	BackgroundImage bg = new BackgroundImage(new Image("file:images/worldmapview.jpg"),
 			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
 		bp.setBackground(new Background(bg));
 
 
 		// Start of Cities HBox containing buttons for city choice
-		HBox citiesHBox = new HBox(50);
+		HBox citiesHBox = new HBox();
 
 		Hyperlink  cairoButton = new Hyperlink  ();
 		Hyperlink  spartaButton = new Hyperlink  ();
@@ -390,6 +395,8 @@ BorderPane bp = new BorderPane();
 		
 		
 		//cities hbox pictures
+		
+
 		Image cairoImage = new Image("file:images/cairologo.jpg");
 		ImageView cairoImageView = new ImageView(cairoImage);
 		cairoImageView.setFitHeight(200);;
@@ -502,7 +509,6 @@ BorderPane bp = new BorderPane();
 						armyLogoView.setFitHeight(130);;
 						armyLogoView.setFitWidth(180);
 						armyButton.setGraphic(armyLogoView);
-						
 						
 
 						String ttString = "Number of Units: " + a.getUnits().size() + "; Army Location: On Road to " + a.getTarget() +";  Distance to Target: " + a.getDistancetoTarget() + "\n";
@@ -690,21 +696,21 @@ BorderPane bp = new BorderPane();
 							}
 							
 					}});
-				
+	//creating the end turn button
 	Button end = new Button("End Turn ");
+	Color orange = Color.web("#FFB806");
+
+
+	//end.setBackground(new Background( new BackgroundFill(orange , CornerRadii.EMPTY, Insets.EMPTY)));
 	bp.setBottom(end);
 
 	Scene worldMapView = new Scene(bp, 1275, 680);
 
-
-	
 	window.setScene(worldMapView);
 
-		//creating the end turn button
-		
 	end.setMaxHeight(40);
 	end.setMaxWidth(240);
-	end.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
+	end.setStyle("-fx-font: 25 arial; -fx-base: #FFB806;");
 		end.setOnAction(e -> {
 			
 			
@@ -1314,7 +1320,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		Button goToMapViewButton = new Button ("World Map View");
 		goToMapViewButton.setMaxHeight(40);
 		goToMapViewButton.setMaxWidth(240);
-		goToMapViewButton.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
+		goToMapViewButton.setStyle("-fx-font: 25 arial; -fx-base: #191100;");
 
 		
 		
@@ -1355,7 +1361,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 	});
 	end.setMaxHeight(40);
 	end.setMaxWidth(240);
-	end.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
+	end.setStyle("-fx-font: 25 arial; -fx-base: #191100;");
 
 	//hbox containing the two  buttons
 		HBox buttonsHBox = new HBox();
@@ -1604,7 +1610,6 @@ public void youLost(Stage window) {
 		window.setScene(worldmap);
 		window.show();
 	}
-
 
 
 
