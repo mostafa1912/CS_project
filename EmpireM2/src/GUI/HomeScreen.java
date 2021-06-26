@@ -340,28 +340,31 @@ public class HomeScreen extends Application {
 
 
 public void worldMapView(Stage window) throws IOException	{
-		
+BorderPane bp = new BorderPane();
+
 // Label with player info 
 		
 		Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
 				game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
 		label.setMaxHeight(10);
-		
+		label.setBackground(new Background(new BackgroundFill(Color.BLACK,CornerRadii.EMPTY, Insets.EMPTY)));
+
+		HBox labelHbox = new HBox();
+		labelHbox.getChildren().add(label);
+		labelHbox.setBackground(new Background(new BackgroundFill(Color.BLACK,
+				CornerRadii.EMPTY,
+				Insets.EMPTY)));
+
 		label.setMinWidth(1275);
 		label.setTextFill(Color.web("WHITE"));
 		HBox upperHBoxOfPlayerInfo = new HBox();
-		upperHBoxOfPlayerInfo.getChildren().addAll(label);
+		upperHBoxOfPlayerInfo.getChildren().addAll(labelHbox);
 		upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
 		upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
-		
-		
-		//creating a borderpane to be the main layout
-		GridPane pageLayout = new GridPane();
-		//creating main subcomponents for page laypout
+		bp.setTop(label);
 		
 
-	//	pageLayout.setLeft(left);
-		//pageLayout.setRight(right);
+
 
 
 		
@@ -369,7 +372,9 @@ public void worldMapView(Stage window) throws IOException	{
 	BackgroundImage bg = new BackgroundImage(new Image("file:images/ancientworldmap.png"),
 			BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 				BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
-		
+		bp.setBackground(new Background(bg));
+
+
 		// Start of Cities HBox containing buttons for city choice
 		HBox citiesHBox = new HBox(50);
 
@@ -405,33 +410,34 @@ public void worldMapView(Stage window) throws IOException	{
 		romeButton.setGraphic(romeImageView);
 
 
+		//trying to change position of chosen city
+
+
+
+
+
 		citiesHBox.getChildren().addAll(cairoButton,spartaButton,romeButton);
 		
+		citiesHBox.setAlignment(Pos.CENTER);
+		citiesHBox.setTranslateX(-180);
+		citiesHBox.setTranslateY(100);
+		bp.setCenter(citiesHBox);
 
-		citiesHBox.setTranslateX(287.5);
-		// Buttom of the view 
-		//GridPane.setConstraints(citiesHBox,0,100);
-		//pageLayout.getChildren().add(citiesHBox);
-		
-		// End of Cities HBox 
-		
 		
 	//representation for idle armies
 		
 		
-		
+		VBox leftVBox = new VBox();
 		Label IdleArmiesandLabel = new Label ("Idle Armies Controlled By " + game.getPlayer().getName()+ " :" );
 		IdleArmiesandLabel.setFont(Font.font("Cambria", 26));
 		IdleArmiesandLabel.setTextFill(Color.web("Orange"));
-		
-		GridPane.setConstraints(IdleArmiesandLabel,0,0);
-		pageLayout.getChildren().add(IdleArmiesandLabel);
+		leftVBox.getChildren().add(IdleArmiesandLabel);
 
 		HBox idleArmiesHBox = new HBox(6);
 		for (Army a : game.getPlayer().getControlledArmies()) {
 			
 		if (a.getCurrentStatus().equals(Status.IDLE ) && !a.getCurrentStatus().equals(Status.BESIEGING))	{
-		/********/
+
 			Hyperlink  armyButton  = new Hyperlink ();
 			Image armyLogo = new Image("file:images/armylogo.png");
 			ImageView armyLogoView = new ImageView(armyLogo);
@@ -467,8 +473,8 @@ public void worldMapView(Stage window) throws IOException	{
 			
 		}}
 		
-		GridPane.setConstraints(idleArmiesHBox,0,1);
-		pageLayout.getChildren().add(idleArmiesHBox);
+		leftVBox.getChildren().add(idleArmiesHBox);
+
 
 		
 		
@@ -481,7 +487,7 @@ public void worldMapView(Stage window) throws IOException	{
 		Label marchingArmiesandLabelVBoxTitle = new Label ("Marching Armies : ");
 		marchingArmiesandLabelVBoxTitle.setFont(Font.font("Cambria", 26));
 		marchingArmiesandLabelVBoxTitle.setTextFill(Color.web("Orange"));
-		GridPane.setConstraints(marchingArmiesandLabelVBoxTitle, 0, 2);
+		leftVBox.getChildren().add(marchingArmiesandLabelVBoxTitle);
 		
 		
 		
@@ -517,8 +523,8 @@ public void worldMapView(Stage window) throws IOException	{
 					}
 				}
 		
-		GridPane.setConstraints(marchingArmiesHBox,0,3);
-		pageLayout.getChildren().addAll(marchingArmiesandLabelVBoxTitle,marchingArmiesHBox);
+		leftVBox.getChildren().add(marchingArmiesHBox);
+
 				
 				
 				
@@ -529,7 +535,7 @@ public void worldMapView(Stage window) throws IOException	{
 		besiegingArmiesLabel.setFont(Font.font("Cambria", 26));
 		besiegingArmiesLabel.setTextFill(Color.web("Orange"));
 		
-		GridPane.setConstraints(besiegingArmiesLabel, 0, 4);
+		leftVBox.getChildren().add(besiegingArmiesLabel);
 
 		HBox besiegingArmiesHBox = new HBox();
 	
@@ -578,8 +584,9 @@ public void worldMapView(Stage window) throws IOException	{
 				
 				
 
-				GridPane.setConstraints(besiegingArmiesHBox,0,5);
-				pageLayout.getChildren().addAll(besiegingArmiesLabel,besiegingArmiesHBox);
+				leftVBox.getChildren().add(besiegingArmiesHBox);
+
+				bp.setLeft(leftVBox);
 								
 						
 
@@ -671,6 +678,9 @@ public void worldMapView(Stage window) throws IOException	{
 
 		//creating the end turn button
 		Button end = new Button("End Turn ");
+	end.setMaxHeight(40);
+	end.setMaxWidth(240);
+	end.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
 		end.setOnAction(e -> {game.endTurn();
 			for (Army a : game.getPlayer().getControlledArmies()  )
 			{
@@ -687,27 +697,11 @@ public void worldMapView(Stage window) throws IOException	{
 			}
 		});
 		end.setAlignment(Pos.CENTER);
-		end.setTranslateX(635.5);
-		end.setTranslateY(50);
+		end.setTranslateX(520);
 
-		//creating
+		bp.setBottom(end);
 
-
-
-
-
-
-				
-	
-		VBox superLayout = new VBox () ; 
-		superLayout.setBackground(new Background(bg));
-		pageLayout.setMinHeight(300);
-		superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout,citiesHBox);
-		superLayout.getChildren().add(end);
-
-
-		
-		Scene worldMapView = new Scene(superLayout , 1275, 680);
+		Scene worldMapView = new Scene(bp, 1275, 680);
 
 
 		
@@ -721,16 +715,7 @@ public void worldMapView(Stage window) throws IOException	{
 	
 	
 public void cityView(Stage window , String currentCityName) throws IOException	{
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-		game.endTurn();
-=======
 
->>>>>>> Stashed changes
-=======
-
->>>>>>> Stashed changes
-		
 		Background bg = Createbackground1("cityviewwallpaper.jpg");
 		
 		
@@ -759,12 +744,12 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 	
 		
 //Setting City Icon on Top Left of Page 		
-		Image cityLogo = new Image("file:images/cairotextlogo1.jpg");
+		Image cityLogo = new Image("file:images/cairologo.png");
 		
 		if (currentCity.getName().equals("Sparta"))
-			cityLogo = new Image("file:images/spartatextlogo1.png");
+			cityLogo = new Image("file:images/spartalogo.png");
 		if (currentCity.getName().equals("Rome"))
-			cityLogo = new Image("file:images/rometextlogo1.png");
+			cityLogo = new Image("file:images/romelogo.png");
 		
 		ImageView cityLogoView = new ImageView(cityLogo);
 		cityLogoView.setFitHeight(100);;
@@ -1291,8 +1276,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		goToMapViewButton.setMaxHeight(40);
 		goToMapViewButton.setMaxWidth(240);
 		goToMapViewButton.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
-		goToMapViewButton.setTranslateX(517.5);
-		goToMapViewButton.setTranslateY(10);
+
 		
 		
 		
@@ -1304,10 +1288,34 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 				AlertBox.display(e1.getMessage());
 			}
 		});
-		
-		
-		
-		
+
+	//creating the end turn button
+	Button end = new Button("End Turn ");
+	end.setOnAction(e -> {game.endTurn();
+		for (Army a : game.getPlayer().getControlledArmies()  )
+		{
+			if(a.getDistancetoTarget()==0 && !a.getCurrentStatus().equals(Status.BESIEGING)){
+				SiegingChoice.giveSiegeChoice(game , a);
+
+
+			}
+		}
+		try {
+			cityView(window,currentCityName);
+		} catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
+	});
+	end.setMaxHeight(40);
+	end.setMaxWidth(240);
+	end.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
+
+	//hbox containing the two  buttons
+		HBox buttonsHBox = new HBox();
+		buttonsHBox.setAlignment(Pos.CENTER);
+		buttonsHBox.getChildren().addAll(goToMapViewButton,end);
+		buttonsHBox.setPadding(new Insets(15));
+		buttonsHBox.setSpacing(15);
 		
 		
 		
@@ -1315,7 +1323,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 		
 		superLayout.getChildren().add(upperHBoxOfPlayerInfo);
 
-		superLayout.getChildren().addAll(pageLayout,goToMapViewButton);
+		superLayout.getChildren().addAll(pageLayout,buttonsHBox);
 
 		superLayout.setBackground(bg);
 		
