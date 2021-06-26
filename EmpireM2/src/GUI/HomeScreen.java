@@ -1317,7 +1317,7 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 
 
 	}
-public void battleView(Stage window) throws IOException	{
+public void battleView(Stage window ) throws IOException	{
 		System.out.println(game.getPlayer().getName() + " : " +playerCityName );
 		Label label = new Label("player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
 				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());

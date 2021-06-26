@@ -5,6 +5,7 @@ import engine.Game;
 import engine.Player;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -347,7 +348,18 @@ public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityNam
 			window.close();
 		});
 		
-		
+		//creating attack button
+		Button attackButton = new Button("ATTACK");
+		attackButton.setOnAction(e -> {
+			City city = null;
+			for (City c : g.getAvailableCities()){
+				if(cityName == c.getName())
+					city = c;
+			}
+
+			HomeScreen.battleView(window, army , city.getDefendingArmy() );
+		});
+
 		
 		layout.getChildren().addAll(label,defendingArmyUnitsHBox,setTargetButton);
 		layout.setAlignment(Pos.CENTER);
