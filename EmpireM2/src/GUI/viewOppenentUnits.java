@@ -97,6 +97,12 @@ public class viewOppenentUnits  {
 				try {
 					selectedUnit.attack(d);
 					g.setBattleLog(g.getBattleLog()+ "\n-Players Unit " +selectedUnit.getType()+ " Attacked Oppenent's Unit " + d.getType() + " \nAnd made it's count = " + d.getCurrentSoldierCount() +"\n");
+					
+					d.attack(selectedUnit);
+					g.setBattleLog(g.getBattleLog()+ "\n-Opponent's Unit " +d.getType()+ " Attacked Player's Unit " + selectedUnit.getType() + " \nAnd made it's count = " + selectedUnit.getCurrentSoldierCount() +"\n");
+				
+					
+				
 				} catch (FriendlyFireException e1) {
 					// TODO Auto-generated catch block
 					AlertBox.display("Friendly Fire", e1.getMessage());
