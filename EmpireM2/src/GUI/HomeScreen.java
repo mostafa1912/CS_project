@@ -1317,21 +1317,66 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 
 
 	}
-public void battleView(Stage window ) throws IOException	{
-		System.out.println(game.getPlayer().getName() + " : " +playerCityName );
-		Label label = new Label("player name: " + game.getPlayer().getName()  + "\n Player City: " + playerCityName + "\n Turn Count: " +
-				game.getCurrentTurnCount() + "\n Food: " + game.getPlayer().getFood() + "\n Gold: "+ game.getPlayer().getTreasury());
-		Label label1 = new Label( );
-		label1.setLayoutX(200);
+public void battleView(Stage window, Army attackingArmy, Army defendingArmy) throws IOException	{
+	Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
+			game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
+	label.setMaxHeight(10);
+	label.setMinWidth(1275);
+	label.setTextFill(Color.web("WHITE"));
+	HBox upperHBoxOfPlayerInfo = new HBox();
+	upperHBoxOfPlayerInfo.getChildren().addAll(label);
+	upperHBoxOfPlayerInfo.setAlignment(Pos.TOP_LEFT);
+	upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+	
+	
+	//creating a borderpane to be the main layout
+	GridPane pageLayout = new GridPane();
+	//creating main subcomponents for page layout
+	
+	
+//setting background
+BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackground.jpeg"),
+		BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+			BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
 
-		BorderPane pageLayout = new BorderPane();
-		HBox hBox = new HBox();
-		hBox.getChildren().addAll(label);
-		hBox.setAlignment(Pos.TOP_LEFT);
-		pageLayout.setTop(hBox);
+	
+		VBox superLayout = new VBox();
+		superLayout.setBackground(new Background(bg));
+		superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
+		Scene battleView = new Scene(superLayout , 1275, 680);
+		
+		HBox attacking = new HBox();
 
-		Scene battleView = new Scene(pageLayout , 1275, 680);
-
+for (Unit u : attackingArmy.getUnits()) { 
+			
+			
+			String unitType = "Archer";
+			Image unitLogo = new Image("file:images/ArchersCard.png");
+			
+			if (u.getType().equals("Infantry")){
+				unitLogo = new Image("file:images/BarbarianCard.png");
+				unitType = "Infantry";
+			}
+			
+			if (u.getType().equals("Cavalry")) {
+				unitLogo = new Image("file:images/HogRiderCard.png");
+				unitType = "Cavalry";
+			}
+			
+			Hyperlink  unitLogoButton  = new Hyperlink ();
+			ImageView unitLogoView = new ImageView(unitLogo);
+			unitLogoView.setFitHeight(130);;
+			unitLogoView.setFitWidth(130);
+			
+			unitLogoButton.setGraphic(unitLogoView);
+			
+			// Adding hover text to the building
+			Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
+			tt.setShowDelay(new Duration (0));
+			tt.setHideDelay(new Duration (10));
+			Tooltip.install(unitLogoButton, tt);
+			attacking.getChildren().add(unitLogoButton);
+		
 		window.setScene(battleView);
 
 
@@ -1341,6 +1386,6 @@ public void battleView(Stage window ) throws IOException	{
 	
 	
 	
-	
 
+}
 }
