@@ -1408,18 +1408,18 @@ public static void battleView(Stage window, Army attackingArmy, Army defendingAr
 	
 	
 	//creating a borderpane to be the main layout
-	GridPane pageLayout = new GridPane();
+	
 	//creating main subcomponents for page layout
 	
 	
-	
+	GridPane pageLayout = new GridPane();
 
 //setting background
 BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackground.jpeg"),
 		BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 			BackgroundPosition.CENTER, new BackgroundSize(1.0 ,1.0,true,true, false, false) );
 
-		BorderPane bp = new BorderPane();
+		
 		
 
 		
@@ -1438,7 +1438,8 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		hBoxOfLog.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
 		
 		
-		bp.setRight(hBoxOfLog);
+		GridPane.setConstraints(hBoxOfLog,1,0 );
+		pageLayout.getChildren().add(hBoxOfLog);
 		
 		
 		
@@ -1479,16 +1480,16 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		
 		
 		VBox superLayout = new VBox();
-		bp.setBackground(new Background(bg));
-		superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
-		Scene battleView = new Scene(bp , 1275, 680);
+		superLayout.setBackground(new Background(bg));
+		
+		
 		
 	//	HBox attacking = new HBox();
 	//	attacking.setMaxSize(999999999, 999999999);
 		upperHBoxOfPlayerInfo.setBackground(new Background(new BackgroundFill(Color.BLACK,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
-		bp.setTop(upperHBoxOfPlayerInfo);
+		
 		VBox centre = new VBox(40);
 		HBox attacking1 = new HBox();
 		HBox attacking2 = new HBox();
@@ -1600,11 +1601,12 @@ for (Unit u : attackingArmy.getUnits()) {
 				
 	
 	centre.getChildren().addAll(defending,attacking);
-	bp.setCenter(centre);
+	GridPane.setConstraints(centre,0,0 );
+	pageLayout.getChildren().add(centre);
 
 	
 	
-	
+	superLayout.getChildren().addAll(upperHBoxOfPlayerInfo,pageLayout);
 	
 	
 	
@@ -1617,6 +1619,7 @@ for (Unit u : attackingArmy.getUnits()) {
 	window.setTitle("Battle View");
 	
 	
+	Scene battleView = new Scene(superLayout , 1275, 680);
 	window.setScene(battleView);
 
 
