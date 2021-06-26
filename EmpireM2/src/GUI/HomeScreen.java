@@ -339,7 +339,7 @@ public class HomeScreen extends Application {
 	}
 
 
-public void worldMapView(Stage window) throws IOException	{
+	public void worldMapView(Stage window) throws IOException	{
 BorderPane bp = new BorderPane();
 
 // Label with player info 
@@ -496,12 +496,12 @@ BorderPane bp = new BorderPane();
 	
 				for (Army a : game.getPlayer().getControlledArmies()) {
 					if (a.getCurrentStatus().equals(Status.MARCHING)) {
+						Hyperlink  armyButton  = new Hyperlink ();
 						Image armyLogo = new Image("file:images/armylogo.png");
-						
 						ImageView armyLogoView = new ImageView(armyLogo);
 						armyLogoView.setFitHeight(130);;
 						armyLogoView.setFitWidth(180);
-						
+						armyButton.setGraphic(armyLogoView);
 						
 						
 
@@ -515,11 +515,15 @@ BorderPane bp = new BorderPane();
 						Tooltip tt = new Tooltip(ttString);
 						tt.setShowDelay(new Duration (0));
 						tt.setHideDelay(new Duration (10));
-						Tooltip.install(armyLogoView, tt);
+						Tooltip.install(armyButton, tt);
 						
 						
 						
-						marchingArmiesHBox.getChildren().add(armyLogoView);
+						
+						marchingArmiesHBox.getChildren().add(armyButton);
+						
+						
+						
 					}
 				}
 		
@@ -545,11 +549,12 @@ BorderPane bp = new BorderPane();
 
 				for (Army a : game.getPlayer().getControlledArmies()) {
 					if (a.getCurrentStatus().equals(Status.BESIEGING)) {
+						Hyperlink  armyButton  = new Hyperlink ();
 						Image armyLogo = new Image("file:images/armylogo.png");
-						
 						ImageView armyLogoView = new ImageView(armyLogo);
 						armyLogoView.setFitHeight(130);;
 						armyLogoView.setFitWidth(180);
+						armyButton.setGraphic(armyLogoView);
 
 						
 						
@@ -571,14 +576,20 @@ BorderPane bp = new BorderPane();
 						Tooltip tt = new Tooltip(ttString);
 						tt.setShowDelay(new Duration (0));
 						tt.setHideDelay(new Duration (10));
-						Tooltip.install(armyLogoView, tt);
+						Tooltip.install(armyButton, tt);
 						
 						
 						
 
 					}
 
-						besiegingArmiesHBox.getChildren().add(armyLogoView);}
+						besiegingArmiesHBox.getChildren().add(armyButton);
+						
+						armyButton.setOnAction(e->{ 
+							ViewUnits.displayUnitsOfArmy(a, game.getPlayer(), game, a.getCurrentLocation());
+							
+						});
+					}
 		}
 					
 				
@@ -714,8 +725,9 @@ BorderPane bp = new BorderPane();
 	
 	
 	
-public void cityView(Stage window , String currentCityName) throws IOException	{
+	public void cityView(Stage window , String currentCityName) throws IOException	{
 
+		clearEmptyArmies();
 		Background bg = Createbackground1("cityviewwallpaper.jpg");
 		
 		
@@ -744,12 +756,12 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 	
 		
 //Setting City Icon on Top Left of Page 		
-		Image cityLogo = new Image("file:images/cairologo.png");
+		Image cityLogo = new Image("file:images/cairotextlogo1.png");
 		
 		if (currentCity.getName().equals("Sparta"))
-			cityLogo = new Image("file:images/spartalogo.png");
+			cityLogo = new Image("file:images/spartatextlogo.png");
 		if (currentCity.getName().equals("Rome"))
-			cityLogo = new Image("file:images/romelogo.png");
+			cityLogo = new Image("file:images/rometextlogo.png");
 		
 		ImageView cityLogoView = new ImageView(cityLogo);
 		cityLogoView.setFitHeight(100);;
@@ -1336,7 +1348,8 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 	}
 
 
-public static void battleView(Stage window, Army attackingArmy, Army defendingArmy) throws IOException	{
+	public static void battleView(Stage window, Army attackingArmy, Army defendingArmy) throws IOException	{
+	clearEmptyArmies();
 	Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
 			game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
 	label.setMaxHeight(10);
@@ -1448,11 +1461,26 @@ for (Unit u : attackingArmy.getUnits()) {
 	centre.getChildren().addAll(attacking,defending);
 	bp.setCenter(centre);
 	
-		window.setScene(battleView);
+	window.setX(0);
+	window.setY(0);
+	window.setWidth(1500);
+	window.setHeight(800);
+	
+	window.setTitle("Battle View");
+	
+	window.setTitle("Battle View");
+	window.setScene(battleView);
 
 
 	}
 	
 
+	
+	public static void clearEmptyArmies() { 
+		for (Army c : game.getPlayer().getControlledArmies()) {
+			if (c.getUnits().size()==0)
+				game.getPlayer().getControlledArmies().remove(c);
+		}
+	}
 
 }

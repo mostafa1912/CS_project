@@ -342,26 +342,53 @@ public static void displayUnitsOfArmy(Army army , Player p,Game g,String cityNam
 		});
 		
 		//creating attack button
-		Button attackButton = new Button("ATTACK");
+		
 
-
-
-		attackButton.setOnAction(e -> {
-			City city = null;
-			for (City c : g.getAvailableCities()){
-				if(cityName == c.getName())
-					city = c;
-			}
-
-
-			try {
-				HomeScreen.battleView(window, army , city.getDefendingArmy() );
-			} catch (IOException ioException) {
-				ioException.printStackTrace();
-			}
-		});
 		HBox buttonsHBox = new HBox();
-		buttonsHBox.getChildren().addAll(setTargetButton,attackButton);
+
+		if (army.getDistancetoTarget() == 0 ) {
+			Hyperlink  attackButton  = new Hyperlink ();
+			
+			Image attackTextLogo = new Image("file:images/attacktextlogo.png");
+			ImageView attackTextLogoLogoView = new ImageView(attackTextLogo);
+			attackTextLogoLogoView.setFitHeight(60);;
+			attackTextLogoLogoView.setFitWidth(200);
+			attackButton.setGraphic(attackTextLogoLogoView);
+			
+			
+			Tooltip tt3 = new Tooltip("Attack");
+			tt3.setShowDelay(new Duration (0));
+			tt3.setHideDelay(new Duration (10));
+			Tooltip.install(attackButton, tt3);
+			attackButton.setOnAction(e -> {
+				City city = null;
+				for (City c : g.getAvailableCities()){
+					if(cityName == c.getName())
+						city = c;
+				}
+	
+				
+				try {
+					window.setX(0);
+					window.setY(0);
+					window.setWidth(1500);
+					window.setHeight(800);
+					
+					window.setTitle("Battle View");
+					
+					HomeScreen.battleView(window, army , city.getDefendingArmy() );
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
+			});
+			
+			buttonsHBox.getChildren().addAll(setTargetButton,attackButton);
+		} 
+		else { 
+			buttonsHBox.getChildren().addAll(setTargetButton);
+		}
+		
+		
 		buttonsHBox.setAlignment(Pos.CENTER);
 		layout.setBackground(new Background(bg));
 		layout.getChildren().addAll(label,defendingArmyUnitsHBox,buttonsHBox);
