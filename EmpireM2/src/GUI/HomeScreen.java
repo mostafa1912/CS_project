@@ -692,15 +692,17 @@ BorderPane bp = new BorderPane();
 	end.setMaxHeight(40);
 	end.setMaxWidth(240);
 	end.setStyle("-fx-font: 25 arial; -fx-base: #b6e7c9;");
-		end.setOnAction(e -> {game.endTurn();
+		end.setOnAction(e -> {
 			for (Army a : game.getPlayer().getControlledArmies()  )
 			{
+				game.endTurn();
 				if(a.getDistancetoTarget()==0 && !a.getCurrentStatus().equals(Status.BESIEGING)){
 					SiegingChoice.giveSiegeChoice(game , a);
-
+				
 
 				}
 			}
+			
 			try {
 				worldMapView(window);
 			} catch (IOException ioException) {
@@ -1383,9 +1385,16 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
 		bp.setTop(upperHBoxOfPlayerInfo);
-		VBox centre = new VBox();
-		HBox attacking = new HBox();
-		HBox defending = new HBox();
+		VBox centre = new VBox(40);
+		HBox attacking1 = new HBox();
+		HBox attacking2 = new HBox();
+		HBox attacking3 = new HBox();
+		VBox attacking = new VBox();
+		
+		HBox defending1 = new HBox();
+		HBox defending2 = new HBox();
+		HBox defending3 = new HBox();
+		VBox defending = new VBox();
 // Looping on attacking army units and adding their photos
 for (Unit u : attackingArmy.getUnits()) { 
 			String unitType = "";
@@ -1418,8 +1427,15 @@ for (Unit u : attackingArmy.getUnits()) {
 			tt.setHideDelay(new Duration (10));
 			Tooltip.install(unitLogoButton, tt);
 			
-			attacking.getChildren().addAll(unitLogoButton);
+			if (attacking1.getChildren().size()<10)
+				attacking1.getChildren().addAll(unitLogoButton);
+			else if (attacking2.getChildren().size() < 10)
+				attacking2.getChildren().addAll(unitLogoButton);
+			else 
+				attacking3.getChildren().addAll(unitLogoButton);
 }
+
+attacking.getChildren().addAll(attacking1,attacking2,attacking3);
 // Looping on defending army units and adding their photos
 			for (Unit d : defendingArmy.getUnits()) { 
 				String unitType2 = "";
@@ -1452,13 +1468,18 @@ for (Unit u : attackingArmy.getUnits()) {
 				tt2.setHideDelay(new Duration (10));
 				Tooltip.install(unitLogoButton2, tt2);
 		
-				defending.getChildren().addAll(unitLogoButton2,unitLogoView2);		
-			}
-				
-	attacking.setTranslateY(350);
-	defending.setTranslateY(-50);
+				if (defending1.getChildren().size()<10)
+					defending1.getChildren().addAll(unitLogoButton2);
+				else if (defending2.getChildren().size() < 10)
+					defending2.getChildren().addAll(unitLogoButton2);
+				else
+					defending3.getChildren().addAll(unitLogoButton2);
+	}
 
-	centre.getChildren().addAll(attacking,defending);
+	defending.getChildren().addAll(defending1,defending2,defending3);
+				
+	
+	centre.getChildren().addAll(defending,attacking);
 	bp.setCenter(centre);
 	
 	window.setX(0);
