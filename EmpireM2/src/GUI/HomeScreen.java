@@ -1386,6 +1386,12 @@ public void cityView(Stage window , String currentCityName) throws IOException	{
 
 public static void battleView(Stage window, Army attackingArmy, Army defendingArmy) throws IOException	{
 	clearEmptyArmies();
+	
+	
+	
+	
+	
+	
 	Label label = new Label("Player name: " + game.getPlayer().getName()  + "                                                              Player City: " + playerCityName + "                                                              Turn Count: " +
 			game.getCurrentTurnCount() + "                                                              Food: " + game.getPlayer().getFood() + "                                                              Gold: "+ game.getPlayer().getTreasury());
 	label.setMaxHeight(10);
@@ -1425,10 +1431,8 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		HBox attacking3 = new HBox();
 		VBox attacking = new VBox();
 		
-		HBox defending1 = new HBox();
-		HBox defending2 = new HBox();
-		HBox defending3 = new HBox();
 		VBox defending = new VBox();
+		TilePane defendingTilePane = new TilePane();
 // Looping on attacking army units and adding their photos
 for (Unit u : attackingArmy.getUnits()) { 
 			String unitType = "";
@@ -1467,6 +1471,17 @@ for (Unit u : attackingArmy.getUnits()) {
 				attacking2.getChildren().addAll(unitLogoButton);
 			else 
 				attacking3.getChildren().addAll(unitLogoButton);
+			
+			unitLogoButton.setOnAction(e-> {
+				 viewOppenentUnits.displayOpponentUnits(u,defendingArmy,game);
+				 try {
+					
+					battleView(window,attackingArmy,defendingArmy);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					AlertBox.display(e1.getMessage());
+				}
+			});
 }
 
 
@@ -1508,23 +1523,42 @@ for (Unit u : attackingArmy.getUnits()) {
 				tt2.setHideDelay(new Duration (10));
 				Tooltip.install(unitLogoButton2, tt2);
 		
-				if (defending1.getChildren().size()<8)
-					defending1.getChildren().addAll(unitLogoButton2);
-				else if (defending2.getChildren().size() < 8)
-					defending2.getChildren().addAll(unitLogoButton2);
-				else
-					defending3.getChildren().addAll(unitLogoButton2);
+				defendingTilePane.getChildren().add(unitLogoButton2);
+				
+				
 	}
 
 			
 	Label defendingArmyLabel = new Label ("Defending Army: ");
 	defendingArmyLabel.setFont(Font.font("Cambria", 26));
 	defendingArmyLabel.setTextFill(Color.web("Orange"));
-	defending.getChildren().addAll(defendingArmyLabel,defending1,defending2,defending3);
+	defending.getChildren().addAll(defendingArmyLabel,defendingTilePane);
 				
 	
 	centre.getChildren().addAll(defending,attacking);
 	bp.setCenter(centre);
+
+	/***********/
+	
+	
+	
+	Label logLabel = new Label (game.getBattleLog());
+	
+	logLabel.setTextFill(Color.web("WHITE"));
+	logLabel.setMinWidth(500);
+	HBox hBoxOfLog = new HBox();
+	
+	hBoxOfLog.setMaxHeight(800);
+	hBoxOfLog.setMinHeight(100);
+	hBoxOfLog.setMinWidth(700);
+	hBoxOfLog.setMaxWidth(500);
+	hBoxOfLog.getChildren().addAll(logLabel);
+	hBoxOfLog.setAlignment(Pos.TOP_LEFT);
+	hBoxOfLog.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
+	
+	bp.setRight(hBoxOfLog);
+	
+	
 	
 	window.setX(0);
 	window.setY(0);
