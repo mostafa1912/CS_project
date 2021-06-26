@@ -68,31 +68,28 @@ public class SiegingChoice  {
 		laySiegeTextLogoView.setFitWidth(200);
 		laySiegeButton.setGraphic(laySiegeTextLogoView);
 		
+		Hyperlink setTargetButton = new Hyperlink();
+        Image s = new Image("file:images/setarmytargettextlogo.png");
+		ImageView ss = new ImageView(s);
+        ss.setFitHeight(60);;
+        ss.setFitWidth(200);
+        setTargetButton.setGraphic(ss);
 		
-		
-		Hyperlink  closeButton  = new Hyperlink ();
-		Image closeTextLogo = new Image("file:images/continuetextlogo.png");
-		ImageView closeTextLogoView = new ImageView(closeTextLogo);
-		closeTextLogoView.setFitHeight(60);;
-		closeTextLogoView.setFitWidth(200);
-		closeButton.setGraphic(closeTextLogoView);
+
 		
         
 		buttonsHBox.setAlignment(Pos.CENTER);
         
        
         
-		buttonsHBox.getChildren().addAll(laySiegeButton,closeButton);
+		buttonsHBox.getChildren().addAll(laySiegeButton, setTargetButton);
         layout.getChildren().addAll(label,buttonsHBox);
 
-        closeButton.setOnAction(e -> {
-            window.close();
 
-        } );
         laySiegeButton.setOnAction(e -> {
             //looking for the city object to be put in siege method
-            City city;
-            city = new City("sddwd");
+            City city = null;
+
 
             for (City c : game.getAvailableCities()){
                 if (army.getCurrentLocation() == c.getName())
@@ -101,10 +98,10 @@ public class SiegingChoice  {
                 }
 
             }
-            System.out.print(city.getName());
+
             try {
                 game.getPlayer().laySiege(army , city);
-                System.out.print("ana get hena" + army.getCurrentStatus().toString());
+
 
             } catch (TargetNotReachedException targetNotReachedException) {
                 AlertBox.display("Target Not Reached ",targetNotReachedException.getMessage());
