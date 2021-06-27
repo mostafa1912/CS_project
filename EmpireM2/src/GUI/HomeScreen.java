@@ -1660,8 +1660,8 @@ for (Unit u : attackingArmy.getUnits()) {
 	defendingArmyLabel.setTextFill(Color.web("Orange"));
 	defending.getChildren().addAll(defendingArmyLabel,defendingTilePane);
 				
-	autoResolveButtonHbox.setTranslateX(1000);
-	autoResolveButtonHbox.setTranslateY(-50);
+	autoResolveButtonHbox.setTranslateX(500);
+	
 	
 	
 	if (attackingArmy.getUnits().size() == 0 || defendingArmy.getUnits().size() == 0) { 
