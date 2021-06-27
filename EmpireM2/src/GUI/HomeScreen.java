@@ -1046,7 +1046,7 @@ public static void cityView(Stage window , String currentCityName) throws IOExce
 			
 			if (currentCity.getMilitaryBuildings().get(i) instanceof Barracks) {
 				buildingLogo = new Image("file:images/baracksicon.png");
-				buildingType = "Barracks";
+				buildingType = "Barrack";
 			}
 			
 			if (currentCity.getMilitaryBuildings().get(i) instanceof Stable) {
