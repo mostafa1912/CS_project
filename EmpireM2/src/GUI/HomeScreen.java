@@ -1537,78 +1537,6 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		VBox defending = new VBox();
 		TilePane defendingTilePane = new TilePane();
 // Looping on attacking army units and adding their photos
-for (Unit u : attackingArmy.getUnits()) { 
-			String unitType = "";
-			Image unitLogo = null;
-			if (u.getType().equals("Archer")) {
-			unitType = "Archer";
-			unitLogo = new Image("file:images/ArchersCard.png");
-			}
-			
-			if (u.getType().equals("Infantry")){
-			unitLogo = new Image("file:images/BarbarianCard.png");
-			unitType = "Infantry";
-			}
-			
-			if (u.getType().equals("Cavalry")) {
-			unitLogo = new Image("file:images/HogRiderCard.png");
-			unitType = "Cavalry";
-			}
-			
-			Hyperlink  unitLogoButton  = new Hyperlink ();
-			ImageView unitLogoView = new ImageView(unitLogo);
-			unitLogoView.setFitHeight(130);;
-			unitLogoView.setFitWidth(130);
-			
-			unitLogoButton.setGraphic(unitLogoView);
-			
-			// Adding hover text to the building
-			Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
-			tt.setShowDelay(new Duration (0));
-			tt.setHideDelay(new Duration (10));
-			Tooltip.install(unitLogoButton, tt);
-			
-			if (attacking1.getChildren().size()<8)
-				attacking1.getChildren().addAll(unitLogoButton);
-			else if (attacking2.getChildren().size() < 8)
-				attacking2.getChildren().addAll(unitLogoButton);
-			else 
-				attacking3.getChildren().addAll(unitLogoButton);
-			
-			unitLogoButton.setOnAction(e-> {
-				 viewOppenentUnits.displayOpponentUnits(u,defendingArmy,game);
-					if (attackingArmy.getUnits().size() != 0 && defendingArmy.getUnits().size() == 0 ) {
-						game.setBattleLog(game.getBattleLog()+ "\n------Player Occupied " + defendingArmy.getCurrentLocation()+"------");
-						game.occupy(attackingArmy, defendingArmy.getCurrentLocation());
-						
-						for (City c : game.getAvailableCities() ) { 
-							if (c.getName().equals(attackingArmy.getCurrentLocation())) {
-								c.setTurnsUnderSiege(1);
-							}
-						}
-						attackingArmy.setCurrentStatus(Status.IDLE);
-						attackingArmy.setDistancetoTarget(50);
-					}
-					else if (attackingArmy.getUnits().size() == 0 && defendingArmy.getUnits().size() != 0){
-						game.setBattleLog(game.getBattleLog()+ "\n------Player's Army Got destroyed------");
-					
-						for (City c : game.getAvailableCities() ) { 
-							if (c.getName().equals(attackingArmy.getCurrentLocation())) {
-								c.setTurnsUnderSiege(1);
-							}
-						}
-						attackingArmy.setCurrentStatus(Status.IDLE);
-						attackingArmy.setDistancetoTarget(50);
-						}
-				 try {
-					
-					battleView(window,attackingArmy,defendingArmy);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					AlertBox.display(e1.getMessage());
-				}
-			});
-}
 
 
 	Label attackingArmyLabel = new Label (game.getPlayer().getName()+" Attacking Army: ");
@@ -1653,6 +1581,78 @@ for (Unit u : attackingArmy.getUnits()) {
 				defendingTilePane.getChildren().add(unitLogoButton2);
 				
 				
+	}
+
+			for (Unit u : attackingArmy.getUnits()) { 
+				String unitType = "";
+				Image unitLogo = null;
+				if (u.getType().equals("Archer")) {
+				unitType = "Archer";
+				unitLogo = new Image("file:images/ArchersCard.png");
+				}
+				
+				if (u.getType().equals("Infantry")){
+				unitLogo = new Image("file:images/BarbarianCard.png");
+				unitType = "Infantry";
+				}
+				
+				if (u.getType().equals("Cavalry")) {
+				unitLogo = new Image("file:images/HogRiderCard.png");
+				unitType = "Cavalry";
+				}
+				
+				Hyperlink  unitLogoButton  = new Hyperlink ();
+				ImageView unitLogoView = new ImageView(unitLogo);
+				unitLogoView.setFitHeight(130);;
+				unitLogoView.setFitWidth(130);
+				
+				unitLogoButton.setGraphic(unitLogoView);
+				
+				// Adding hover text to the building
+				Tooltip tt = new Tooltip("Unit Type: " + unitType +"\n Unit Level: "+  u.getLevel() + "\n Current Solider Count: " + u.getCurrentSoldierCount() + "\n Max Solider Count: " + u.getMaxSoldierCount()+"");
+				tt.setShowDelay(new Duration (0));
+				tt.setHideDelay(new Duration (10));
+				Tooltip.install(unitLogoButton, tt);
+				
+				if (attacking1.getChildren().size()<8)
+					attacking1.getChildren().addAll(unitLogoButton);
+				else if (attacking2.getChildren().size() < 8 && defendingTilePane.getChildren().size() < 14)
+					attacking2.getChildren().addAll(unitLogoButton);
+			
+				
+				unitLogoButton.setOnAction(e-> {
+					 viewOppenentUnits.displayOpponentUnits(u,defendingArmy,game);
+						if (attackingArmy.getUnits().size() != 0 && defendingArmy.getUnits().size() == 0 ) {
+							game.setBattleLog(game.getBattleLog()+ "\n------Player Occupied " + defendingArmy.getCurrentLocation()+"------");
+							game.occupy(attackingArmy, defendingArmy.getCurrentLocation());
+							
+							for (City c : game.getAvailableCities() ) { 
+								if (c.getName().equals(attackingArmy.getCurrentLocation())) {
+									c.setTurnsUnderSiege(1);
+								}
+							}
+							attackingArmy.setCurrentStatus(Status.IDLE);
+							attackingArmy.setDistancetoTarget(50);
+						}
+						else if (attackingArmy.getUnits().size() == 0 && defendingArmy.getUnits().size() != 0){
+							game.setBattleLog(game.getBattleLog()+ "\n------Player's Army Got destroyed------");
+						
+							for (City c : game.getAvailableCities() ) { 
+								if (c.getName().equals(attackingArmy.getCurrentLocation())) {
+									c.setTurnsUnderSiege(1);
+								}
+							}
+							attackingArmy.setCurrentStatus(Status.IDLE);
+							attackingArmy.setDistancetoTarget(50);
+							}
+					 try {
+						
+						battleView(window,attackingArmy,defendingArmy);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						AlertBox.display(e1.getMessage());
+					}
+				});
 	}
 
 			
