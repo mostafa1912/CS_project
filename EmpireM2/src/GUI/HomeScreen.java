@@ -751,7 +751,7 @@ BorderPane bp = new BorderPane();
 			if (game.getCurrentTurnCount()>= 51) { 
 				
 				youLost(window);
-				System.out.println("You Lost");
+				//System.out.println("You Lost");
 			}
 			else if (game.getPlayer().getControlledCities().size() == 3 ) { 
 				youWon(window);
@@ -1274,7 +1274,7 @@ public static void cityView(Stage window , String currentCityName) throws IOExce
 		Image initiateArmyTextLogo = new Image("file:images/initiatearmytextlogo.png");
 		ImageView initiateArmyTextLogoView = new ImageView(initiateArmyTextLogo);
 		initiateArmyTextLogoView.setFitHeight(40);;
-		initiateArmyTextLogoView.setFitWidth(100);
+		initiateArmyTextLogoView.setFitWidth(150);
 		initiateArmyButton.setGraphic(initiateArmyTextLogoView);
 		
 		initiateArmyButton.setOnAction(e ->{
@@ -1480,13 +1480,11 @@ BackgroundImage bg = new BackgroundImage(new Image("file:images/BattleViewBackgr
 		hBoxOfLog.setBackground(new Background(new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY )));
 		
 		
-		Hyperlink  autoResolveButton  = new Hyperlink ();
-		
-		Image autoResolveLogo =  new Image("file:images/autoresolvetextlogo.png");
-		ImageView autoResolveView = new ImageView(autoResolveLogo);
-		autoResolveView.setFitHeight(100);;
-		autoResolveView.setFitWidth(400);
-		autoResolveButton.setGraphic(autoResolveView);
+		Button autoResolveButton = new Button ("Auto Resolve The Battle");
+		autoResolveButton.setMaxHeight(40);
+		autoResolveButton.setMaxWidth(500);
+		autoResolveButton.setStyle("-fx-font: 25 arial; -fx-base: #191100;");
+
 
 		VBox autoResolveButtonHbox = new VBox();
 		
@@ -1654,7 +1652,7 @@ for (Unit u : attackingArmy.getUnits()) {
 	if (attackingArmy.getUnits().size() == 0 || defendingArmy.getUnits().size() == 0) { 
 		Button goToMapViewButton = new Button ("World Map View");
 		goToMapViewButton.setMaxHeight(40);
-		goToMapViewButton.setMaxWidth(240);
+		goToMapViewButton.setMaxWidth(500);
 		goToMapViewButton.setStyle("-fx-font: 25 arial; -fx-base: #191100;");
 
 		
@@ -1759,10 +1757,18 @@ public static void youLost(Stage window) {
 		enteryournamelogoViewVbox.setAlignment(Pos.TOP_CENTER);
 		
 		pageLayout.getChildren().add(enteryournamelogoViewVbox);
+		
+		Label label = new Label();
+		label.setText("You Exceeded 50 Turns Without Conquering The World");
+		label.setAlignment(Pos.BOTTOM_CENTER);
+		label.setTranslateY(-200);
+		label.setFont(Font.font("Cambria", 32));
+		label.setTextFill(Color.web("WHITE"));
+		label.setWrapText(true);
 
 		StackPane stackPane = new StackPane();
 		stackPane.setBackground(new Background(bg));
-		stackPane.getChildren().addAll(enteryournamelogoViewVbox );
+		stackPane.getChildren().addAll(enteryournamelogoViewVbox,label );
 		Scene worldmap = new Scene(stackPane, 1275, 680);
 		window.setScene(worldmap);
 		window.show();

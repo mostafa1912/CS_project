@@ -69,7 +69,7 @@ public class SiegingChoice  {
 		laySiegeButton.setGraphic(laySiegeTextLogoView);
 		
 		Hyperlink setTargetButton = new Hyperlink();
-        Image s = new Image("file:images/setarmytargettextlogo.png");
+        Image s = new Image("file:images/setanothertargettextlogo.png");
 		ImageView ss = new ImageView(s);
         ss.setFitHeight(60);;
         ss.setFitWidth(200);
