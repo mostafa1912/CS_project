@@ -118,9 +118,19 @@ public class HomeScreen extends Application  {
 
 		startButton.setStyle("-fx-font: 25 arial; -fx-base: #FFB806;");
 
+		
+		Button  RulesButton = new Button ("Rules");
+		//setting button size and font
+		RulesButton.setMaxHeight(50);
+		RulesButton.setMaxWidth(125);
 
+		RulesButton.setStyle("-fx-font: 25 arial; -fx-base: #FFB806;");
+		
+		VBox buttonsVBox = new VBox(20);
+		buttonsVBox.getChildren().addAll(startButton,RulesButton);
+		buttonsVBox.setAlignment(Pos.CENTER);
 		//adding start button to layout
-		startLayout.getChildren().addAll(gamenamelogoViewVBox ,deepquoteViewVBox,startButton);
+		startLayout.getChildren().addAll(gamenamelogoViewVBox ,deepquoteViewVBox,buttonsVBox);
 		// setting default scene dimensions
 		Scene startScene = new Scene(startLayout, 1275, 680);
 		window.setScene(startScene);
@@ -134,6 +144,10 @@ public class HomeScreen extends Application  {
 
 				AlertBox.display(e1.getMessage());
 			}
+		});
+		
+		RulesButton.setOnAction(e->{
+			Instructions.display();
 		});
 
 	}
