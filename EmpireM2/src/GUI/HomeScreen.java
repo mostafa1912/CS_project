@@ -1648,7 +1648,8 @@ for (Unit u : attackingArmy.getUnits()) {
 				tt2.setShowDelay(new Duration (0));
 				tt2.setHideDelay(new Duration (10));
 				Tooltip.install(unitLogoButton2, tt2);
-		
+				
+				if (defendingTilePane.getChildren().size() < 21)
 				defendingTilePane.getChildren().add(unitLogoButton2);
 				
 				
