@@ -48,9 +48,9 @@ public class HomeScreen extends Application  {
 
 	public static void main(String[] args) {
 		
-		//String uriString = new File("music/warmusic.wav").toURI().toString();
-		 //MediaPlayer player = new MediaPlayer( new Media(uriString));
-		  //player.play();
+		String uriString = new File("music/warmusic.wav").toURI().toString();
+		 MediaPlayer player = new MediaPlayer( new Media(uriString));
+		  player.play();
 		launch(args);
 	}
 
@@ -1698,12 +1698,17 @@ for (Unit u : attackingArmy.getUnits()) {
 
 	
 public static void clearEmptyArmies() { 
-	
+	if (!game.getPlayer().getControlledArmies().isEmpty()) {
+		Army temp =game.getPlayer().getControlledArmies().get(0) ;
 		for (Army c : game.getPlayer().getControlledArmies()) {
 			if (c.getUnits().size()==0)
-				game.getPlayer().getControlledArmies().remove(c);
+				temp = c;
 		}
-	
+		
+		if (temp.getUnits().size()==0)
+			game.getPlayer().getControlledArmies().remove(temp);
+		
+		}
 	}
 
 	
