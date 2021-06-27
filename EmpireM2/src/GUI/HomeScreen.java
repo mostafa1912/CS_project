@@ -1577,6 +1577,29 @@ for (Unit u : attackingArmy.getUnits()) {
 			
 			unitLogoButton.setOnAction(e-> {
 				 viewOppenentUnits.displayOpponentUnits(u,defendingArmy,game);
+					if (attackingArmy.getUnits().size() != 0 && defendingArmy.getUnits().size() == 0 ) {
+						game.setBattleLog(game.getBattleLog()+ "\n------Player Occupied " + defendingArmy.getCurrentLocation()+"------");
+						game.occupy(attackingArmy, defendingArmy.getCurrentLocation());
+						
+						for (City c : game.getAvailableCities() ) { 
+							if (c.getName().equals(attackingArmy.getCurrentLocation())) {
+								c.setTurnsUnderSiege(1);
+							}
+						}
+						attackingArmy.setCurrentStatus(Status.IDLE);
+						attackingArmy.setDistancetoTarget(50);
+					}
+					else if (attackingArmy.getUnits().size() == 0 && defendingArmy.getUnits().size() != 0){
+						game.setBattleLog(game.getBattleLog()+ "\n------Player's Army Got destroyed------");
+					
+						for (City c : game.getAvailableCities() ) { 
+							if (c.getName().equals(attackingArmy.getCurrentLocation())) {
+								c.setTurnsUnderSiege(1);
+							}
+						}
+						attackingArmy.setCurrentStatus(Status.IDLE);
+						attackingArmy.setDistancetoTarget(50);
+						}
 				 try {
 					
 					battleView(window,attackingArmy,defendingArmy);
