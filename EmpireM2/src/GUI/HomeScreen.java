@@ -444,7 +444,7 @@ BorderPane bp = new BorderPane();
 		HBox idleArmiesHBox = new HBox(6);
 		for (Army a : game.getPlayer().getControlledArmies()) {
 			
-		if (a.getCurrentStatus().equals(Status.IDLE ) && !a.getCurrentStatus().equals(Status.BESIEGING))	{
+		if (a.getCurrentStatus().equals(Status.IDLE ) && a.getUnits().size() != 0)	{
 
 			Hyperlink  armyButton  = new Hyperlink ();
 			Image armyLogo = new Image("file:images/armylogo.png");
@@ -503,7 +503,7 @@ BorderPane bp = new BorderPane();
 		
 	
 				for (Army a : game.getPlayer().getControlledArmies()) {
-					if (a.getCurrentStatus().equals(Status.MARCHING)) {
+					if (a.getCurrentStatus().equals(Status.MARCHING) && a.getUnits().size() != 0) {
 						Hyperlink  armyButton  = new Hyperlink ();
 						Image armyLogo = new Image("file:images/armylogo.png");
 						ImageView armyLogoView = new ImageView(armyLogo);
@@ -560,7 +560,7 @@ BorderPane bp = new BorderPane();
 //For besieging armies, the player should be able to know which city is this army besieging and for how many turns the city was under siege. 
 
 				for (Army a : game.getPlayer().getControlledArmies()) {
-					if (a.getCurrentStatus().equals(Status.BESIEGING)) {
+					if (a.getCurrentStatus().equals(Status.BESIEGING) && a.getUnits().size() != 0 ) {
 						Hyperlink  armyButton  = new Hyperlink ();
 						Image armyLogo = new Image("file:images/armylogo.png");
 						ImageView armyLogoView = new ImageView(armyLogo);
@@ -602,6 +602,8 @@ BorderPane bp = new BorderPane();
 								//System.out.println("Window shoulf be displayed");
 
 								MustBattle.displayYouMustBattleWindow(game, c, a);
+								worldMapView(window);
+								
 								
 							}
 						}
@@ -727,7 +729,7 @@ BorderPane bp = new BorderPane();
 	end.setStyle("-fx-font: 25 arial; -fx-base: #FFB806;");
 		end.setOnAction(e -> {
 			
-			
+
 			game.endTurn();
 			
 			for (Army a : game.getPlayer().getControlledArmies()  )
@@ -1661,7 +1663,7 @@ for (Unit u : attackingArmy.getUnits()) {
 		
 		goToMapViewButton.setOnAction(e -> { 
 			window.close();
-			/***************************************/
+			game.setBattleLog("---Battle Log: \n");
 			//clearEmptyArmies();
 		});
 		
@@ -1696,7 +1698,7 @@ for (Unit u : attackingArmy.getUnits()) {
 
 	
 public static void clearEmptyArmies() { 
-	if (!game.getPlayer().getControlledArmies().isEmpty())
+	
 		for (Army c : game.getPlayer().getControlledArmies()) {
 			if (c.getUnits().size()==0)
 				game.getPlayer().getControlledArmies().remove(c);

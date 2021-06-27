@@ -100,7 +100,8 @@ public class SiegingChoice  {
             }
 
             try {
-                game.getPlayer().laySiege(army , city);
+            	if (!(city == null))
+            		game.getPlayer().laySiege(army , city);
 
 
             } catch (TargetNotReachedException targetNotReachedException) {

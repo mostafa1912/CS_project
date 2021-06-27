@@ -247,6 +247,8 @@ public class Game {
 					c.setTurnsUnderSiege(1);
 				}
 			}
+			attacker.setCurrentStatus(Status.IDLE);
+			attacker.setDistancetoTarget(50);
 		}
 		else {
 			this.setBattleLog(this.getBattleLog()+ "\n------Player's Army Got destroyed------");
@@ -257,6 +259,7 @@ public class Game {
 				}
 			}
 			attacker.setCurrentStatus(Status.IDLE);
+			attacker.setDistancetoTarget(50);
 			}
 
 	}
