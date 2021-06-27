@@ -506,7 +506,7 @@ BorderPane bp = new BorderPane();
 		
 		
 		
-		Label marchingArmiesandLabelVBoxTitle = new Label ("Marching Armies : ");
+		Label marchingArmiesandLabelVBoxTitle = new Label ("Marching Armies Controlled By "+ game.getPlayer().getName()+": ");
 		marchingArmiesandLabelVBoxTitle.setFont(Font.font("Cambria", 26));
 		marchingArmiesandLabelVBoxTitle.setTextFill(Color.web("Orange"));
 		leftVBox.getChildren().add(marchingArmiesandLabelVBoxTitle);
@@ -561,7 +561,7 @@ BorderPane bp = new BorderPane();
 
 ////Hbox containg besieging armies 
 		
-		Label besiegingArmiesLabel = new Label ("Besieging Armies : ");
+		Label besiegingArmiesLabel = new Label ("Besieging Armies Controlled By "+ game.getPlayer().getName()+": " );
 		besiegingArmiesLabel.setFont(Font.font("Cambria", 26));
 		besiegingArmiesLabel.setTextFill(Color.web("Orange"));
 		
@@ -852,7 +852,7 @@ public static void cityView(Stage window , String currentCityName) throws IOExce
 
 //  Economical Buildings Label 
 		HBox economicalBuildingsLabelHBox = new HBox ();
-		Label economicalBuildingsLabel = new Label ("Economical Buildings");
+		Label economicalBuildingsLabel = new Label ("Economical Buildings in "+ currentCity.getName());
 		economicalBuildingsLabel.setFont(Font.font("Cambria", 26));
 		economicalBuildingsLabel.setTextFill(Color.web("#0076a3"));
 		economicalBuildingsLabelHBox.getChildren().add(economicalBuildingsLabel);
@@ -939,30 +939,9 @@ public static void cityView(Stage window , String currentCityName) throws IOExce
 			
 			// Adding Upgrade Hyperlink  Under Each Building 
 
-			Hyperlink  harvestButton  = new Hyperlink ();
-			
-			Image harvestTextLogo = new Image("file:images/harvesttextlogo.png");
-			ImageView harvestTextLogoView = new ImageView(harvestTextLogo);
-			harvestTextLogoView.setFitHeight(40);;
-			harvestTextLogoView.setFitWidth(130);
-			harvestButton.setGraphic(harvestTextLogoView);
 			
 			
-			Tooltip tt2 = new Tooltip("Harvest adds " + currentBuilding.harvest());
-			tt2.setShowDelay(new Duration (0));
-			tt2.setHideDelay(new Duration (10));
-			Tooltip.install(harvestButton, tt2);
-			currentBuildingVBox.getChildren().add(harvestButton);
-					
-			harvestButton.setOnAction(e->{ 
-				game.getPlayer().setTreasury(game.getPlayer().getTreasury() +currentBuilding.harvest() );
-				try {
-					cityView(window, currentCityName);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					AlertBox.display(e1.getMessage());
-				}
-			});
+			
 			
 			upgradeBuildingButton.setOnAction( e -> { 
 				
@@ -1012,7 +991,7 @@ public static void cityView(Stage window , String currentCityName) throws IOExce
 	
 //  Military Buildings Label 
 		HBox MilitaryBuildingsLabelHBox = new HBox();
-		Label MilitaryBuildingsLabel = new Label ("Military Buildings");
+		Label MilitaryBuildingsLabel = new Label ("Military Buildings in "+ currentCity.getName()+": ");
 		MilitaryBuildingsLabel.setFont(Font.font("Cambria", 26));
 		MilitaryBuildingsLabel.setTextFill(Color.web("#0076a3"));
 		MilitaryBuildingsLabelHBox.getChildren().add(MilitaryBuildingsLabel);
@@ -1206,7 +1185,7 @@ public static void cityView(Stage window , String currentCityName) throws IOExce
 		
 //  Military Buildings Label 
 	
-		Label defendingArmyLabel = new Label ("Defending Army");
+		Label defendingArmyLabel = new Label (currentCity.getName()+"'s Defending Army");
 		defendingArmyLabel.setFont(Font.font("Cambria", 26));
 		defendingArmyLabel.setTextFill(Color.web("#0076a3"));
 		GridPane.setConstraints(defendingArmyLabel, 0, 7);
@@ -1610,7 +1589,7 @@ for (Unit u : attackingArmy.getUnits()) {
 }
 
 
-	Label attackingArmyLabel = new Label ("Attacking Army: ");
+	Label attackingArmyLabel = new Label (game.getPlayer().getName()+" Attacking Army: ");
 	attackingArmyLabel.setFont(Font.font("Cambria", 26));
 	attackingArmyLabel.setTextFill(Color.web("Orange"));
 	
@@ -1654,7 +1633,7 @@ for (Unit u : attackingArmy.getUnits()) {
 	}
 
 			
-	Label defendingArmyLabel = new Label ("Defending Army: ");
+	Label defendingArmyLabel = new Label (defendingArmy.getCurrentLocation()+"'s Defending Army: ");
 	defendingArmyLabel.setFont(Font.font("Cambria", 26));
 	defendingArmyLabel.setTextFill(Color.web("Orange"));
 	defending.getChildren().addAll(defendingArmyLabel,defendingTilePane);
