@@ -45,7 +45,7 @@ public static void display () {
 		label1.setAlignment(Pos.TOP_LEFT);
 		
 		Label label2 = new Label();
-		label2.setText("The Conqueror is a single player turn-based empire building game. A player initially chooses one historical city to start his empire with. The goal is to conquer the whole world by taking control over every other city in less than 50 turns. In order to achieve this goal, the player have the option of building various types of building in any city he has control over and also build armies in order to conquer other cities.    Good Luck in conquering the WORLD !!!");
+		label2.setText("The Conqueror is a single player turn-based empire building game. A player initially chooses one historical city to start his empire with. The goal is to conquer the whole world by taking control over every other city in less than 50 turns. In order to achieve this goal, the player have the option of building various types of building in any city he has control over and also build armies in order to conquer other cities.    Good Luck in conquering THE WORLD !!!");
 		label2.setTextFill(Color.web("WHITE"));
 		
 		label2.setFont(Font.font("Cambria", 22));
