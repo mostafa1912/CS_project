@@ -241,7 +241,7 @@ public static void displayBuildMilitary(Player p, String cityName) {
 	buildStableButton.setGraphic(stableIconView);
 	
 	
-	Tooltip tt3 = new Tooltip("Build An Infantry");
+	Tooltip tt3 = new Tooltip("Build A Stable");
 	tt3.setShowDelay(new Duration (0));
 	tt3.setHideDelay(new Duration (10));
 	Tooltip.install(buildStableButton, tt3);
