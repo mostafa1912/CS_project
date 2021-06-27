@@ -1250,7 +1250,7 @@ public static void cityView(Stage window , String currentCityName) throws IOExce
 		
 
 //  Stationed Armies Label 
-		HBox stationedArmiesLabelHBox = new HBox(6);
+		VBox stationedArmiesLabelHBox = new VBox(6);
 		
 		Label stationedArmiesLabel = new Label ("Player Armies Currently Located In "+ currentCity.getName());
 		stationedArmiesLabel.setFont(Font.font("Cambria", 26));
@@ -1262,25 +1262,8 @@ public static void cityView(Stage window , String currentCityName) throws IOExce
 
 // Putting Build Label Next to Military Buildings Label 
 		
-		Hyperlink  initiateArmyButton  = new Hyperlink ();
 		
-		Image initiateArmyTextLogo = new Image("file:images/initiatearmytextlogo.png");
-		ImageView initiateArmyTextLogoView = new ImageView(initiateArmyTextLogo);
-		initiateArmyTextLogoView.setFitHeight(40);;
-		initiateArmyTextLogoView.setFitWidth(150);
-		initiateArmyButton.setGraphic(initiateArmyTextLogoView);
-		
-		initiateArmyButton.setOnAction(e ->{
-			ViewUnits.displayChooseUnitToInitializeArmy(currentCity, game.getPlayer());
-			try {
-				cityView(window, currentCityName);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				AlertBox.display(e1.getMessage());
-			}
-		});
-		
-		stationedArmiesLabelHBox.getChildren().add(initiateArmyButton);
+	
 		
 				
 				
@@ -1360,6 +1343,22 @@ public static void cityView(Stage window , String currentCityName) throws IOExce
 
 		
 		
+		Button initiateArmyButton = new Button ("Initiate Army");
+		initiateArmyButton.setMaxHeight(40);
+		initiateArmyButton.setMaxWidth(240);
+		initiateArmyButton.setStyle("-fx-font: 25 arial; -fx-base: #191100;");
+
+		
+		initiateArmyButton.setOnAction(e ->{
+			ViewUnits.displayChooseUnitToInitializeArmy(currentCity, game.getPlayer());
+			try {
+				cityView(window, currentCityName);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				AlertBox.display(e1.getMessage());
+			}
+		});
+		
 		
 		
 		goToMapViewButton.setOnAction(e -> { 
@@ -1402,7 +1401,7 @@ public static void cityView(Stage window , String currentCityName) throws IOExce
 	//hbox containing the two  buttons
 		HBox buttonsHBox = new HBox();
 		buttonsHBox.setAlignment(Pos.CENTER);
-		buttonsHBox.getChildren().addAll(goToMapViewButton,end);
+		buttonsHBox.getChildren().addAll(goToMapViewButton,end,initiateArmyButton);
 		buttonsHBox.setPadding(new Insets(15));
 		buttonsHBox.setSpacing(15);
 		
