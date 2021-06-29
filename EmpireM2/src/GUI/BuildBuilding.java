@@ -195,7 +195,7 @@ public static void displayBuildMilitary(Player p, String cityName) {
 	
 	buildArcheryRangeButton.setOnAction( e -> { 
 		try {
-			p.build("ArcheryRange", cityName);
+			p.build("Archeryrange", cityName);
 		} catch (NotEnoughGoldException e1) {
 			// TODO Auto-generated catch block
 			AlertBox.display("You don't have Enough Gold",e1.getMessage());
@@ -222,7 +222,7 @@ public static void displayBuildMilitary(Player p, String cityName) {
 	
 	buildInfantryButton.setOnAction( e -> { 
 		try {
-			p.build("barracks", cityName);
+			p.build("Barracks", cityName);
 		} catch (NotEnoughGoldException e1) {
 			// TODO Auto-generated catch block
 			AlertBox.display("You don't have Enough Gold",e1.getMessage());
@@ -250,7 +250,7 @@ public static void displayBuildMilitary(Player p, String cityName) {
 	
 	buildStableButton.setOnAction( e -> { 
 		try {
-			p.build("stable", cityName);
+			p.build("Stable", cityName);
 		} catch (NotEnoughGoldException e1) {
 			// TODO Auto-generated catch block
 			AlertBox.display("You don't have Enough Gold",e1.getMessage());
