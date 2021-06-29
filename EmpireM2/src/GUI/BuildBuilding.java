@@ -195,7 +195,7 @@ public static void displayBuildMilitary(Player p, String cityName) {
 	
 	buildArcheryRangeButton.setOnAction( e -> { 
 		try {
-			p.build("Archeryrange", cityName);
+			p.build("ArcheryRange", cityName);
 		} catch (NotEnoughGoldException e1) {
 			// TODO Auto-generated catch block
 			AlertBox.display("You don't have Enough Gold",e1.getMessage());
