@@ -2,8 +2,7 @@
 This is a team project that consists of building a game using java and java fx.
 
 
-The Conqueror
-This is a single player turn-based empire building game. A player initially chooses one historical city to start his empire with. The goal is to conquer the whole world by taking control over every other city under a certain number of turns. In order to achieve this goal, the player has the option of building various types of building in any city he has control over and also build armies in order to conquer other cities.
+The Conqueror is a single player turn-based empire building game. A player initially chooses one historical city to start his empire with. The goal is to conquer the whole world by taking control over every other city under a certain number of turns. In order to achieve this goal, the player has the option of building various types of building in any city he has control over and also build armies in order to conquer other cities.
 
 Winning/Loosing
 The player wins if he managed to conquer all cities available in the game under the deter-
